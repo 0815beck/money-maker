@@ -25,11 +25,4 @@ public class Transaction {
     private Account account;
 
 
-
-
-
-
-
-
-
 }
