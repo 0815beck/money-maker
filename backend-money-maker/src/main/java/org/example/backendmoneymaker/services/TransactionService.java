@@ -12,7 +12,7 @@ public interface TransactionService {
 
     ResponseEntity<Transaction> addTransaction(Transaction transaction);
     ResponseEntity<String> deleteTransaction(Long id);
-    ResponseEntity<Optional<Transaction>> updateTransaction(Transaction transaction);
+    ResponseEntity<Optional<Transaction>> updateTransaction(Long id, Transaction transaction);
 
     ResponseEntity<List<Transaction>> getAllTransactions();
     ResponseEntity<Optional<Transaction>> findTransaction(Long id);
