@@ -7,6 +7,7 @@ import org.example.backendmoneymaker.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Data
@@ -21,6 +22,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Category> getCategoryByID(Long id) {
+        return categoryRepository.findById(id);
     }
 
     @Override
