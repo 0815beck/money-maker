@@ -17,8 +17,12 @@ public class Transaction {
     private Date timestamp;
     private String description;
 
-    //private Category category;
-    //private Account account;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    private Account account;
 
 
 
