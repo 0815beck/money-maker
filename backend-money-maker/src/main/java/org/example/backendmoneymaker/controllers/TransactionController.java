@@ -1,11 +1,8 @@
 package org.example.backendmoneymaker.controllers;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.example.backendmoneymaker.entities.Transaction;
 import org.example.backendmoneymaker.services.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
