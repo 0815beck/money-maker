@@ -1,4 +1,6 @@
 package org.example.backendmoneymaker.repositories;
 
-public interface FixedCostRepository {
-}
+import org.example.backendmoneymaker.entities.FixedCost;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FixedCostRepository extends JpaRepository<FixedCost, Long> { }
