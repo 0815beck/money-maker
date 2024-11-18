@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 @AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
@@ -42,8 +42,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ResponseEntity<Optional<Transaction>> updateTransaction(Transaction transaction) {
-        Optional <Transaction> oldTransaction = repository.findById(transaction.getId());
+    public ResponseEntity<Optional<Transaction>> updateTransaction(Long id, Transaction transaction) {
+        Optional <Transaction> oldTransaction = repository.findById(id);
         if(oldTransaction.isPresent()){
             if(transaction.getCategory() != null){
                 oldTransaction.get().setCategory(transaction.getCategory());
