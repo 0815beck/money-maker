@@ -10,5 +10,5 @@ public interface FixedCostService {
     Optional<FixedCost> findById(Long id);
     FixedCost create(FixedCost fixedCost);
     FixedCost modify(FixedCost fixedCost);
-    void delteById(Long id);
+    void deleteById(Long id);
 }
