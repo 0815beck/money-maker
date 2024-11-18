@@ -19,8 +19,9 @@ public class Account {
     /*@OneToMany(mappedBy = account)
     @JsonIgnoreProperties("account")
     private List<FixedCost> fixedCosts;
+    */
 
-    @OneToMany(mappedBy = account)
+    @OneToMany(mappedBy = "account")
     @JsonIgnoreProperties("account")
-    private List<Transaction> transactions;*/
+    private List<Transaction> transactions;
 }
