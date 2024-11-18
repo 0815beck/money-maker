@@ -1,11 +1,9 @@
 package org.example.backendmoneymaker.controllers;
 
 import org.example.backendmoneymaker.entities.FixedCost;
-import org.example.backendmoneymaker.repositories.FixedCostRepository;
 import org.example.backendmoneymaker.services.FixedCostService;
 import org.example.backendmoneymaker.services.FixedCostServiceImpl;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +15,9 @@ import java.util.Optional;
 public class FixedCostController {
 
     private final FixedCostService fixedCostService;
-    private final FixedCostRepository fixedCostRepository;
 
-    public FixedCostController(FixedCostServiceImpl fixedCostService, FixedCostRepository fixedCostRepository) {
+    public FixedCostController(FixedCostServiceImpl fixedCostService) {
         this.fixedCostService = fixedCostService;
-        this.fixedCostRepository = fixedCostRepository;
     }
 
     @GetMapping("/fixedCost")
@@ -61,7 +57,7 @@ public class FixedCostController {
             return ResponseEntity.badRequest().build();
         }
 
-        if (fixedCostRepository.findById(fixedCost.getId()).isEmpty()) {
+        if (fixedCostService.findById(fixedCost.getId()).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -76,11 +72,11 @@ public class FixedCostController {
             return ResponseEntity.badRequest().build();
         }
 
-        if (fixedCostRepository.findById(id).isEmpty()) {
+        if (fixedCostService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        fixedCostRepository.deleteById(id);
+        fixedCostService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
