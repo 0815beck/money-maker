@@ -37,7 +37,7 @@ public class FixedCostServiceImpl implements FixedCostService {
     }
 
     @Override
-    public void delteById(Long id) {
+    public void deleteById(Long id) {
         fixedCostRepository.deleteById(id);
     }
 }
