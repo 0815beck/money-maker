@@ -2,6 +2,7 @@ package org.example.backendmoneymaker.services;
 
 import org.example.backendmoneymaker.entities.Account;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,5 +14,6 @@ public interface AccountService {
 
     void deleteAccount(Long id);
 
-    Account updateAccount(Account account);
+    Account saveAccount(Account account);
+
 }
