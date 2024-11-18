@@ -1,8 +1,8 @@
 package org.example.backendmoneymaker.controllers;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.example.backendmoneymaker.entities.Category;
 import org.example.backendmoneymaker.services.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
-
 
     @GetMapping
     ResponseEntity<List<Category>> getAllCategories() {

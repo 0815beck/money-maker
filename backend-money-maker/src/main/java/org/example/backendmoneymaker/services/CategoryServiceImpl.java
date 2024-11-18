@@ -1,6 +1,7 @@
 package org.example.backendmoneymaker.services;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.backendmoneymaker.entities.Category;
 import org.example.backendmoneymaker.repositories.CategoryRepository;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Data
+@AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
