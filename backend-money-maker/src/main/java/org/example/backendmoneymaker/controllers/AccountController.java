@@ -37,7 +37,7 @@ public class AccountController {
 
     @PutMapping
     ResponseEntity<Account> modifyAccount(@RequestBody Account account){
-        if (account.getId() == 0){
+        if (account.getId() == null){
             return ResponseEntity.badRequest().build();
         }
         if (accountService.getAccountById(account.getId()).isEmpty()){

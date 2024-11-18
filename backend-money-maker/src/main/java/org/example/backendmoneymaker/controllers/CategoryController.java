@@ -32,7 +32,7 @@ public class CategoryController {
 
     @PutMapping
     ResponseEntity<Category> modifyCategory(@RequestBody Category category) {
-        if (category.getId() == 0) {
+        if (category.getId() == null) {
             return ResponseEntity.badRequest().build();
         }
         if (categoryService.getCategoryByID(category.getId()).isEmpty()) {
