@@ -3,21 +3,17 @@ package org.example.backendmoneymaker.services;
 import lombok.AllArgsConstructor;
 import org.example.backendmoneymaker.entities.Transaction;
 import org.example.backendmoneymaker.repositories.TransactionRepository;
-import org.hibernate.validator.internal.constraintvalidators.bv.NotNullValidator;
-import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 @AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository repository;
-
 
     @Override
     public ResponseEntity<Transaction> addTransaction(Transaction transaction) {
@@ -42,8 +38,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ResponseEntity<Optional<Transaction>> updateTransaction(Transaction transaction) {
-        Optional <Transaction> oldTransaction = repository.findById(transaction.getId());
+    public ResponseEntity<Optional<Transaction>> updateTransaction(Long id, Transaction transaction) {
+        Optional <Transaction> oldTransaction = repository.findById(id);
         if(oldTransaction.isPresent()){
             if(transaction.getCategory() != null){
                 oldTransaction.get().setCategory(transaction.getCategory());
