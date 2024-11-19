@@ -1,8 +1,11 @@
 package org.example.backendmoneymaker.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,14 +16,18 @@ public class Transaction {
     @GeneratedValue
     private Long id;
 
-    private float amount;
-    private Date timestamp;
+    @NotNull
+    private BigDecimal amount;
+    @NotNull
+    private LocalDate timestamp;
     private String description;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @NotNull
     @ManyToOne
     private Account account;
 }
