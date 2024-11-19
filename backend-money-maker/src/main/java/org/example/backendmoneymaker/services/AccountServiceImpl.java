@@ -1,5 +1,6 @@
 package org.example.backendmoneymaker.services;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.backendmoneymaker.entities.Account;
 import org.example.backendmoneymaker.repositories.AccountRepository;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Data
+@AllArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService{
     private AccountRepository accountRepository;

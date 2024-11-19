@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -17,8 +19,10 @@ public class Account {
     @GeneratedValue
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @NotNull
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "account")

@@ -5,12 +5,14 @@ import org.example.backendmoneymaker.entities.Transaction;
 import org.example.backendmoneymaker.repositories.TransactionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @AllArgsConstructor
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository repository;

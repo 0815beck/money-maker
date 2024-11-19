@@ -1,7 +1,9 @@
 package org.example.backendmoneymaker.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.example.backendmoneymaker.entities.Category;
 import org.example.backendmoneymaker.services.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -10,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Data
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping
     ResponseEntity<List<Category>> getAllCategories() {
@@ -22,7 +24,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    ResponseEntity<Category> createCategory(@RequestBody @Valid Category category) {
         if (category.getId() != null) {
             return ResponseEntity.badRequest().build();
         }
@@ -30,8 +32,8 @@ public class CategoryController {
     }
 
     @PutMapping
-    ResponseEntity<Category> modifyCategory(@RequestBody Category category) {
-        if (category.getId() == 0) {
+    ResponseEntity<Category> modifyCategory(@RequestBody @Valid Category category) {
+        if (category.getId() == null) {
             return ResponseEntity.badRequest().build();
         }
         if (categoryService.getCategoryByID(category.getId()).isEmpty()) {

@@ -1,7 +1,9 @@
 package org.example.backendmoneymaker.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.example.backendmoneymaker.entities.Account;
 import org.example.backendmoneymaker.services.AccountService;
 import org.springframework.http.HttpStatus;
@@ -10,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Data
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @GetMapping
     ResponseEntity<List<Account>> getAllAccounts(){
@@ -27,7 +29,7 @@ public class AccountController {
     }
 
     @PostMapping
-    ResponseEntity<Account> createAccount(@RequestBody Account account){
+    ResponseEntity<Account> createAccount(@RequestBody @Valid Account account){
         if (account.getId() != null){
             return ResponseEntity.badRequest().build();
         }
@@ -35,8 +37,8 @@ public class AccountController {
     }
 
     @PutMapping
-    ResponseEntity<Account> modifyAccount(@RequestBody Account account){
-        if (account.getId() == 0){
+    ResponseEntity<Account> modifyAccount(@RequestBody @Valid Account account){
+        if (account.getId() == null){
             return ResponseEntity.badRequest().build();
         }
         if (accountService.getAccountById(account.getId()).isEmpty()){
