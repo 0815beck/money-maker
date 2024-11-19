@@ -41,18 +41,15 @@ public class TransactionServiceImpl implements TransactionService {
     public ResponseEntity<Optional<Transaction>> updateTransaction(Long id, Transaction transaction) {
         Optional <Transaction> oldTransaction = repository.findById(id);
         if(oldTransaction.isPresent()){
+            oldTransaction.get().setAmount(transaction.getAmount());
+            oldTransaction.get().setDescription(transaction.getDescription());
             if(transaction.getCategory() != null){
                 oldTransaction.get().setCategory(transaction.getCategory());
-            }
-            if(transaction.getAmount() != 0.00){
-                oldTransaction.get().setAmount(transaction.getAmount());
             }
             if(transaction.getTimestamp() != null){
                 oldTransaction.get().setTimestamp(transaction.getTimestamp());
             }
-            if(transaction.getDescription() != null){
-                oldTransaction.get().setDescription(transaction.getDescription());
-            }
+
             return new ResponseEntity<>(oldTransaction, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
