@@ -21,11 +21,12 @@ public class FixedCost {
     private Long id;
 
     @NotNull
-    @DecimalMin("0.0")
     private BigDecimal amount;
 
     @NotNull
     private LocalDate start;
+
+    private String description;
 
     @NotNull
     @Min(0)
@@ -35,6 +36,7 @@ public class FixedCost {
     private Category category;
 
     @ManyToOne
+    @JsonIgnoreProperties({"fixedCosts", "transactions"})
     private Account account;
 
     @OneToMany
