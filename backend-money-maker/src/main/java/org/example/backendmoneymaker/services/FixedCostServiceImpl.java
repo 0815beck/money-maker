@@ -1,9 +1,15 @@
 package org.example.backendmoneymaker.services;
 
+import org.example.backendmoneymaker.entities.Account;
 import org.example.backendmoneymaker.entities.FixedCost;
+import org.example.backendmoneymaker.entities.Transaction;
+import org.example.backendmoneymaker.repositories.AccountRepository;
 import org.example.backendmoneymaker.repositories.FixedCostRepository;
+import org.example.backendmoneymaker.repositories.TransactionRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +17,68 @@ import java.util.Optional;
 public class FixedCostServiceImpl implements FixedCostService {
 
     private final FixedCostRepository fixedCostRepository;
+    private final TransactionRepository transactionRepository;
+    private final AccountRepository accountRepository;
 
-    public FixedCostServiceImpl(FixedCostRepository fixedCostRepository) {
+    public FixedCostServiceImpl(
+            FixedCostRepository fixedCostRepository,
+            TransactionRepository transactionRepository,
+            AccountRepository accountRepository) {
         this.fixedCostRepository = fixedCostRepository;
+        this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 10 * * *")
+    public void generateTransactionsForAllAccounts() {
+        List<Account> accounts = accountRepository.findAll();
+        for (Account account : accounts) {
+            generateTransactions(account);
+        }
+    }
+
+    private void generateTransactions(Account account) {
+
+        List<FixedCost> fixedCosts = account.getFixedCosts();
+
+        for (FixedCost fixedCost: fixedCosts) {
+            LocalDate today = LocalDate.now();
+            LocalDate date = fixedCost.getStart();
+            while (true) {
+                if (date.equals(today)) {
+                    if (transactionAlreadyPresent(fixedCost, date)) {
+                        break;
+                    }
+                    transactionRepository.save(generateTransactionForSpecificDate(fixedCost, date));
+                    break;
+                }
+
+                if (date.isAfter(today)) {
+                    break;
+                }
+
+                date = date.plusMonths(1);
+            }
+        }
+    }
+
+    private boolean transactionAlreadyPresent(FixedCost fixedCost, LocalDate date) {
+        return fixedCost.getGeneratedTransactions()
+                .stream()
+                .anyMatch(transaction -> transaction.getTimestamp().equals(date));
+    }
+
+    private Transaction generateTransactionForSpecificDate(FixedCost fixedCost, LocalDate date) {
+        Transaction transaction = new Transaction();
+
+        transaction.setAmount(fixedCost.getAmount());
+        transaction.setTimestamp(date);
+        transaction.setDescription(fixedCost.getDescription());
+        transaction.setCategory(fixedCost.getCategory());
+        transaction.setAccount(fixedCost.getAccount());
+
+        return transaction;
     }
 
     @Override

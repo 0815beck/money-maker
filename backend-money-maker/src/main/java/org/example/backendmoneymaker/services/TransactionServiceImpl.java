@@ -51,7 +51,7 @@ public class TransactionServiceImpl implements TransactionService {
             if(transaction.getTimestamp() != null){
                 oldTransaction.get().setTimestamp(transaction.getTimestamp());
             }
-
+            repository.save(oldTransaction.get());
             return new ResponseEntity<>(oldTransaction, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

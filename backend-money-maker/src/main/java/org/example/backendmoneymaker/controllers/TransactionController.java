@@ -22,7 +22,10 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction){
+    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
+        if (transaction.getId() != null) {
+            return ResponseEntity.badRequest().build();
+        }
         return service.addTransaction(transaction);
     }
 
@@ -32,7 +35,10 @@ public class TransactionController {
     }
 
     @PutMapping
-    public ResponseEntity<Optional<Transaction>> updateTransaction(@RequestBody Transaction transaction){
+    public ResponseEntity<Optional<Transaction>> updateTransaction(@RequestBody Transaction transaction) {
+        if (transaction.getId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return service.updateTransaction(transaction);
     }
 

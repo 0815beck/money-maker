@@ -11,4 +11,5 @@ public interface FixedCostService {
     FixedCost create(FixedCost fixedCost);
     FixedCost modify(FixedCost fixedCost);
     void deleteById(Long id);
+    void generateTransactionsForAllAccounts();
 }

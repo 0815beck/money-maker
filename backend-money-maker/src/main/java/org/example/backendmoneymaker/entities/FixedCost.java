@@ -1,10 +1,7 @@
 package org.example.backendmoneymaker.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -28,9 +25,6 @@ public class FixedCost {
 
     private String description;
 
-    @NotNull
-    @Min(0)
-    private Integer intervalInDays;
 
     @ManyToOne
     private Category category;

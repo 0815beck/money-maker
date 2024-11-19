@@ -1,5 +1,6 @@
 package org.example.backendmoneymaker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -29,5 +30,6 @@ public class Transaction {
 
     @NotNull
     @ManyToOne
+    @JsonIgnoreProperties({"transactions", "fixedCosts"})
     private Account account;
 }

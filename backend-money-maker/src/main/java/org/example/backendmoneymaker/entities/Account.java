@@ -22,9 +22,6 @@ public class Account {
     @NotBlank
     private String name;
 
-    @NotNull
-    private BigDecimal balance;
-
     @OneToMany(mappedBy = "account")
     @JsonIgnoreProperties("account")
     private List<FixedCost> fixedCosts;
