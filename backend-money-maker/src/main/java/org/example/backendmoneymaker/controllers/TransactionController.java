@@ -31,9 +31,9 @@ public class TransactionController {
         return service.deleteTransaction(id);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Optional<Transaction>> updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction){
-        return service.updateTransaction(id, transaction);
+    @PutMapping
+    public ResponseEntity<Optional<Transaction>> updateTransaction(@RequestBody Transaction transaction){
+        return service.updateTransaction(transaction);
     }
 
     @GetMapping

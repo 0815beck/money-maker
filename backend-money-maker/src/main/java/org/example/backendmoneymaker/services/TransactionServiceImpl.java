@@ -40,8 +40,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ResponseEntity<Optional<Transaction>> updateTransaction(Long id, Transaction transaction) {
-        Optional <Transaction> oldTransaction = repository.findById(id);
+    public ResponseEntity<Optional<Transaction>> updateTransaction(Transaction transaction) {
+        Optional <Transaction> oldTransaction = repository.findById(transaction.getId());
         if(oldTransaction.isPresent()){
             oldTransaction.get().setAmount(transaction.getAmount());
             oldTransaction.get().setDescription(transaction.getDescription());
