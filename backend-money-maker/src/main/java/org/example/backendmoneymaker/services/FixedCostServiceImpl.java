@@ -50,7 +50,12 @@ public class FixedCostServiceImpl implements FixedCostService {
                     if (transactionAlreadyPresent(fixedCost, date)) {
                         break;
                     }
-                    transactionRepository.save(generateTransactionForSpecificDate(fixedCost, date));
+                    Transaction newTransaction = generateTransactionForSpecificDate(fixedCost, date);
+                    newTransaction = transactionRepository.save(newTransaction);
+                    transactionRepository.markTransactionAsGeneratedByFixCost(fixedCost.getId(),
+                            newTransaction.getId());
+//                    fixedCost.getGeneratedTransactions().add(newTransaction);
+//                    fixedCostRepository.save(fixedCost);
                     break;
                 }
 
@@ -69,7 +74,8 @@ public class FixedCostServiceImpl implements FixedCostService {
                 .anyMatch(transaction -> transaction.getTimestamp().equals(date));
     }
 
-    private Transaction generateTransactionForSpecificDate(FixedCost fixedCost, LocalDate date) {
+    private Transaction generateTransactionForSpecificDate(
+            FixedCost fixedCost, LocalDate date) {
         Transaction transaction = new Transaction();
 
         transaction.setAmount(fixedCost.getAmount());
