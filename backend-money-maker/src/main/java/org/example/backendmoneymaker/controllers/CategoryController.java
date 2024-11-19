@@ -1,6 +1,7 @@
 package org.example.backendmoneymaker.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.example.backendmoneymaker.entities.Category;
@@ -23,7 +24,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    ResponseEntity<Category> createCategory(@RequestBody @Valid Category category) {
         if (category.getId() != null) {
             return ResponseEntity.badRequest().build();
         }
@@ -31,8 +32,8 @@ public class CategoryController {
     }
 
     @PutMapping
-    ResponseEntity<Category> modifyCategory(@RequestBody Category category) {
-        if (category.getId() == 0) {
+    ResponseEntity<Category> modifyCategory(@RequestBody @Valid Category category) {
+        if (category.getId() == null) {
             return ResponseEntity.badRequest().build();
         }
         if (categoryService.getCategoryByID(category.getId()).isEmpty()) {

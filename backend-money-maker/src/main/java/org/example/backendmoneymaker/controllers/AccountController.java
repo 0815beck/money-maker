@@ -1,6 +1,7 @@
 package org.example.backendmoneymaker.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.example.backendmoneymaker.entities.Account;
@@ -28,7 +29,7 @@ public class AccountController {
     }
 
     @PostMapping
-    ResponseEntity<Account> createAccount(@RequestBody Account account){
+    ResponseEntity<Account> createAccount(@RequestBody @Valid Account account){
         if (account.getId() != null){
             return ResponseEntity.badRequest().build();
         }
@@ -36,8 +37,8 @@ public class AccountController {
     }
 
     @PutMapping
-    ResponseEntity<Account> modifyAccount(@RequestBody Account account){
-        if (account.getId() == 0){
+    ResponseEntity<Account> modifyAccount(@RequestBody @Valid Account account){
+        if (account.getId() == null){
             return ResponseEntity.badRequest().build();
         }
         if (accountService.getAccountById(account.getId()).isEmpty()){
