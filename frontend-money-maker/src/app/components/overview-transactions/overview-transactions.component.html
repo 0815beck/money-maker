@@ -1,1 +1,6 @@
-<p>overview-transactions works!</p>
+<div>
+  <button type="button" (click)="showForm()">+</button>
+</div>
+
+<div *ngIf="!formDisplayed; else form"></div>
+<ng-template #form><app-transaction-form></app-transaction-form></ng-template>

@@ -1,1 +1,42 @@
-<p>transaction-form works!</p>
+<form>
+  <div class="input-group">
+    <span class="input-group-text">Amount</span>
+    <input type="number" aria-label="First name" class="form-control" />
+  </div>
+  <div class="input-group mb-3">
+    <button
+      class="btn btn-outline-secondary dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      Category
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">Action</a></li>
+      <li><a class="dropdown-item" href="#">Another action</a></li>
+      <li><a class="dropdown-item" href="#">Something else here</a></li>
+      <li><hr class="dropdown-divider" /></li>
+      <li><a class="dropdown-item" href="#">Separated link</a></li>
+    </ul>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Text input with dropdown button"
+      placeholder="Choose ... "
+    />
+  </div>
+  <div class="input-group">
+    <span class="input-group-text">Date</span>
+    <input type="date" aria-label="First name" class="form-control" />
+  </div>
+  <div data-mdb-input-init class="form-outline">
+    <textarea
+      class="form-control"
+      id="textAreaExample1"
+      rows="4"
+      placeholder="Description"
+    ></textarea>
+    <label class="form-label" for="textAreaExample"></label>
+  </div>
+</form>

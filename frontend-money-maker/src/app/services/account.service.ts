@@ -51,6 +51,20 @@ export class AccountService {
       return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
     }
 
+  public fetchAccounts() {
+    this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
+      this.accounts.next(accounts);
+    })
+  }
+
+  public refetchSelectedAccount() {
+    this.httpClient
+      .get<Account>(env.baseUrl 
+        + '/accounts' + '/' + this.account?.getValue()?.id).subscribe(account => {
+        this.account.next(account);
+      })
+  }
+
 
 
  modifyAccount(modifiedAccount: Account): Observable<Account>{
