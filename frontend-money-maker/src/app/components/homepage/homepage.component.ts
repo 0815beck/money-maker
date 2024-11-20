@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { first, Observable, Subject, takeUntil } from 'rxjs';
 import { Account } from '../../models/account';
 import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
@@ -15,6 +15,9 @@ export class HomepageComponent {
   accounts: Account[] | undefined;
   account: Account | undefined;
 
+  selectedStartDate: string;
+  selectedEndDate: string;
+
   constructor(
     private accountService: AccountService,
     private transactionService: TransactionService
@@ -25,6 +28,11 @@ export class HomepageComponent {
     accountService.account$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(account => {
       this.account = account;
     })
+
+    let today = new Date();
+    this.selectedStartDate = new Date(today.getFullYear(), today.getMonth(), 1)
+      .toISOString().split('T')[0];
+    this.selectedEndDate = today.toISOString().split('T')[0];
   }
 
 

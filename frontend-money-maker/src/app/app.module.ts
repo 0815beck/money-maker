@@ -16,6 +16,7 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
