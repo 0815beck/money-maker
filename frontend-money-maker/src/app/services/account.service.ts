@@ -41,13 +41,13 @@ export class AccountService {
   //public accountNamesAndIds$ = this.accounts$
   //  .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
 
-  public addAccount(account: Account) {
-    this.accounts.next(this.accounts.getValue()?.concat(account))}
+  public addAccount(account: Account): Observable<Account> {
+    this.accounts.next(this.accounts.getValue()?.concat(account));
+  return this.httpClient.post<Account>(env.baseUrl + "/accounts", account)
+  };
+
 
   deleteAccount(id: number): Observable<void>{
-      /*
-    this.accounts.next(this.accounts.value?.filter(account => account.id != id));
-*/
       return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
     }
 
@@ -59,12 +59,11 @@ export class AccountService {
 
   public refetchSelectedAccount() {
     this.httpClient
-      .get<Account>(env.baseUrl 
+      .get<Account>(env.baseUrl
         + '/accounts' + '/' + this.account?.getValue()?.id).subscribe(account => {
         this.account.next(account);
       })
   }
-
 
 
  modifyAccount(modifiedAccount: Account): Observable<Account>{
