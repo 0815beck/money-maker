@@ -24,11 +24,12 @@ export class AccountService {
     .pipe(
       switchMap(accounts => {
         return accounts === undefined ?
-          httpClient
+          this.httpClient
             .get<Account[]>(env.baseUrl + '/accounts')
             .pipe(tap(accounts => this.accounts.next(accounts))) :
           of(accounts)})
-    ).pipe(
+    )
+    .pipe(
       shareReplay(1)
     );
 
@@ -37,13 +38,18 @@ export class AccountService {
     this.loggedIn$ = this.account$.pipe(map(x => !x === undefined))
   }
 
-
   //public accountNamesAndIds$ = this.accounts$
   //  .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
 
-  public addAccount(account: Account) {
-    this.accounts.next(this.accounts.getValue()?.concat(account))
-  }
+  public addAccount(account: Account): Observable<Account> {
+    this.accounts.next(this.accounts.getValue()?.concat(account));
+  return this.httpClient.post<Account>(env.baseUrl + "/accounts", account)
+  };
+
+
+  deleteAccount(id: number): Observable<void>{
+      return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
+    }
 
   public fetchAccounts() {
     this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
@@ -53,11 +59,14 @@ export class AccountService {
 
   public refetchSelectedAccount() {
     this.httpClient
-      .get<Account>(env.baseUrl 
+      .get<Account>(env.baseUrl
         + '/accounts' + '/' + this.account?.getValue()?.id).subscribe(account => {
         this.account.next(account);
       })
   }
 
 
+ modifyAccount(modifiedAccount: Account): Observable<Account>{
+    return this.httpClient.put<Account>(env.baseUrl+"/accounts", modifiedAccount);
+ }
 }
