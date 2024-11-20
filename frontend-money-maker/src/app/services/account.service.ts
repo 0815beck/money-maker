@@ -37,9 +37,13 @@ export class AccountService {
     .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
 
   deleteAccount(id: number): Observable<void>{
+/*
     this.accounts.next(this.accounts.value?.filter(account => account.id != id));
+*/
     return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
   }
 
-
+ modifyAccount(modifiedAccount: Account): Observable<Account>{
+    return this.httpClient.put<Account>(env.baseUrl+"/accounts", modifiedAccount);
+ }
 }
