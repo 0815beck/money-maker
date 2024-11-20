@@ -15,6 +15,7 @@ import { TransactionFormComponent } from './components/transaction-form/transact
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,11 +31,12 @@ import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-
     TransactionFormComponent,
     CategoryFormComponent,
     AccountFormComponent,
-    FixedCostFormComponent
+    FixedCostFormComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
