@@ -12,6 +12,10 @@ export class TransactionFormComponent {
 
   constructor(private categoryService: CategoryService) {}
 
+  ngOnInit() {
+    this.loadCategories();
+  }
+
   loadCategories() {
     this.categoryService.getCategories().subscribe({
       next: (data) => {
