@@ -13,7 +13,7 @@ export class AccountService {
   constructor(private httpClient: HttpClient) { }
 
   private account = new BehaviorSubject<Account | undefined>(undefined);
-  
+
   public account$ = this.account.asObservable();
   public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
 
@@ -23,10 +23,10 @@ export class AccountService {
     .asObservable()
     .pipe(
       switchMap(accounts => {
-        return accounts === undefined ? 
+        return accounts === undefined ?
           this.httpClient
             .get<Account[]>(env.baseUrl + '/accounts')
-            .pipe(tap(accounts => this.accounts.next(accounts))) : 
+            .pipe(tap(accounts => this.accounts.next(accounts))) :
           of(accounts)})
     )
     .pipe(
@@ -35,6 +35,11 @@ export class AccountService {
 
   public accountNamesAndIds$ = this.accounts$
     .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
+
+  deleteAccount(id: number): Observable<void>{
+    this.accounts.next(this.accounts.value?.filter(account => account.id != id));
+    return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
+  }
 
 
 }
