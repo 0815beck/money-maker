@@ -1,10 +1,35 @@
 <section>
-    <label for="select-account">Select Account: </label>
-    <select id="select-account" (change)="changeAccount($event)">
-        <!--<option value="undefined">Not Selected</option>-->
-        <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
-    </select>
+    <div>
+        <label for="select-account">Select Account: </label>
+        <select id="select-account" (change)="changeAccount($event)">
+            <!--<option value="undefined">Not Selected</option>-->
+            <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
+        </select>
+    </div>
 </section>
+<h1 *ngIf="account">Welcome back {{account.name}}</h1>
+<div>
+    <div>
+        <label for="select-start-date">Start:</label>
+        <input type="date" [(ngModel)]="selectedStartDate"/>
+    </div>
+    <div>
+        <label for="select-end-date">End:</label>
+        <input type="date" [(ngModel)]="selectedEndDate" [min]="selectedStartDate"/>
+    </div>
+</div>
+<div>
+    <div>
+        Total Income:
+    </div>
+    <div>
+        Total Expenses:
+    </div>
+    <div>
+        Balance {{selectedEndDate | date}}:
+    </div>
+</div>
 <p>
     Selected account: {{account | json}}
 </p>
+<p>Selected start date: {{selectedStartDate}}</p>

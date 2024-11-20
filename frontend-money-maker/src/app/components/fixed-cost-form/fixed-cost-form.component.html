@@ -1,1 +1,31 @@
-<p>fixed-cost-form works!</p>
+<p class="fs-1 text-center p-2">Create New Fixed Cost</p>
+
+<form [formGroup]="fixedCostForm" class="p-3">
+  <div class="input-group">
+    <span class="input-group-text">Amount</span>
+    <input type="number" aria-label="First name" class="form-control" formControlName="amount"/>
+  </div>
+
+  <select class="form-select" formControlName="category">
+    <option value="" disabled>Choose Category..</option>
+    <option *ngFor="let category of categoryList" value="{{ category}}">
+      {{ category.name }}
+    </option>
+  </select>
+
+  <div class="input-group">
+    <span class="input-group-text">Start Date</span>
+    <input type="date" aria-label="First name" class="form-control"  [min]="today" formControlName="start"/>
+  </div>
+  <div data-mdb-input-init class="form-outline">
+    <textarea
+      class="form-control"
+      id="textAreaExample"
+      rows="4"
+      placeholder="Description"
+      formControlName="description"
+    ></textarea>
+    <label class="form-label" for="textAreaExample"></label>
+  </div>
+  <button type="submit" [disabled]="fixedCostForm.invalid">Speichern</button>
+</form>
