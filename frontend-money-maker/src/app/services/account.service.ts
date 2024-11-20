@@ -12,7 +12,7 @@ export class AccountService {
   private account;
   public account$;
   public loggedIn$;
-  
+
   private accounts;
   public accounts$;
 
@@ -23,10 +23,10 @@ export class AccountService {
     .asObservable()
     .pipe(
       switchMap(accounts => {
-        return accounts === undefined ? 
+        return accounts === undefined ?
           httpClient
             .get<Account[]>(env.baseUrl + '/accounts')
-            .pipe(tap(accounts => this.accounts.next(accounts))) : 
+            .pipe(tap(accounts => this.accounts.next(accounts))) :
           of(accounts)})
     ).pipe(
       shareReplay(1)
