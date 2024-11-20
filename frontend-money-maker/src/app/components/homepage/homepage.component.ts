@@ -29,10 +29,13 @@ export class HomepageComponent {
 
 
   changeAccount(event: Event) {
+    console.log('[Debug] event triggered')
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue === "undefined") {
-      this.accountService
+      this.accountService.setSelectedAccountToUndefined();
+      return;
     }
+    this.accountService.setSelectedAccount(parseInt(selectedValue));
   }
 
 //unsubscribe logic
