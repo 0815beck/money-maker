@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Account } from '../../models/account';
 import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
@@ -12,21 +12,28 @@ import { TransactionService } from '../../services/transaction.service';
 })
 export class HomepageComponent {
 
-  account$: Observable<Account | undefined>;
-  //totalIncome$: Observable<number | undefined>;
-  //totalExpenses$: Observable<number | undefined>;
-  //balance$: Observable<number | undefined>;
-  //latestTransactions$: Observable<Transaction[] | undefined>;
+  accounts: Account[] | undefined;
+  account: Account | undefined;
 
   constructor(
     private accountService: AccountService,
     private transactionService: TransactionService
   ) {
-    this.account$ = accountService.account$;
-    //this.totalIncome$ = transactionService.getTotalIncome();
-    //this.totalExpenses$ = transactionService.getTotalExpense();
-    //this.balance$ = transactionService.getTotalBalance();
-    //this.latestTransactions$ = transactionService.getLatestTransactions();
+    accountService.accounts$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(accounts => {
+      this.accounts = accounts;
+    })
+    accountService.account$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(account => {
+      this.account = account;
+    })
   }
+
+
+//unsubscribe logic
+  private ngUnsubscribe = new Subject<void>();
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+}
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/accounts")
 public class AccountController {
     private final AccountService accountService;

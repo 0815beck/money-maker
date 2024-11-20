@@ -9,17 +9,17 @@ import { env } from '../env';
 })
 export class AccountService {
 
+  private account;
+  public account$;
+  public loggedIn$;
 
-  constructor(private httpClient: HttpClient) { }
+  private accounts;
+  public accounts$;
 
-  private account = new BehaviorSubject<Account | undefined>(undefined);
+  constructor(private httpClient: HttpClient) {
 
-  public account$ = this.account.asObservable();
-  public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
-
-
-  private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
-  private accounts$ = this.accounts
+    this.accounts = new BehaviorSubject<Account[] | undefined>(undefined);
+    this.accounts$ = this.accounts
     .asObservable()
     .pipe(
       switchMap(accounts => {
@@ -33,15 +33,25 @@ export class AccountService {
       shareReplay(1)
     );
 
-  public accountNamesAndIds$ = this.accounts$
-    .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
+    this.account = new BehaviorSubject<Account | undefined>(undefined);
+    this.account$ = this.account.asObservable();
+    this.loggedIn$ = this.account$.pipe(map(x => !x === undefined))
+  }
+
+  //public accountNamesAndIds$ = this.accounts$
+  //  .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
+
+  public addAccount(account: Account) {
+    this.accounts.next(this.accounts.getValue()?.concat(account))}
 
   deleteAccount(id: number): Observable<void>{
-/*
+      /*
     this.accounts.next(this.accounts.value?.filter(account => account.id != id));
 */
-    return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
-  }
+      return this.httpClient.delete<void>(env.baseUrl + "/accounts/" + id);
+    }
+
+
 
  modifyAccount(modifiedAccount: Account): Observable<Account>{
     return this.httpClient.put<Account>(env.baseUrl+"/accounts", modifiedAccount);
