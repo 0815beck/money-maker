@@ -12,7 +12,9 @@ export class TransactionService {
 
   constructor() { }
 
-
+  getTransactions() : Observable<Transaction[] | undefined> {
+    return this.transactions$;
+  }
 //FOR TESTING PURPOSES
   getTotalIncome() {
     return new Observable<number | undefined>((observer) => {
