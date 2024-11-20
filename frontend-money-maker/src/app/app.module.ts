@@ -17,6 +17,7 @@ import { AccountFormComponent } from './components/account-form/account-form.com
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
