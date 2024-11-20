@@ -1,0 +1,21 @@
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.402);
+}
+
+a {
+  opacity: 50%;
+  color: blueviolet;
+  font-size: larger;
+}
+
+a:hover {
+  opacity: 100%;
+  color: blueviolet;
+}
+
+.active {
+  opacity: 100% !important;
+  color: blueviolet !important;
+}
