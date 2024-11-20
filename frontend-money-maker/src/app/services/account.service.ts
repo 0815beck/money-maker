@@ -15,14 +15,7 @@ export class AccountService {
 
   private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
   public accounts$ = this.accounts.asObservable();
-
-  ngOnInit() {
-    this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
-      this.accounts.next(accounts);
-      this.account.next(accounts[0]);
-    })
-  }
-
+  
   constructor(private httpClient: HttpClient) {
     httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
       this.accounts.next(accounts);
