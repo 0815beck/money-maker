@@ -1,6 +1,6 @@
 <p class="fs-1 text-center p-2">Create New Fixed Cost</p>
 
-<form [formGroup]="fixedCostForm" class="p-3">
+<form [formGroup]="fixedCostForm" class="p-3" (ngSubmit)="createFixedCost()">
   <div class="input-group">
     <span class="input-group-text">Amount</span>
     <input type="number" aria-label="First name" class="form-control" formControlName="amount"/>
@@ -8,7 +8,7 @@
 
   <select class="form-select" formControlName="category">
     <option value="" disabled>Choose Category..</option>
-    <option *ngFor="let category of categoryList" value="{{ category}}">
+    <option *ngFor="let category of categoryList" [ngValue]="category">
       {{ category.name }}
     </option>
   </select>
