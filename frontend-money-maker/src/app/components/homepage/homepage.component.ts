@@ -13,20 +13,20 @@ import { TransactionService } from '../../services/transaction.service';
 export class HomepageComponent {
 
   account$: Observable<Account | undefined>;
-  totalIncome$: Observable<number | undefined>;
-  totalExpenses$: Observable<number | undefined>;
-  balance$: Observable<number | undefined>;
-  latestTransactions$: Observable<Transaction[] | undefined>;
+  //totalIncome$: Observable<number | undefined>;
+  //totalExpenses$: Observable<number | undefined>;
+  //balance$: Observable<number | undefined>;
+  //latestTransactions$: Observable<Transaction[] | undefined>;
 
   constructor(
     private accountService: AccountService,
     private transactionService: TransactionService
   ) {
-    this.account$ = accountService.getAccount();
-    this.totalIncome$ = transactionService.getTotalIncome();
-    this.totalExpenses$ = transactionService.getTotalExpense();
-    this.balance$ = transactionService.getTotalBalance();
-    this.latestTransactions$ = transactionService.getLatestTransactions();
+    this.account$ = accountService.account$;
+    //this.totalIncome$ = transactionService.getTotalIncome();
+    //this.totalExpenses$ = transactionService.getTotalExpense();
+    //this.balance$ = transactionService.getTotalBalance();
+    //this.latestTransactions$ = transactionService.getLatestTransactions();
   }
 
 }
