@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class FixedCostFormComponent {
 
+  today:string;
+
+  constructor() {
+    this.today = new Date().toISOString().split('T')[0];
+  }
+
 }

@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrl: './overview-fixed-costs.component.css'
 })
 export class OverviewFixedCostsComponent {
+  formDisplayed: boolean = false;
+
+  showForm() {
+    if (!this.formDisplayed) {
+      this.formDisplayed = true;
+    } else {
+      this.formDisplayed = false;
+    }
+  }
 
 }
