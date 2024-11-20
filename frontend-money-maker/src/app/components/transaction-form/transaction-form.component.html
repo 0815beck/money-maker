@@ -1,31 +1,17 @@
-<form>
+<p class="fs-1 text-center p-2">Create New Transaction</p>
+<form class="p-3">
   <div class="input-group">
     <span class="input-group-text">Amount</span>
     <input type="number" aria-label="First name" class="form-control" />
   </div>
-  <div class="input-group mb-3">
-    <button
-      class="btn btn-outline-secondary dropdown-toggle"
-      type="button"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      Category
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Action</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
-      <li><hr class="dropdown-divider" /></li>
-      <li><a class="dropdown-item" href="#">Separated link</a></li>
-    </ul>
-    <input
-      type="text"
-      class="form-control"
-      aria-label="Text input with dropdown button"
-      placeholder="Choose ... "
-    />
-  </div>
+
+  <select class="form-select">
+    <option selected disabled>Choose Category..</option>
+    <option *ngFor="let category of categoryList" value="{{ category.id }}">
+      {{ category.name }}
+    </option>
+  </select>
+
   <div class="input-group">
     <span class="input-group-text">Date</span>
     <input type="date" aria-label="First name" class="form-control" />
