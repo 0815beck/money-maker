@@ -16,8 +16,6 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {ReactiveFormsModule} from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
