@@ -1,6 +1,10 @@
-<div>
-  <button type="button" (click)="showForm()">+</button>
+<div class="p-3 d-grid justify-content-md-end">
+  <button type="button" (click)="showForm()" class="btn btn-outline-secondary">
+    +
+  </button>
 </div>
 
-<div *ngIf="!formDisplayed; else form"></div>
-<ng-template #form><app-transaction-form></app-transaction-form></ng-template>
+<div *ngIf="formDisplayed; then form"></div>
+<ng-template #form
+  ><div><app-transaction-form></app-transaction-form></div
+></ng-template>
