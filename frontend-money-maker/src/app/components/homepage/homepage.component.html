@@ -1,5 +1,10 @@
 <section>
     <label for="select-account">Select Account: </label>
-    <select id="select-account">
+    <select id="select-account" (change)="changeAccount($event)">
+        <!--<option value="undefined">Not Selected</option>-->
+        <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
     </select>
 </section>
+<p>
+    Selected account: {{account | json}}
+</p>

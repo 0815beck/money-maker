@@ -11,8 +11,10 @@ export class OverviewTransactionsComponent {
   showForm() {
     if (!this.formDisplayed) {
       this.formDisplayed = true;
+      console.log(true);
     } else {
       this.formDisplayed = false;
+      console.log(false);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, switchMap, of, tap, shareReplay, share } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, of, tap, shareReplay, share, take } from 'rxjs';
 import { Account } from '../models/account';
 import { HttpClient } from '@angular/common/http';
 import { env } from '../env';
@@ -20,22 +20,30 @@ export class AccountService {
 
     this.accounts = new BehaviorSubject<Account[] | undefined>(undefined);
     this.accounts$ = this.accounts
-    .asObservable()
-    .pipe(
-      switchMap(accounts => {
-        return accounts === undefined ?
-          this.httpClient
-            .get<Account[]>(env.baseUrl + '/accounts')
-            .pipe(tap(accounts => this.accounts.next(accounts))) :
-          of(accounts)})
-    )
-    .pipe(
-      shareReplay(1)
-    );
+      .asObservable()
+      .pipe(
+        switchMap(accounts => {
+          return accounts === undefined ?
+            this.httpClient
+              .get<Account[]>(env.baseUrl + '/accounts')
+              .pipe(tap(accounts => this.accounts.next(accounts))) :
+            of(accounts)})
+      )
+      .pipe(
+        shareReplay(1)
+      );
 
     this.account = new BehaviorSubject<Account | undefined>(undefined);
     this.account$ = this.account.asObservable();
     this.loggedIn$ = this.account$.pipe(map(x => !x === undefined))
+
+//set default account
+    this.accounts
+      .asObservable()
+      .pipe(take(2))
+      .subscribe(accounts => {
+        if (accounts) { this.account.next(accounts[0]) }
+      })
   }
 
   //public accountNamesAndIds$ = this.accounts$
@@ -55,6 +63,17 @@ export class AccountService {
     this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
       this.accounts.next(accounts);
     })
+  }
+
+  public setSelectedAccount(id: number) {
+    this.httpClient
+      .get<Account>(env.baseUrl+ '/accounts' + '/' + id).subscribe(account => {
+        this.account.next(account);
+      });
+  }
+
+  public setSelectedAccountToUndefined() {
+    this.account.next(undefined);
   }
 
   public refetchSelectedAccount() {
