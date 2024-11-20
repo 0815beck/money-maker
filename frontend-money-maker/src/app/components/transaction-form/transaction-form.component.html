@@ -1,29 +1,44 @@
 <p class="fs-1 text-center p-2">Create New Transaction</p>
-<form class="p-3">
+<form class="p-3" [formGroup]="transactionForm">
   <div class="input-group">
     <span class="input-group-text">Amount</span>
-    <input type="number" aria-label="First name" class="form-control" />
+    <input
+      type="number"
+      aria-label="First name"
+      class="form-control"
+      formControlName="amount"
+    />
   </div>
 
-  <select class="form-select">
-    <option selected disabled>Choose Category..</option>
-    <option *ngFor="let category of categoryList" value="{{ category.id }}">
-      {{ category.name }}
-    </option>
-  </select>
+  <div class="input-group">
+    <select class="form-select" formControlName="category">
+      <option value="" disabled selected>Select Category...</option>
+      <option *ngFor="let category of categoryList" value="{{ category }}">
+        {{ category.name }}
+      </option>
+    </select>
+  </div>
 
   <div class="input-group">
     <span class="input-group-text">Date</span>
-    <input type="date" aria-label="First name" class="form-control" />
+    <input
+      type="date"
+      aria-label="First name"
+      class="form-control"
+      formControlName="date"
+    />
   </div>
-  <div data-mdb-input-init class="form-outline">
+  <div data-mdb-input-init class="form-outline p-2">
     <textarea
       class="form-control"
       id="textAreaExample"
       rows="4"
       placeholder="Description"
+      formControlName="description"
     ></textarea>
     <label class="form-label" for="textAreaExample"></label>
   </div>
-  <button type="submit">Speichern</button>
+  <div class="d-grid">
+    <button type="submit" class="btn-outline-secondary btn">Speichern</button>
+  </div>
 </form>

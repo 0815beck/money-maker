@@ -1,3 +1,13 @@
-.amount {
-  background-color: #501a56;
+.input-group-text {
+  background-color: var(--color-palette-yellow);
+}
+
+.btn-outline-secondary {
+  background-color: var(--color-palette-violett);
+  color: var(--color-palette-yellow);
+}
+
+button:hover {
+  background-color: var(--color-palette-yellow);
+  color: var(--color-palette-violett);
 }

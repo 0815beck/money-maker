@@ -20,11 +20,21 @@
 }
 
 .close {
+  transition: all 0.2s ease-in;
   position: absolute;
   right: 25px;
   top: 0;
   font-size: 35px;
   font-weight: bold;
+  color: var(--color-palette-yellow);
+
+  background-color: rgba(250, 235, 215, 0);
+  border: 0;
+}
+
+.close:hover {
+  transform: scale(1.5);
+  transition: all 0.2s ease-in;
 }
 
 .animate {

@@ -16,6 +16,7 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,9 +37,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
