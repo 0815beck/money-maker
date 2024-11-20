@@ -1,44 +1,71 @@
-<p class="fs-1 text-center p-2">Create New Transaction</p>
-<form class="p-3" [formGroup]="transactionForm">
-  <div class="input-group">
-    <span class="input-group-text">Amount</span>
-    <input
-      type="number"
-      aria-label="First name"
-      class="form-control"
-      formControlName="amount"
-    />
-  </div>
+<div *ngIf="!newCategory; then transaction; else category"></div>
+<ng-template #transaction>
+  <p class="fs-1 text-center p-2">Create New Transaction</p>
+  <form class="p-3" [formGroup]="transactionForm">
+    <div class="input-group">
+      <span class="input-group-text">Amount</span>
+      <input
+        type="number"
+        aria-label="First name"
+        class="form-control"
+        formControlName="amount"
+      />
+    </div>
 
-  <div class="input-group">
-    <select class="form-select" formControlName="category">
-      <option value="" disabled selected>Select Category...</option>
-      <option *ngFor="let category of categoryList" value="{{ category }}">
-        {{ category.name }}
-      </option>
-    </select>
-  </div>
+    <div class="input-group">
+      <select class="form-select" formControlName="category">
+        <option value="" disabled selected>Select Category...</option>
+        <option *ngFor="let category of categoryList" value="{{ category }}">
+          {{ category.name }}
+        </option>
+      </select>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="changeToCategoryForm()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-plus-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+          />
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+          />
+        </svg>
+      </button>
+    </div>
 
-  <div class="input-group">
-    <span class="input-group-text">Date</span>
-    <input
-      type="date"
-      aria-label="First name"
-      class="form-control"
-      formControlName="date"
-    />
-  </div>
-  <div data-mdb-input-init class="form-outline p-2">
-    <textarea
-      class="form-control"
-      id="textAreaExample"
-      rows="4"
-      placeholder="Description"
-      formControlName="description"
-    ></textarea>
-    <label class="form-label" for="textAreaExample"></label>
-  </div>
-  <div class="d-grid">
-    <button type="submit" class="btn-outline-secondary btn">Speichern</button>
-  </div>
-</form>
+    <div class="input-group">
+      <span class="input-group-text">Date</span>
+      <input
+        type="date"
+        aria-label="First name"
+        class="form-control"
+        formControlName="date"
+      />
+    </div>
+    <div data-mdb-input-init class="form-outline p-2">
+      <textarea
+        class="form-control"
+        id="textAreaExample"
+        rows="4"
+        placeholder="Description"
+        formControlName="description"
+      ></textarea>
+      <label class="form-label" for="textAreaExample"></label>
+    </div>
+    <div class="d-grid">
+      <button type="submit" class="btn-outline-secondary btn">Speichern</button>
+    </div>
+  </form></ng-template
+>
+<ng-template #category
+  ><app-category-form (returnToTransaction)="return($event)"></app-category-form
+></ng-template>

@@ -1,1 +1,39 @@
-<p>category-form works!</p>
+<div class="container">
+  <button class="btn btn-outline-secondary m-3" (click)="return()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-backspace-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8z"
+      />
+    </svg>
+  </button>
+  <p class="fs-1 text-center p-2">Create New Category</p>
+</div>
+
+<form class="p-3" [formGroup]="categoryForm">
+  <div class="input-group">
+    <span class="input-group-text">Amount</span>
+    <input
+      type="number"
+      aria-label="First name"
+      class="form-control"
+      formControlName="name"
+    />
+  </div>
+  <select class="form-select" formControlName="image">
+    <option value="" disabled selected>Select Picture...</option>
+    <option value="" *ngFor="let picture of pictureList">
+      <img src="{{ picture }}" width="10px" />
+    </option>
+  </select>
+
+  <div class="d-grid">
+    <button type="submit" class="btn-outline-secondary btn">Speichern</button>
+  </div>
+</form>

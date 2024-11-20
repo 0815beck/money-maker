@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class TransactionFormComponent {
   categoryList!: Category[];
   transactionForm!: FormGroup;
+  newCategory: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -37,5 +38,17 @@ export class TransactionFormComponent {
         console.log('Fehler beim Laden der Categorien: ', error);
       },
     });
+  }
+
+  changeToCategoryForm() {
+    if (!this.newCategory) {
+      this.newCategory = true;
+    } else {
+      this.newCategory = false;
+    }
+  }
+
+  return(boolean: boolean) {
+    this.newCategory = boolean;
   }
 }
