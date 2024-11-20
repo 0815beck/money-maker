@@ -45,5 +45,19 @@ export class AccountService {
     this.accounts.next(this.accounts.getValue()?.concat(account))
   }
 
+  public fetchAccounts() {
+    this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
+      this.accounts.next(accounts);
+    })
+  }
+
+  public refetchSelectedAccount() {
+    this.httpClient
+      .get<Account>(env.baseUrl 
+        + '/accounts' + '/' + this.account?.getValue()?.id).subscribe(account => {
+        this.account.next(account);
+      })
+  }
+
 
 }
