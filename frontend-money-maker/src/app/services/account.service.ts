@@ -9,49 +9,23 @@ import { env } from '../env';
 })
 export class AccountService {
 
-  private account;
-  public account$;
-  public loggedIn$;
+  private account = new BehaviorSubject<Account | undefined>(undefined);
+  public account$ = this.account.asObservable();
+  public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
 
-  private accounts;
-  public accounts$;
-
+  private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
+  public accounts$ = this.accounts.asObservable();
+  
   constructor(private httpClient: HttpClient) {
-
-    this.accounts = new BehaviorSubject<Account[] | undefined>(undefined);
-    this.accounts$ = this.accounts
-      .asObservable()
-      .pipe(
-        switchMap(accounts => {
-          return accounts === undefined ?
-            this.httpClient
-              .get<Account[]>(env.baseUrl + '/accounts')
-              .pipe(tap(accounts => this.accounts.next(accounts))) :
-            of(accounts)})
-      )
-      .pipe(
-        shareReplay(1)
-      );
-
-    this.account = new BehaviorSubject<Account | undefined>(undefined);
-    this.account$ = this.account.asObservable();
-    this.loggedIn$ = this.account$.pipe(map(x => !x === undefined))
-
-//set default account
-    this.accounts
-      .asObservable()
-      .pipe(take(2))
-      .subscribe(accounts => {
-        if (accounts) { this.account.next(accounts[0]) }
-      })
+    httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
+      this.accounts.next(accounts);
+      this.account.next(accounts[0]);
+    })
   }
-
-  //public accountNamesAndIds$ = this.accounts$
-  //  .pipe(map(accounts => accounts?.map( ({id, name}) => {return {id, name}} )))
 
   public addAccount(account: Account): Observable<Account> {
     this.accounts.next(this.accounts.getValue()?.concat(account));
-  return this.httpClient.post<Account>(env.baseUrl + "/accounts", account)
+    return this.httpClient.post<Account>(env.baseUrl + "/accounts", account)
   };
 
 
