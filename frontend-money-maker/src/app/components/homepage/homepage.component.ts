@@ -18,6 +18,12 @@ export class HomepageComponent {
   selectedStartDate: string;
   selectedEndDate: string;
 
+  transactions: Transaction[] | undefined;
+
+  totalIncome: number | undefined;
+  totalExpenses: number | undefined;
+  balance: number | undefined;
+
   constructor(
     private accountService: AccountService,
     private transactionService: TransactionService
@@ -32,9 +38,14 @@ export class HomepageComponent {
     let today = new Date();
     this.selectedStartDate = new Date(today.getFullYear(), today.getMonth(), 1)
       .toISOString().split('T')[0];
-    this.selectedEndDate = today.toISOString().split('T')[0];
-  }
 
+    this.selectedEndDate = today.toISOString().split('T')[0];
+    transactionService.getTransactions().subscribe(transactions => {
+      this.transactions = transactions;
+      this.computeStats();
+    })
+
+  }
 
   changeAccount(event: Event) {
     console.log('[Debug] event triggered')
@@ -46,12 +57,27 @@ export class HomepageComponent {
     this.accountService.setSelectedAccount(parseInt(selectedValue));
   }
 
+  computeStats() {
+    const relevantTransactions = this.transactions
+      ?.filter(transaction => new Date(this.selectedStartDate) <= transaction.timestamp)
+      ?.filter(transaction => transaction.timestamp <= new Date(this.selectedEndDate));
+    
+    this.totalExpenses = relevantTransactions
+      ?.filter(transaction => transaction.amount < 0)
+      ?.map(transaction => transaction.amount)
+      ?.reduce((acc, next) => acc + next, 0);
+
+    this.totalIncome = relevantTransactions
+      ?.filter(transaction => transaction.amount > 0)
+      ?.map(transaction => transaction.amount)
+      ?.reduce((acc, next) => acc + next, 0);
+  }
+
 //unsubscribe logic
   private ngUnsubscribe = new Subject<void>();
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-}
-
+  } 
 }
