@@ -21,8 +21,8 @@ export class FixedCostService {
       this.fixedCost.asObservable(),
       this.accountService.account$.pipe(
         switchMap(account => {
-          return account === undefined ? 
-            of(undefined) : 
+          return account === undefined ?
+            of(undefined) :
             this.httpClient.get<FixedCost[]>(env.baseUrl + '/accounts' + '?userId=' + account.id)
               .pipe(tap(fixedCosts => this.fixedCost.next(fixedCosts)))
         })
@@ -30,4 +30,7 @@ export class FixedCostService {
     ).pipe(shareReplay(1))
   }
 
+  addFixedCost(fixedCost: FixedCost): Observable<FixedCost>{
+   return  this.httpClient.post<FixedCost>(env.baseUrl+"/fixedCost", fixedCost);
+  }
 }
