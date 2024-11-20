@@ -28,6 +28,16 @@ export class HomepageComponent {
   }
 
 
+  changeAccount(event: Event) {
+    console.log('[Debug] event triggered')
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    if (selectedValue === "undefined") {
+      this.accountService.setSelectedAccountToUndefined();
+      return;
+    }
+    this.accountService.setSelectedAccount(parseInt(selectedValue));
+  }
+
 //unsubscribe logic
   private ngUnsubscribe = new Subject<void>();
 
