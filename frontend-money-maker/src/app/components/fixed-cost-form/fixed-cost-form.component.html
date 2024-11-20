@@ -1,7 +1,7 @@
-<form>
+<form [formGroup]="fixedCostForm">
   <div class="input-group">
     <span class="input-group-text">Amount</span>
-    <input type="number" aria-label="First name" class="form-control" />
+    <input type="number" aria-label="First name" class="form-control" formControlName="amount"/>
   </div>
   <div class="input-group mb-3">
     <button
@@ -28,7 +28,7 @@
   </div>
   <div class="input-group">
     <span class="input-group-text">Start Date</span>
-    <input type="date" aria-label="First name" class="form-control"  [min]="today"/>
+    <input type="date" aria-label="First name" class="form-control"  [min]="today" formControlName="start"/>
   </div>
   <div data-mdb-input-init class="form-outline">
     <textarea
@@ -36,6 +36,7 @@
       id="textAreaExample"
       rows="4"
       placeholder="Description"
+      formControlName="description"
     ></textarea>
     <label class="form-label" for="textAreaExample"></label>
   </div>

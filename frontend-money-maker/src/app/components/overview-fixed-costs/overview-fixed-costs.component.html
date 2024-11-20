@@ -5,6 +5,11 @@
 </div>
 
 <div *ngIf="formDisplayed; then form"></div>
-<ng-template #form
-><div><app-fixed-cost-form></app-fixed-cost-form></div
-></ng-template>
+<ng-template #form>
+  <div class="modal-container">
+    <button (click)="showForm()" class="close">&times;</button>
+    <div class="modal-content animate">
+      <app-fixed-cost-form></app-fixed-cost-form>
+    </div>
+  </div>
+</ng-template>

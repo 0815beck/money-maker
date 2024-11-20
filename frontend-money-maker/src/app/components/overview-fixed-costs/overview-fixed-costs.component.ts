@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AccountService} from '../../services/account.service';
 
 @Component({
   selector: 'app-overview-fixed-costs',
@@ -8,6 +10,7 @@ import { Component } from '@angular/core';
 export class OverviewFixedCostsComponent {
   formDisplayed: boolean = false;
 
+
   showForm() {
     if (!this.formDisplayed) {
       this.formDisplayed = true;
@@ -15,5 +18,7 @@ export class OverviewFixedCostsComponent {
       this.formDisplayed = false;
     }
   }
+
+
 
 }
