@@ -15,7 +15,7 @@
     <div class="input-group">
       <select class="form-select" formControlName="category">
         <option value="" disabled selected>Select Category...</option>
-        <option *ngFor="let category of categoryList" value="{{ category }}">
+        <option *ngFor="let category of categoryList" [ngValue]="category">
           {{ category.name }}
         </option>
       </select>
@@ -62,7 +62,7 @@
       <label class="form-label" for="textAreaExample"></label>
     </div>
     <div class="d-grid">
-      <button type="submit" class="btn-outline-secondary btn">Speichern</button>
+      <button type="submit" class="btn-outline-secondary btn" [disabled]="transactionForm.invalid">Speichern</button>
     </div>
   </form></ng-template
 >

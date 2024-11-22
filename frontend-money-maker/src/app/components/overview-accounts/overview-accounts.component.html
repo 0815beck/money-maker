@@ -4,12 +4,18 @@
   </button>
 </div>
 
+<div *ngFor="let account of accounts">
+  <p>{{account.id}}: {{account.name}}</p>
+</div>
+
 <div *ngIf="formDisplayed; then form"></div>
 <ng-template #form>
   <div class="modal-container">
     <button (click)="showForm()" class="close">&times;</button>
     <div class="modal-content animate">
-      <app-account-form></app-account-form>
+      <app-account-form  (closeEvent)="showForm()"></app-account-form>
     </div>
   </div>
 </ng-template>
+
+

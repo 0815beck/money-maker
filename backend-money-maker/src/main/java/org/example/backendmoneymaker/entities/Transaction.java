@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name="transactions")
+@Table(name="transaction")
 @Data
 public class Transaction {
     @Id

@@ -5,5 +5,7 @@
     <span class="input-group-text">name</span>
     <input type="text" aria-label="First name" class="form-control" formControlName="name"/>
   </div>
-  <button type="submit" [disabled]="accountForm.invalid">Speichern</button>
+  <div class="d-grid">
+  <button type="submit" [disabled]="accountForm.invalid" class="btn-outline-secondary btn">Speichern</button>
+  </div>
 </form>

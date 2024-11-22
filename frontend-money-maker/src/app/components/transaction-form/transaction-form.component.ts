@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Account} from '../../models/account';
+import {AccountService} from '../../services/account.service';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-transaction-form',
@@ -12,16 +15,25 @@ export class TransactionFormComponent {
   categoryList!: Category[];
   transactionForm!: FormGroup;
   newCategory: boolean = false;
+  account?: Account;
+  destroy = new Subject<void>();
+
 
   constructor(
     private categoryService: CategoryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ) {
     this.transactionForm = this.fb.group({
-      amount: [0, Validators.required],
+      amount: ["", Validators.required],
       category: ['', Validators.required],
-      date: [Date, Validators.required],
-      description: ['', Validators.required],
+      date: ["", Validators.required],
+      description: [''],
+      account: [this.account]
+    });
+    accountService.account$.pipe(takeUntil(this.destroy)).subscribe(data => {
+      this.account = data;
+      this.transactionForm.get("account")?.patchValue(this.account);
     });
   }
 
@@ -51,5 +63,10 @@ export class TransactionFormComponent {
   return(boolean: boolean) {
     this.newCategory = boolean;
     this.loadCategories();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
