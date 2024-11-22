@@ -70,6 +70,7 @@ export class FixedCostFormComponent implements OnDestroy {
     this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
       this.accountService.fetchAccounts();
       this.accountService.refetchSelectedAccount();
+      console.log(data);
     });
   }
 
