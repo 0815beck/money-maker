@@ -24,6 +24,8 @@ export class HomepageComponent {
   totalExpenses: number | undefined;
   balance: number | undefined;
 
+  expensesData: any;
+
   constructor(
     private accountService: AccountService
   ) {
@@ -104,6 +106,17 @@ export class HomepageComponent {
 
     console.log('[Debug] The balance at the end date is: ' + balance);
     this.balance = balance;
+
+    let expensesData = {
+      labels: ['Miete', 'Lebensmittel', 'Kleidung', 'Unterhaltung', 'Fahrtkosten', 'Sonstiges'],
+      datasets: [
+        {
+          label: 'Ausgaben',
+          data: [12, 19, 3, 5, 2, 3]
+        },
+      ],
+    }
+    this.expensesData = expensesData
   }
 
 //unsubscribe logic

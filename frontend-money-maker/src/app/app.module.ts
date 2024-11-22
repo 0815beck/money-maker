@@ -17,6 +17,7 @@ import { AccountFormComponent } from './components/account-form/account-form.com
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +34,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CategoryFormComponent,
     AccountFormComponent,
     FixedCostFormComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

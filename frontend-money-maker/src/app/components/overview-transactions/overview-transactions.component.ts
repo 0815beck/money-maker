@@ -39,4 +39,9 @@ export class OverviewTransactionsComponent {
   loadTransactions() {
     this.accountTransactions = this.account?.transactions;
   }
+
+  transactionSaved(String: any) {
+    this.showForm();
+    this.loadTransactions();
+  }
 }
