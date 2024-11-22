@@ -1,3 +1,19 @@
-.color-violett {
+.c-violett {
     color: var(--color-palette-violett);
+}
+
+.c-yellow {
+    color: var(--color-palette-yellow)
+}
+
+.bc-yellow {
+    background-color: var(--color-palette-yellow);
+}
+
+.bc-violett {
+    background-color: var(--color-palette-violett);
+}
+
+h1 {
+    text-align: center;
 }

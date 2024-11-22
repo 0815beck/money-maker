@@ -4,7 +4,7 @@ import { CategoryService } from '../../services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account } from '../../models/account';
 import { AccountService } from '../../services/account.service';
-import { Subject, takeUntil } from 'rxjs';
+import { last, Subject, takeUntil } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../services/transaction.service';
 
@@ -28,7 +28,7 @@ export class TransactionFormComponent {
   ) {
     this.transactionForm = this.fb.group({
       amount: ['', Validators.required],
-      category: ['', Validators.required],
+      selectedCategory: ['', Validators.required],
       timestamp: ['', Validators.required],
       description: [''],
       account: [this.account],
@@ -66,6 +66,7 @@ export class TransactionFormComponent {
   return(boolean: boolean) {
     this.newCategory = boolean;
     this.loadCategories();
+    this.transactionForm.get('selectedCategory')?.setValue('');
   }
 
   ngOnDestroy(): void {
@@ -77,7 +78,7 @@ export class TransactionFormComponent {
     const newTransaction: Transaction = {
       amount: this.transactionForm.get('amount')?.value,
       timestamp: this.transactionForm.get('timestamp')?.value,
-      category: this.transactionForm.get('category')?.value,
+      category: this.transactionForm.get('selectedCategory')?.value,
       account: this.transactionForm.get('account')?.value,
     };
 
@@ -93,5 +94,23 @@ export class TransactionFormComponent {
     });
 
     this.changeToCategoryForm();
+  }
+
+  deleteSelectedCategory() {
+    const selectedCategory =
+      this.transactionForm.get('selectedCategory')?.value;
+    if (selectedCategory) {
+      this.categoryService.deleteCategory(selectedCategory.id).subscribe({
+        next: () => {
+          console.log('Delete Category successfull');
+          this.loadCategories();
+          this.transactionForm.get('selectedCategory')?.setValue('');
+        },
+        error: (error) => {
+          console.log('Can not delete Category: ', error);
+          alert('Can not delete Category, if it is still in use');
+        },
+      });
+    }
   }
 }
