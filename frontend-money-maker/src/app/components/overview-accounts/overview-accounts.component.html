@@ -11,10 +11,10 @@
     <span class="ms-2 ">{{ account.name }}</span>
   </div>
   <div>
-    <button class="btn btn-link text-danger text-decoration-none">
+    <button *ngIf="account.id != null" class="btn btn-link" (click)="deleteAccount(account.id)">
       <i class="bi bi-trash"></i>
     </button>
-    <button class="btn btn-link text-decoration-none">
+    <button class="btn btn-link text-decoration-none"  [routerLink]="['/accounts/', account.id]">
       <i class="bi bi-arrow-right"></i>
     </button>
   </div>

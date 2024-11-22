@@ -20,6 +20,10 @@ export class OverviewAccountsComponent {
     })
   }
 
+  deleteAccount(id: number): void{
+    this.accountService.deleteAccount(id).subscribe(()=> this.accountService.fetchAccounts());
+  }
+
   showForm(formDisplayed: boolean = this.formDisplayed) {
     this.formDisplayed = !formDisplayed
   }
