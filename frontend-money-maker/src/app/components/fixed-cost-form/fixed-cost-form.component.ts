@@ -9,7 +9,7 @@ import {FixedCostService} from '../../services/fixed-cost.service';
 import {TransactionService} from '../../services/transaction.service';
 import {Transaction} from '../../models/transaction';
 import {Subject, takeUntil} from 'rxjs';
-import * as console from 'node:console';
+
 
 @Component({
   selector: 'app-fixed-cost-form',
