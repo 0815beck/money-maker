@@ -7,3 +7,7 @@ INSERT INTO category (name) VALUES('Spielzeug');
 
 
 
+
+
+
+
