@@ -45,6 +45,26 @@
   animation: animatezoom 0.6s;
 }
 
+.picture {
+  border: 0;
+  background-color: #501a5600;
+}
+
+.picture img {
+  transition: all 0.2s ease-out;
+}
+
+.picture img:hover {
+  transform: scale(1.2);
+  transition: all 0.2s ease-in;
+}
+
+.picture.selected img {
+  transform: scale(1.2);
+  border: 1px solid var(--color-palette-violett);
+  border-radius: 2px;
+}
+
 @-webkit-keyframes animatezoom {
   from {
     -webkit-transform: scale(0);

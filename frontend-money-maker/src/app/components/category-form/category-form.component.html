@@ -16,20 +16,36 @@
   <p class="fs-1 text-center p-2">Create New Category</p>
 </div>
 
-<form class="p-3" [formGroup]="categoryForm">
+<form class="p-3" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
   <div class="input-group">
-    <span class="input-group-text">Amount</span>
+    <span class="input-group-text">Name: </span>
     <input
-      type="number"
+      type="text"
       aria-label="First name"
       class="form-control"
       formControlName="name"
     />
   </div>
-  <div>
-    <p>Choose your picture</p>
+
+  <div class="d-flex gap-2 p-2">
+    <input
+      type="hidden"
+      id="selected-picture"
+      name="selected-picture"
+      value=""
+      formControlName="image"
+    />
+    <p>Choose your picture:</p>
     <div class="picture-list" *ngFor="let picture of pictureList">
-      <img src="" />
+      <button
+        class="picture"
+        type="button"
+        ngFor="let picture of pictureList"
+        [class.selected]="picture === selectedPicture"
+        (click)="selectPicture(picture)"
+      >
+        <img src="{{ picture }}" width="30px" />
+      </button>
     </div>
   </div>
 

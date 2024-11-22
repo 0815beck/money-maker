@@ -50,5 +50,6 @@ export class TransactionFormComponent {
 
   return(boolean: boolean) {
     this.newCategory = boolean;
+    this.loadCategories();
   }
 }
