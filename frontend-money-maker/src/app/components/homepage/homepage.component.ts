@@ -4,6 +4,7 @@ import { Account } from '../../models/account';
 import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
 import { TransactionService } from '../../services/transaction.service';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'app-homepage',
@@ -106,6 +107,26 @@ export class HomepageComponent {
 
     console.log('[Debug] The balance at the end date is: ' + balance);
     this.balance = balance;
+
+
+//Compute expenses per category:
+//IN ARBEIT!!!!
+    let pairs : {catName: string, total: number}[] = []
+    let map = new Map<string, number>();
+    map = relevantTransactions.reduce<Map<string, number>>((currentMap, nextTransaction) => {
+      const key = nextTransaction.category.name;
+      if (nextTransaction.amount >= 0) {
+        return currentMap;
+      }
+      if (currentMap.has(key)) {
+        currentMap.set(key, currentMap.get(key)! + nextTransaction.amount)
+      } else {
+        currentMap.set(key, nextTransaction.amount);
+      }
+      return currentMap;
+    }, map);
+
+    let array
 
     let expensesData = {
       labels: ['Miete', 'Lebensmittel', 'Kleidung', 'Unterhaltung', 'Fahrtkosten', 'Sonstiges'],
