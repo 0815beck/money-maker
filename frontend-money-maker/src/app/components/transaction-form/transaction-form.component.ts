@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -19,6 +19,8 @@ export class TransactionFormComponent {
   newCategory: boolean = false;
   account?: Account;
   destroy = new Subject<void>();
+
+  @Output() returnWhenSaved = new EventEmitter<boolean>();
 
   constructor(
     private categoryService: CategoryService,
@@ -87,13 +89,17 @@ export class TransactionFormComponent {
     this.transactionService.addTransaction(newTransaction).subscribe({
       next: () => {
         console.log('Transaction saved');
+        this.returnToOverview('Saved');
       },
       error: (error) => {
         console.log('Can not save Transaction', error);
       },
     });
+  }
 
-    this.changeToCategoryForm();
+  returnToOverview(String: any) {
+    this.returnWhenSaved.emit();
+    console.log(String);
   }
 
   deleteSelectedCategory() {

@@ -5,6 +5,7 @@
 </div>
 
 <p class="fs-1 text-center p-2">All Transaction</p>
+<p>{{ account?.name }}</p>
 <div *ngFor="let transaction of accountTransactions">
   <div>{{ transaction.amount }}</div>
 </div>
@@ -14,7 +15,9 @@
   <div class="modal-container">
     <button (click)="showForm()" class="close">&times;</button>
     <div class="modal-content animate">
-      <app-transaction-form></app-transaction-form>
+      <app-transaction-form
+        (returnWhenSaved)="transactionSaved($event)"
+      ></app-transaction-form>
     </div>
   </div>
 </ng-template>

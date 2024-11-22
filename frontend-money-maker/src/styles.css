@@ -97,20 +97,20 @@ button:hover {
   color: var(--color-palette-violett);
 }
 
-.bg-odd {
-  background-color: #ffce58;
-  color: #501a56;
+.bg-yellow {
+  background-color: var(--color-palette-yellow);
+  color: var(--color-palette-violett);
 }
 
-.bg-even {
-  background-color: #501a56;
-  color: #ffce58;
+.bg-purple {
+  background-color: var(--color-palette-violett);
+  color: var(--color-palette-yellow);
 }
 
-.bg-even i{
-  color: #ffce58;
+.bg-purple i{
+  color: var(--color-palette-yellow);
 }
 
-.bg-odd i{
-  color: #501a56;
+.bg-yellow i, h5{
+  color: var(--color-palette-violett);
 }
