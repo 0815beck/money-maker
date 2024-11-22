@@ -9,13 +9,13 @@ import Chart from 'chart.js/auto';
 export class PieChartComponent {
 
   @Input() data: any;
-  
+
   chart: any = [];
   colors = [
     'rgb(255, 25, 75)',
     'rgb(0, 233, 225)',
     'rgb(253, 235, 35)',
-    'rgb(9, 185, 185)',
+    'rgb(9,185,24)',
     'rgb(116, 49, 249)',
     'rgb(250, 140, 29)'
   ];
@@ -27,7 +27,7 @@ export class PieChartComponent {
       console.log('[Error] data is undefined');
       return;
     }
-    
+
     this.data!.datasets[0]!.backgroundColor = this.colors;
 
     const chartConfig = {
