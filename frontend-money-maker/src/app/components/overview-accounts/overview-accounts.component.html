@@ -1,1 +1,15 @@
-<p>overview-accounts works!</p>
+<div class="p-3 d-grid justify-content-md-end">
+  <button type="button" (click)="showForm()" class="btn btn-outline-secondary">
+    +
+  </button>
+</div>
+
+<div *ngIf="formDisplayed; then form"></div>
+<ng-template #form>
+  <div class="modal-container">
+    <button (click)="showForm()" class="close">&times;</button>
+    <div class="modal-content animate">
+      <app-account-form></app-account-form>
+    </div>
+  </div>
+</ng-template>

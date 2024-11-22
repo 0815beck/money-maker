@@ -10,7 +10,6 @@ import {TransactionService} from '../../services/transaction.service';
 import {Transaction} from '../../models/transaction';
 import {Subject, takeUntil} from 'rxjs';
 
-
 @Component({
   selector: 'app-fixed-cost-form',
   templateUrl: './fixed-cost-form.component.html',

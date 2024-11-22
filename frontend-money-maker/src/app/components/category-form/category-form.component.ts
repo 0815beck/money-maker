@@ -8,11 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CategoryFormComponent {
   categoryForm!: FormGroup;
-  pictureList = [
-    'https://cdn.pixabay.com/photo/2017/10/04/12/18/shopping-2816045_1280.png',
-    'https://cdn.pixabay.com/photo/2024/01/15/10/54/ai-generated-8509956_1280.png',
-  ];
   @Output() returnToTransaction = new EventEmitter<boolean>();
+  pictureList!: [];
 
   constructor(private fb: FormBuilder) {
     this.categoryForm = this.fb.group({
