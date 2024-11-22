@@ -1,7 +1,7 @@
 <div *ngIf="!newCategory; then transaction; else category"></div>
 <ng-template #transaction>
   <p class="fs-1 text-center p-2">Create New Transaction</p>
-  <form class="p-3" [formGroup]="transactionForm">
+  <form class="p-3" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
     <div class="input-group">
       <span class="input-group-text">Amount</span>
       <input
@@ -9,6 +9,7 @@
         aria-label="First name"
         class="form-control"
         formControlName="amount"
+        step="0.01"
       />
     </div>
 
@@ -48,7 +49,7 @@
         type="date"
         aria-label="First name"
         class="form-control"
-        formControlName="date"
+        formControlName="timestamp"
       />
     </div>
     <div data-mdb-input-init class="form-outline p-2">
@@ -62,7 +63,13 @@
       <label class="form-label" for="textAreaExample"></label>
     </div>
     <div class="d-grid">
-      <button type="submit" class="btn-outline-secondary btn" [disabled]="transactionForm.invalid">Speichern</button>
+      <button
+        type="submit"
+        class="btn-outline-secondary btn"
+        [disabled]="transactionForm.invalid"
+      >
+        Speichern
+      </button>
     </div>
   </form></ng-template
 >

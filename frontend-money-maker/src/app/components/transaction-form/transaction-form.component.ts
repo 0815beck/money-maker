@@ -2,9 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Account} from '../../models/account';
-import {AccountService} from '../../services/account.service';
-import {Subject, takeUntil} from 'rxjs';
+import { Account } from '../../models/account';
+import { AccountService } from '../../services/account.service';
+import { Subject, takeUntil } from 'rxjs';
+import { Transaction } from '../../models/transaction';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -18,22 +20,22 @@ export class TransactionFormComponent {
   account?: Account;
   destroy = new Subject<void>();
 
-
   constructor(
     private categoryService: CategoryService,
+    private transactionService: TransactionService,
     private fb: FormBuilder,
     private accountService: AccountService
   ) {
     this.transactionForm = this.fb.group({
-      amount: ["", Validators.required],
+      amount: ['', Validators.required],
       category: ['', Validators.required],
-      date: ["", Validators.required],
+      timestamp: ['', Validators.required],
       description: [''],
-      account: [this.account]
+      account: [this.account],
     });
-    accountService.account$.pipe(takeUntil(this.destroy)).subscribe(data => {
+    accountService.account$.pipe(takeUntil(this.destroy)).subscribe((data) => {
       this.account = data;
-      this.transactionForm.get("account")?.patchValue(this.account);
+      this.transactionForm.get('account')?.patchValue(this.account);
     });
   }
 
@@ -44,6 +46,7 @@ export class TransactionFormComponent {
   loadCategories() {
     this.categoryService.getCategories().subscribe({
       next: (data) => {
+        setTimeout(() => 'Loading ...', 4000);
         this.categoryList = data;
       },
       error: (error) => {
@@ -68,5 +71,27 @@ export class TransactionFormComponent {
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
+  }
+
+  onSubmit() {
+    const newTransaction: Transaction = {
+      amount: this.transactionForm.get('amount')?.value,
+      timestamp: this.transactionForm.get('timestamp')?.value,
+      category: this.transactionForm.get('category')?.value,
+      account: this.transactionForm.get('account')?.value,
+    };
+
+    console.log(newTransaction);
+
+    this.transactionService.addTransaction(newTransaction).subscribe({
+      next: () => {
+        console.log('Transaction saved');
+      },
+      error: (error) => {
+        console.log('Can not save Transaction', error);
+      },
+    });
+
+    this.changeToCategoryForm();
   }
 }
