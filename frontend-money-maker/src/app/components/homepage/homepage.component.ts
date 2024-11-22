@@ -25,30 +25,33 @@ export class HomepageComponent {
   balance: number | undefined;
 
   constructor(
-    private accountService: AccountService,
-    private transactionService: TransactionService
+    private accountService: AccountService
   ) {
+
+    let today = new Date();
+    this.selectedStartDate = this.dateToString(new Date(today.getFullYear() - 1, 1, 1));
+    //  .toISOString().split('T')[0];
+
+    //this.selectedEndDate = today.toISOString().split('T')[0];
+    this.selectedEndDate = this.dateToString(today);
+
     accountService.accounts$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(accounts => {
       this.accounts = accounts;
     })
     accountService.account$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(account => {
       this.account = account;
-    })
-
-    let today = new Date();
-    this.selectedStartDate = new Date(today.getFullYear(), today.getMonth(), 1)
-      .toISOString().split('T')[0];
-
-    this.selectedEndDate = today.toISOString().split('T')[0];
-    transactionService.getTransactions().subscribe(transactions => {
-      this.transactions = transactions;
+      this.transactions = this.account?.transactions;
       this.computeStats();
     })
 
+    //transactionService.getTransactions().subscribe(transactions => {
+    //  this.transactions = transactions;
+    //  this.computeStats();
+    //})
   }
 
   changeAccount(event: Event) {
-    console.log('[Debug] event triggered')
+    console.log('[Debug] changeAccount event handler triggered')
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue === "undefined") {
       this.accountService.setSelectedAccountToUndefined();
@@ -58,19 +61,49 @@ export class HomepageComponent {
   }
 
   computeStats() {
-    const relevantTransactions = this.transactions
-      ?.filter(transaction => new Date(this.selectedStartDate) <= transaction.timestamp)
-      ?.filter(transaction => transaction.timestamp <= new Date(this.selectedEndDate));
-    
-    this.totalExpenses = relevantTransactions
-      ?.filter(transaction => transaction.amount < 0)
-      ?.map(transaction => transaction.amount)
-      ?.reduce((acc, next) => acc + next, 0);
 
-    this.totalIncome = relevantTransactions
-      ?.filter(transaction => transaction.amount > 0)
-      ?.map(transaction => transaction.amount)
-      ?.reduce((acc, next) => acc + next, 0);
+    console.log('[Debug] all transaction of the selected user are: ', this.transactions);
+    console.log('[Debug] The selected start date is: ', this.selectedStartDate);
+    console.log('[Debug] The selected end date is: ', this.selectedEndDate);
+
+    const transactionsUntilEndDate = this.transactions
+      ?.filter(transaction => new Date(transaction.timestamp) <= new Date(this.selectedEndDate));
+
+    const relevantTransactions = transactionsUntilEndDate
+      ?.filter(transaction => new Date(this.selectedStartDate) <= new Date(transaction.timestamp));
+
+    console.log('[Debug] The relevant transactions in the selected time frame are: ', relevantTransactions);
+
+    if (!relevantTransactions) {
+      return;
+    }
+    
+    let totalExpenses = 0;
+    let totalIncome = 0;
+    for(let transaction of relevantTransactions) {
+      if (transaction.amount < 0) {
+        totalExpenses += transaction.amount;
+      } else {
+        totalIncome += transaction.amount;
+      }
+    }
+
+    console.log('[Debug] The total expenses are: ' + totalExpenses);
+    console.log('[Debug] The total income is: ' + totalIncome);
+    this.totalExpenses = totalExpenses;
+    this.totalIncome = totalIncome;
+
+    if (!transactionsUntilEndDate) {
+      return;
+    }
+
+    let balance = 0;
+    for(let transaction of transactionsUntilEndDate) {
+      balance += transaction.amount;
+    }
+
+    console.log('[Debug] The balance at the end date is: ' + balance);
+    this.balance = balance;
   }
 
 //unsubscribe logic
@@ -79,5 +112,17 @@ export class HomepageComponent {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  } 
+  }
+
+  private dateToString(date: Date): string {
+    console.log('[Debug] dateToSting called. Input: ', date);
+    console.log('[Debug] the number of days is: ' + date.getDate())
+    const temp =  `${date.getFullYear()}` + 
+      `-${date.getMonth() < 10 ? '0' : ''}${date.getMonth()}` +
+      `-${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
+    console.log('[Debug] dateToString will return', temp);
+    return temp;
+  }
 }
+
+
