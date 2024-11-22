@@ -11,25 +11,28 @@
 <div>
     <div>
         <label for="select-start-date">Start:</label>
-        <input type="date" [(ngModel)]="selectedStartDate"/>
+        <input type="date" [(ngModel)]="selectedStartDate"
+        (change)="computeStats()"/>
     </div>
     <div>
         <label for="select-end-date">End:</label>
-        <input type="date" [(ngModel)]="selectedEndDate" [min]="selectedStartDate"/>
+        <input type="date" [(ngModel)]="selectedEndDate" [min]="selectedStartDate"
+        (change)="computeStats()"/>
     </div>
 </div>
 <div>
     <div>
-        Total Income:
+        Total Income: {{totalIncome}}
     </div>
     <div>
-        Total Expenses:
+        Total Expenses: {{totalExpenses}}
     </div>
     <div>
-        Balance {{selectedEndDate | date}}:
+        Balance {{selectedEndDate | date}}: {{balance}}
     </div>
 </div>
+<hr/>
 <p>
-    Selected account: {{account | json}}
+    All transaction: {{transactions | json}}
 </p>
 <p>Selected start date: {{selectedStartDate}}</p>

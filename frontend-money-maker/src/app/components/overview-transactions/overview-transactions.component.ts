@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class OverviewTransactionsComponent {
   formDisplayed: boolean = false;
+  selectedPicture!: string;
 
   showForm() {
     if (!this.formDisplayed) {
