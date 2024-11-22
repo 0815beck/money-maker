@@ -20,8 +20,13 @@ export class OverviewAccountsComponent {
     })
   }
 
-  deleteAccount(id: number): void{
-    this.accountService.deleteAccount(id).subscribe(()=> this.accountService.fetchAccounts());
+  deleteAccount(account: Account): void{
+    if (account.fixedCosts.length != 0 || account.transactions.length !=0){
+      window.alert("The account is still linked to at least one transaction or fixed cost and therefor cannot be deleted. Please delete any fixed costs or transactions belonging to this account first.");
+      return;
+    }
+    if (account.id){
+    this.accountService.deleteAccount(account.id).subscribe(()=> this.accountService.fetchAccounts());}
   }
 
   showForm(formDisplayed: boolean = this.formDisplayed) {
