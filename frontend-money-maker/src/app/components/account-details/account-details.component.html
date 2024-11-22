@@ -1,4 +1,6 @@
-
+<button class="btn btn-link bg-purple"  routerLink="/accounts">
+<i class="bi bi-arrow-left"></i>
+</button>
 
 
 <div class="container my-5">
@@ -15,11 +17,11 @@
     <div class="pb-5"></div>
 
     <div class="d-flex mt-3 justify-content-center mt-3">
-     <button class="btn-outline-secondary btn w-100 me-2">Transactions</button>
-      <button class="btn-outline-secondary w-100 btn">Fixed Costs</button>
+     <button class="btn-outline-secondary btn w-100 me-2" (click)="showTransactions=!showTransactions; showFixedCosts = false">Transactions</button>
+      <button class="btn-outline-secondary w-100 btn" (click)="showFixedCosts=!showFixedCosts; showTransactions = false">Fixed Costs</button>
     </div>
     <div class="pb-4"></div>
-
-
   </div>
 </div>
+
+<app-overview-fixed-costs *ngIf="showFixedCosts" [inputAccount]="account"></app-overview-fixed-costs>

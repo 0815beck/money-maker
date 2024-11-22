@@ -1,15 +1,36 @@
 <div class="p-3 d-grid justify-content-md-end">
-  <button type="button" (click)="showForm()" class="btn btn-outline-secondary">
+  <button *ngIf="!inputAccount" type="button" (click)="formDisplayed= !formDisplayed" class="btn btn-outline-secondary">
     +
   </button>
+</div>
+
+<div *ngFor="let fixedCost of fixedCosts; let i = index"
+     class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-3"
+     [ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
+  <div class="d-flex align-items-center">
+    <img [src]="fixedCost.category.imgUrl"
+         alt="Category Icon"
+         class="me-3"
+         style="width: 30px; height: 30px; object-fit: cover;">
+    <span class="ms-4 fw-bold">{{ fixedCost.amount}} €</span>
+    <span class="ms-5 ">{{ fixedCost.category.name }}</span>
+  </div>
+  <div>
+    <button class="btn btn-link" (click)="deleteFixedCost(fixedCost)">
+      <i class="bi bi-trash"></i>
+    </button>
+    <button class="btn btn-link text-decoration-none"  [routerLink]="['/fix-costs/', fixedCost.id]">
+      <i class="bi bi-chevron-double-right"></i>
+    </button>
+  </div>
 </div>
 
 <div *ngIf="formDisplayed; then form"></div>
 <ng-template #form>
   <div class="modal-container">
-    <button (click)="showForm()" class="close">&times;</button>
+    <button (click)="formDisplayed= !formDisplayed" class="close">&times;</button>
     <div class="modal-content animate">
-      <app-fixed-cost-form (closeEvent)="showForm()"></app-fixed-cost-form>
+      <app-fixed-cost-form (closeEvent)="formDisplayed= !formDisplayed"></app-fixed-cost-form>
     </div>
   </div>
 </ng-template>

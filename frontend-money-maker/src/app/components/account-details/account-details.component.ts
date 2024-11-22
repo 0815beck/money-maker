@@ -13,6 +13,8 @@ export class AccountDetailsComponent {
   edit: boolean = false;
   account?: Account;
   name!: FormControl;
+  showTransactions: boolean = false;
+  showFixedCosts: boolean = false;
 
 
   constructor(private accountService: AccountService, private route: ActivatedRoute) {
