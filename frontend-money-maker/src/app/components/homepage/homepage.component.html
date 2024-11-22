@@ -1,14 +1,34 @@
-<section>
-    <div>
-        <label for="select-account">Select Account: </label>
-        <select id="select-account" (change)="changeAccount($event)">
-            <!--<option value="undefined">Not Selected</option>-->
-            <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
-        </select>
+
+<section class="mt-4 ms-4">
+    <div id="select-account-and-month" class="d-flex justify-content-between mb-4">
+        <div>
+            <label for="select-account" class="c-violett me-1">Select Account: </label>
+            <select id="select-account" (change)="changeAccount($event)" class="me-2">
+                <!--<option value="undefined">Not Selected</option>-->
+                <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="select-month" class="color-violett me-1">Select Month: </label>
+            <select id="select-month">
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
     </div>
-</section>
-<h1 *ngIf="account">Welcome back {{account.name}}</h1>
-<div>
+
+<h1 *ngIf="account" class="mb-5">Welcome back {{account.name}}!</h1>
+<!--<div>
     <div>
         <label for="select-start-date">Start:</label>
         <input type="date" [(ngModel)]="selectedStartDate"
@@ -19,20 +39,22 @@
         <input type="date" [(ngModel)]="selectedEndDate" [min]="selectedStartDate"
         (change)="computeStats()"/>
     </div>
+</div>-->
+
+<div id="stats" class="container">
+    <div class="row">
+        <div class="col bc-yellow c-violett rounded-2 me-2 pt-2">
+            <p class="mb-0">Total Income</p> 
+            <p class="fs-1">${{totalIncome}}</p>
+        </div>
+        <div class="col bc-violett c-yellow rounded-2 me-2 pt-2">
+            <p class="mb-0">Total Expenses</p>
+            <p class="fs-1">${{totalExpenses}}</p>
+        </div>
+        <div class="col bc-yellow c-violett rounded-2 br-2 pt-2">
+            <p class="mb-0">Balance {{selectedEndDate}}</p>
+            <p class="fs-1">${{balance}}</p>
+        </div>
+    </div>
 </div>
-<div>
-    <div>
-        Total Income: {{totalIncome}}
-    </div>
-    <div>
-        Total Expenses: {{totalExpenses}}
-    </div>
-    <div>
-        Balance {{selectedEndDate | date}}: {{balance}}
-    </div>
-</div>
-<hr/>
-<p>
-    All transaction: {{transactions | json}}
-</p>
-<p>Selected start date: {{selectedStartDate}}</p>
+</section>

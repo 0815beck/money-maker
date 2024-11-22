@@ -96,3 +96,21 @@ button:hover {
   /*background-color: var(--color-palette-yellow)*/
   color: var(--color-palette-violett);
 }
+
+.bg-odd {
+  background-color: #ffce58;
+  color: #501a56;
+}
+
+.bg-even {
+  background-color: #501a56;
+  color: #ffce58;
+}
+
+.bg-even i{
+  color: #ffce58;
+}
+
+.bg-odd i{
+  color: #501a56;
+}
