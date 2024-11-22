@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../../services/account.service';
 import {Account} from '../../models/account';
@@ -22,6 +22,9 @@ export class FixedCostFormComponent implements OnDestroy {
   account?: Account;
   categoryList: Category[] = [];
   destroy = new Subject<void>();
+  newCategory: boolean = false;
+  @Output()closeEvent=new EventEmitter<void>
+
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private categoryService: CategoryService, private fixedCostService: FixedCostService, private transactionService: TransactionService) {
     this.today = new Date().toISOString().split('T')[0];
@@ -58,7 +61,7 @@ export class FixedCostFormComponent implements OnDestroy {
       this.transactionService.addTransaction(transaction).subscribe(data => {
         transaction = data;
         fixedCost.generatedTransactions.push(transaction);
-        this.saveFixedCost(fixedCost)
+        this.saveFixedCost(fixedCost);
       });
     } else {
       this.saveFixedCost(fixedCost);
@@ -70,8 +73,24 @@ export class FixedCostFormComponent implements OnDestroy {
     this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
       this.accountService.fetchAccounts();
       this.accountService.refetchSelectedAccount();
-      console.log(data);
+      this.closeForm();
     });
+  }
+
+  changeToCategoryForm() {
+    if (!this.newCategory) {
+      this.newCategory = true;
+    } else {
+      this.newCategory = false;
+    }
+  }
+
+  closeForm(): void{
+    this.closeEvent.emit();
+  }
+
+  return(boolean: boolean) {
+    this.newCategory = boolean;
   }
 
   ngOnDestroy(): void {

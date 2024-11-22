@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../../services/account.service';
 import {Account} from '../../models/account';
@@ -11,6 +11,8 @@ import {Account} from '../../models/account';
 export class AccountFormComponent {
 
   accountForm: FormGroup;
+  @Output()closeEvent=new EventEmitter<void>
+
 
   constructor(private fb: FormBuilder, private accountService: AccountService) {
     this.accountForm = fb.group({
@@ -26,7 +28,12 @@ export class AccountFormComponent {
     const account: Account = this.accountForm.value;
     this.accountService.addAccount(account).subscribe(data => {
       this.accountService.fetchAccounts();
+      this.closeForm();
     });
+  }
+
+  closeForm(): void{
+    this.closeEvent.emit();
   }
 
 }
