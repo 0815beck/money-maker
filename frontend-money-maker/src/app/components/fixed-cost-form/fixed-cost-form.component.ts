@@ -23,7 +23,7 @@ export class FixedCostFormComponent implements OnDestroy {
   categoryList: Category[] = [];
   destroy = new Subject<void>();
   newCategory: boolean = false;
-  @Output()closeEvent=new EventEmitter<void>
+  @Output() closeEvent = new EventEmitter<void>
 
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private categoryService: CategoryService, private fixedCostService: FixedCostService, private transactionService: TransactionService) {
@@ -38,13 +38,27 @@ export class FixedCostFormComponent implements OnDestroy {
         generatedTransactions: [[]]
       }
     )
-    categoryService.getCategories().subscribe(data => this.categoryList = data);
     accountService.account$.pipe(takeUntil(this.destroy)).subscribe(data => {
       this.account = data;
       this.fixedCostForm.get("account")?.patchValue(this.account);
     });
+  }
+
+  ngOnInit() {
+    this.loadCategories();
+  }
 
 
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        setTimeout(() => 'Loading ...', 4000);
+        this.categoryList = data;
+      },
+      error: (error) => {
+        console.log('Fehler beim Laden der Categorien: ', error);
+      },
+    });
   }
 
   createFixedCost(): void {
@@ -77,24 +91,37 @@ export class FixedCostFormComponent implements OnDestroy {
     });
   }
 
-  changeToCategoryForm() {
-    if (!this.newCategory) {
-      this.newCategory = true;
-    } else {
-      this.newCategory = false;
-    }
-  }
 
-  closeForm(): void{
+  closeForm(): void {
     this.closeEvent.emit();
   }
 
   return(boolean: boolean) {
     this.newCategory = boolean;
+    this.loadCategories();
+    this.fixedCostForm.get('category')?.setValue('');
   }
 
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
+  }
+
+  deleteSelectedCategory() {
+    const selectedCategory =
+      this.fixedCostForm.get('category')?.value;
+    if (selectedCategory) {
+      this.categoryService.deleteCategory(selectedCategory.id).subscribe({
+        next: () => {
+          console.log('Delete Category successfull');
+          this.loadCategories();
+          this.fixedCostForm.get('selectedCategory')?.setValue('');
+        },
+        error: (error) => {
+          console.log('Can not delete Category: ', error);
+          alert('Can not delete Category, if it is still in use');
+        },
+      });
+    }
   }
 }
