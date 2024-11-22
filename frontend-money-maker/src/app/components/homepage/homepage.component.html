@@ -1,12 +1,32 @@
-<section>
-    <div>
-        <label for="select-account">Select Account: </label>
-        <select id="select-account" (change)="changeAccount($event)">
-            <!--<option value="undefined">Not Selected</option>-->
-            <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
-        </select>
+
+<section class="mt-4 ms-4">
+    <div id="select-account-and-month" class="d-flex justify-content-between">
+        <div>
+            <label for="select-account" class="color-violett me-1">Select Account: </label>
+            <select id="select-account" (change)="changeAccount($event)" class="me-2">
+                <!--<option value="undefined">Not Selected</option>-->
+                <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="select-month" class="color-violett me-1">Select Month: </label>
+            <select id="select-month">
+                <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+            </select>
+        </div>
     </div>
-</section>
+
 <h1 *ngIf="account">Welcome back {{account.name}}</h1>
 <div>
     <div>
@@ -31,8 +51,4 @@
         Balance {{selectedEndDate | date}}: {{balance}}
     </div>
 </div>
-<hr/>
-<p>
-    All transaction: {{transactions | json}}
-</p>
-<p>Selected start date: {{selectedStartDate}}</p>
+</section>
