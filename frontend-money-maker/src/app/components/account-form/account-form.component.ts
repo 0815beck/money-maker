@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AccountService} from '../../services/account.service';
+import {Account} from '../../models/account';
 
 @Component({
   selector: 'app-account-form',
@@ -6,5 +9,24 @@ import { Component } from '@angular/core';
   styleUrl: './account-form.component.css'
 })
 export class AccountFormComponent {
+
+  accountForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private accountService: AccountService) {
+    this.accountForm = fb.group({
+        id: [],
+        name: ["", Validators.required],
+        fixedCosts: [[]],
+        transactions: [[]]
+      }
+    )
+  }
+
+  createAccount(): void {
+    const account: Account = this.accountForm.value;
+    this.accountService.addAccount(account).subscribe(data => {
+      this.accountService.fetchAccounts();
+    });
+  }
 
 }

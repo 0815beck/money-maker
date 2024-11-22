@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './overview-accounts.component.css'
 })
 export class OverviewAccountsComponent {
+  formDisplayed: boolean = false;
+
+  showForm(formDisplayed: boolean = this.formDisplayed) {
+    this.formDisplayed = !formDisplayed
+  }
 
 }

@@ -1,1 +1,9 @@
-<p>account-form works!</p>
+<p class="fs-1 text-center p-2">Create New Account</p>
+
+<form [formGroup]="accountForm" class="p-3" (submit)="createAccount()">
+  <div class="input-group">
+    <span class="input-group-text">name</span>
+    <input type="text" aria-label="First name" class="form-control" formControlName="name"/>
+  </div>
+  <button type="submit" [disabled]="accountForm.invalid">Speichern</button>
+</form>
