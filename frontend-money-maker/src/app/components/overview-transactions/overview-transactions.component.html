@@ -4,8 +4,9 @@
   </button>
 </div>
 
-<div>
-  <p>All Transactions</p>
+<p class="fs-1 text-center p-2">All Transaction</p>
+<div *ngFor="let transaction of accountTransactions">
+  <div>{{ transaction.amount }}</div>
 </div>
 
 <div *ngIf="formDisplayed; then form"></div>
