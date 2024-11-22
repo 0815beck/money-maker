@@ -26,12 +26,12 @@
       formControlName="name"
     />
   </div>
-  <select class="form-select" formControlName="image">
-    <option value="" disabled selected>Select Picture...</option>
-    <option value="" *ngFor="let picture of pictureList">
-      <img src="{{ picture }}" width="10px" />
-    </option>
-  </select>
+  <div>
+    <p>Choose your picture</p>
+    <div class="picture-list" *ngFor="let picture of pictureList">
+      <img src="" />
+    </div>
+  </div>
 
   <div class="d-grid">
     <button type="submit" class="btn-outline-secondary btn">Speichern</button>
