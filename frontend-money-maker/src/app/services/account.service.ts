@@ -15,7 +15,7 @@ export class AccountService {
 
   private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
   public accounts$ = this.accounts.asObservable();
-  
+
   constructor(private httpClient: HttpClient) {
     httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
       this.accounts.next(accounts);
@@ -27,6 +27,10 @@ export class AccountService {
     this.accounts.next(this.accounts.getValue()?.concat(account));
     return this.httpClient.post<Account>(env.baseUrl + "/accounts", account)
   };
+
+  getAccountByID(id: string): Observable<Account>{
+    return this.httpClient.get<Account>(env.baseUrl + "/accounts/" + id)
+  }
 
 
   deleteAccount(id: number): Observable<void>{

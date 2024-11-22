@@ -3,15 +3,17 @@
     +
   </button>
 </div>
+<h1>Account Overview</h1>
+
 <div *ngFor="let account of accounts; let i = index"
      class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-3"
-     [ngClass]="i % 2 === 0 ? 'bg-odd' : 'bg-even'">
+     [ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
   <div class="d-flex align-items-center">
     <span class="ms-3 fw-bold">{{ account.id }}</span>
     <span class="ms-2 ">{{ account.name }}</span>
   </div>
   <div>
-    <button *ngIf="account.id != null" class="btn btn-link" (click)="deleteAccount(account.id)">
+    <button class="btn btn-link" (click)="deleteAccount(account)">
       <i class="bi bi-trash"></i>
     </button>
     <button class="btn btn-link text-decoration-none"  [routerLink]="['/accounts/', account.id]">

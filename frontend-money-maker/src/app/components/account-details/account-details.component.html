@@ -1,1 +1,25 @@
-<p>account-details works!</p>
+
+
+
+<div class="container my-5">
+  <h1 class="text-center text-decoration-underline">Account Details </h1>
+  <div class="card shadow-sm p-4 bg-yellow" >
+    <div class="d-flex justify-content-center align-items-center">
+      <h5 class="card-title">{{ account?.id }}: {{ account?.name }}<button class="btn btn-link" (click)="edit = !edit">
+        <i class="bi bi-pencil"></i>
+      </button></h5>
+    </div>
+    <div *ngIf="edit" class="text-center">
+    <input type="text" [formControl]="name" class="me-2"><button class="btn-outline-secondary btn"  [disabled]="name.invalid" (click)="modifyAccount()">save</button>
+    </div>
+    <div class="pb-5"></div>
+
+    <div class="d-flex mt-3 justify-content-center mt-3">
+     <button class="btn-outline-secondary btn w-100 me-2">Transactions</button>
+      <button class="btn-outline-secondary w-100 btn">Fixed Costs</button>
+    </div>
+    <div class="pb-4"></div>
+
+
+  </div>
+</div>
