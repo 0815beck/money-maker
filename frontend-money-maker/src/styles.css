@@ -93,6 +93,6 @@
 }
 
 button:hover {
-  background-color: var(--color-palette-yellow);
+  /*background-color: var(--color-palette-yellow)*/
   color: var(--color-palette-violett);
 }
