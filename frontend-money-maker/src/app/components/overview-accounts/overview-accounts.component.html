@@ -4,7 +4,7 @@
   </button>
 </div>
 <h1>Account Overview</h1>
-
+<div class="container">
 <div *ngFor="let account of accounts; let i = index"
      class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-3"
      [ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
@@ -32,7 +32,7 @@
     </div>
   </div>
 </ng-template>
-
+</div>
 
 
 
