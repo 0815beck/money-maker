@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { Transaction } from '../../models/transaction';
@@ -13,6 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './overview-transactions.component.css',
 })
 export class OverviewTransactionsComponent {
+  @Input() inputAccount?: Account;
   formDisplayed: boolean = false;
   accountTransactions?: Transaction[];
   account?: Account;
