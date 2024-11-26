@@ -37,4 +37,12 @@ export class FixedCostService {
   deleteFixedCost(id: number): Observable<void>{
     return this.httpClient.delete<void>(env.baseUrl + "/fixedCost/" + id);
   }
+
+  findFixedCostByID(id: string): Observable<FixedCost>{
+    return this.httpClient.get<FixedCost>(env.baseUrl + "/fixedCost/" + id);
+  }
+
+  modifyFixedCost(fixedCost: FixedCost): Observable<FixedCost>{
+    return this.httpClient.put<FixedCost>(env.baseUrl+"/fixedCost", fixedCost);
+  }
 }

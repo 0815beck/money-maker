@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../../services/account.service';
 import {Account} from '../../models/account';
@@ -16,20 +16,22 @@ import {Subject, takeUntil} from 'rxjs';
   styleUrl: './fixed-cost-form.component.css'
 })
 export class FixedCostFormComponent implements OnDestroy {
-
+  @Input() selectedFixedCost?: FixedCost;
   today: string;
   fixedCostForm: FormGroup;
   account?: Account;
   categoryList: Category[] = [];
   destroy = new Subject<void>();
   newCategory: boolean = false;
-  @Output() closeEvent = new EventEmitter<void>
+  @Output() closeEvent = new EventEmitter<void>();
+  @Output() fixedCostEvent = new EventEmitter<FixedCost>();
 
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private categoryService: CategoryService, private fixedCostService: FixedCostService, private transactionService: TransactionService) {
     this.today = new Date().toISOString().split('T')[0];
     this.fixedCostForm = this.fb.group(
       {
+        id: [],
         amount: ["", Validators.required],
         start: ["", Validators.required],
         description: [""],
@@ -43,6 +45,23 @@ export class FixedCostFormComponent implements OnDestroy {
       this.fixedCostForm.get("account")?.patchValue(this.account);
     });
   }
+
+  ngOnChanges() {
+    if (this.selectedFixedCost) {
+      this.fixedCostForm = this.fb.group(
+        {
+          id: [this.selectedFixedCost.id],
+          amount: [this.selectedFixedCost.amount, Validators.required],
+          start: [this.selectedFixedCost.start, Validators.required],
+          description: [this.selectedFixedCost.description],
+          category: [this.selectedFixedCost.category, Validators.required],
+          account: [this.selectedFixedCost.account],
+          generatedTransactions: [this.selectedFixedCost.generatedTransactions]
+        }
+      )
+    }
+  }
+
 
   ngOnInit() {
     this.loadCategories();
@@ -61,10 +80,11 @@ export class FixedCostFormComponent implements OnDestroy {
     });
   }
 
+
   createFixedCost(): void {
 
     const fixedCost: FixedCost = this.fixedCostForm.value;
-    if (new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
+    if ((new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) && !this.selectedFixedCost)) {
       let transaction: Transaction = {
         amount: fixedCost.amount,
         account: fixedCost.account,
@@ -84,16 +104,29 @@ export class FixedCostFormComponent implements OnDestroy {
   }
 
   saveFixedCost(fixedCost: FixedCost): void {
-    this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
-      this.accountService.fetchAccounts();
-      this.accountService.refetchSelectedAccount();
-      this.closeForm();
-    });
+    if (fixedCost.id === null) {
+      this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
+        this.accountService.fetchAccounts();
+        this.accountService.refetchSelectedAccount();
+        this.closeForm();
+      });
+    } else {
+      this.fixedCostService.modifyFixedCost(fixedCost).subscribe(data => {
+        this.accountService.fetchAccounts();
+        this.accountService.refetchSelectedAccount();
+        this.updateFixedCost(data);
+        this.closeForm();
+      })
+    }
   }
 
 
   closeForm(): void {
     this.closeEvent.emit();
+  }
+
+  updateFixedCost(fixedCost: FixedCost) {
+    this.fixedCostEvent.emit(fixedCost);
   }
 
   return(boolean: boolean) {
