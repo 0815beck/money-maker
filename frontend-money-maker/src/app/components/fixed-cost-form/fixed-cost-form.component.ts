@@ -46,6 +46,10 @@ export class FixedCostFormComponent implements OnDestroy {
     });
   }
 
+  ngOnInit() {
+    this.initCategories();
+  }
+
   ngOnChanges() {
     this.fillFormWithDefaultValues();
   }
@@ -72,8 +76,47 @@ export class FixedCostFormComponent implements OnDestroy {
   }
 
 
-  ngOnInit() {
-    this.initCategories();
+  createFixedCost(): void {
+    const fixedCost: FixedCost = this.fixedCostForm.value;
+    if ((new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) && !this.selectedFixedCost)) {
+      let transaction: Transaction = {
+        amount: fixedCost.amount,
+        account: fixedCost.account,
+        category: fixedCost.category,
+        description: fixedCost.description,
+        timestamp: new Date()
+      }
+      this.transactionService.addTransaction(transaction).subscribe(data => {
+        transaction = data;
+        fixedCost.generatedTransactions.push(transaction);
+        this.saveFixedCost(fixedCost);
+      });
+    } else {
+      this.saveFixedCost(fixedCost);
+    }
+  }
+
+  saveFixedCost(fixedCost: FixedCost): void {
+    if (fixedCost.id === null) {
+      this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
+        this.accountService.refetchSelectedAccount();
+        this.closeForm();
+      });
+    } else {
+      this.fixedCostService.modifyFixedCost(fixedCost).subscribe(data => {
+        this.accountService.refetchSelectedAccount();
+        this.updateFixedCost(data);
+        this.closeForm();
+      })
+    }
+  }
+
+  updateFixedCost(fixedCost: FixedCost) {
+    this.fixedCostEvent.emit(fixedCost);
+  }
+
+  closeForm(): void {
+    this.closeEvent.emit();
   }
 
   private initCategories() {
@@ -95,66 +138,6 @@ export class FixedCostFormComponent implements OnDestroy {
     });
   }
 
-
-  createFixedCost(): void {
-
-    const fixedCost: FixedCost = this.fixedCostForm.value;
-    if ((new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) && !this.selectedFixedCost)) {
-      let transaction: Transaction = {
-        amount: fixedCost.amount,
-        account: fixedCost.account,
-        category: fixedCost.category,
-        description: fixedCost.description,
-        timestamp: new Date()
-      }
-      this.transactionService.addTransaction(transaction).subscribe(data => {
-        transaction = data;
-        fixedCost.generatedTransactions.push(transaction);
-        this.saveFixedCost(fixedCost);
-      });
-    } else {
-      this.saveFixedCost(fixedCost);
-    }
-
-  }
-
-  saveFixedCost(fixedCost: FixedCost): void {
-    if (fixedCost.id === null) {
-      this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
-        this.accountService.refetchSelectedAccount();
-        this.closeForm();
-      });
-    } else {
-      this.fixedCostService.modifyFixedCost(fixedCost).subscribe(data => {
-        this.accountService.refetchSelectedAccount();
-        this.updateFixedCost(data);
-        this.closeForm();
-      })
-    }
-  }
-
-
-  closeForm(): void {
-    this.closeEvent.emit();
-  }
-
-  updateFixedCost(fixedCost: FixedCost) {
-    this.fixedCostEvent.emit(fixedCost);
-  }
-
-  
-  return(boolean: boolean) {
-    this.newCategory = boolean;
-    this.loadCategories();
-    this.fixedCostForm.get('category')?.setValue('');
-  }
-
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
-  }
-
-  
   deleteSelectedCategory() {
     const selectedCategory =
       this.fixedCostForm.get('category')?.value;
@@ -171,5 +154,17 @@ export class FixedCostFormComponent implements OnDestroy {
         },
       });
     }
+  }
+
+  return(boolean: boolean) {
+    this.newCategory = boolean;
+    this.loadCategories();
+    this.fixedCostForm.get('category')?.setValue('');
+  }
+
+
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
