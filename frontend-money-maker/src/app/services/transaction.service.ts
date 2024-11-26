@@ -3,14 +3,12 @@ import { Transaction } from '../models/transaction';
 import { BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {env} from '../env';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
-
-  _transactions = new BehaviorSubject<Transaction[]>([]);
-  transactions$ = this._transactions.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -30,24 +28,9 @@ export class TransactionService {
     return this.http.delete<void>(env.baseUrl + "/transaction/"+id);
   }
 
-//FOR TESTING PURPOSES
-  getTotalIncome() {
-    return new Observable<number | undefined>((observer) => {
-      observer.next(200);
-    })
-  }
+//TODO: Vllt noch so ändern, dass der globale state
+//angepasst wird, nachdem transaktionen gelöscht/... wurden
+//Gerade ist es so, dass sowohl die accounts liste (mit ALLEN TRANSAKTIONEN JEMALS)
+//als auch der ausgewählte account geupdated werden
 
-  getTotalExpense() {
-    return new Observable<number | undefined>((observer) => {
-      observer.next(400);
-    })
-  }
-  getTotalBalance() {
-    return new Observable<number |undefined>((observer) => {
-      observer.next(800);
-    })
-  }
-  getLatestTransactions() {
-    return this.transactions$;
-  }
 }

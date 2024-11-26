@@ -12,7 +12,7 @@ export class AccountService {
   private account = new BehaviorSubject<Account | undefined>(undefined);
   public account$ = this.account.asObservable();
 
-//  public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
+//public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
 
   private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
   public accounts$ = this.accounts.asObservable();
@@ -26,13 +26,17 @@ export class AccountService {
 
   }
 
-
-
 //Methods to change the state of the accounts list variable:
   public fetchAccounts() {
     this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
+//update state
       this.accounts.next(accounts);
-    })
+      const selectedAccount = this.account.getValue();
+      const updatedSelectedAccount = accounts.find(a => a.id === selectedAccount?.id);
+      if (updatedSelectedAccount) {
+        this.account.next(updatedSelectedAccount);
+      }
+    });
   }
 
   public addAccount(account: Account): Observable<Account> {
@@ -61,7 +65,11 @@ export class AccountService {
     observable.subscribe(_ => {
       console.log('[Info] Account with id ' + id + 'will be removed from the accounts list.');
       this.accounts.next(this.accounts.getValue()?.filter(x => x.id !== id));
-    })
+      const selectedAccount = this.account.getValue();
+      if (selectedAccount?.id === id) {
+        this.account.next(undefined);
+      }
+    });
     return observable;
   }
   
@@ -100,6 +108,7 @@ export class AccountService {
       .get<Account>(env.baseUrl
         + '/accounts' + '/' + this.account?.getValue()?.id).subscribe(account => {
         this.account.next(account);
+        this.accounts.next(this.accounts.getValue()?.map(a => a.id === account.id ? account : a));
       });
   }
 
