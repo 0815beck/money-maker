@@ -29,13 +29,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ResponseEntity<String> deleteTransaction(Long id) {
+    public ResponseEntity<Void> deleteTransaction(Long id) {
         Optional <Transaction> transaction = repository.findById(id);
         if(transaction.isPresent()){
             repository.deleteById(id);
-            return new ResponseEntity<>("Transaktion gelöscht", HttpStatus.ACCEPTED);
+            return ResponseEntity.accepted().build();
         } else {
-            return new ResponseEntity<>("Transaktion nicht gefunden", HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 

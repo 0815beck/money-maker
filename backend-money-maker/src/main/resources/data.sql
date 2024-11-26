@@ -2,7 +2,7 @@ INSERT INTO account (name) VALUES ('Nico');
 INSERT INTO account (name) VALUES ('Corinna');
 INSERT INTO account (name) VALUES ('Ronja');
 
-INSERT INTO category (name) VALUES ('rent');
+INSERT INTO category (name, img_url) VALUES ('rent', 'https://img.icons8.com/?size=100&id=9aS0IadEbesZ&format=png&color=000000');
 INSERT INTO category (name) VALUES ('salary');
 INSERT INTO category (name) VALUES ('groceries');
 INSERT INTO category (name) VALUES ('entertainment');

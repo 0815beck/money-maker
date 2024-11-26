@@ -31,7 +31,7 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTransaction(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id){
         return service.deleteTransaction(id);
     }
 
