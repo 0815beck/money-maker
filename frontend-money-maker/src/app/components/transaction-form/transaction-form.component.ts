@@ -89,6 +89,7 @@ export class TransactionFormComponent {
     this.transactionService.addTransaction(newTransaction).subscribe({
       next: () => {
         console.log('Transaction saved');
+        this.accountService.refetchSelectedAccount();
         this.returnToOverview('Saved');
       },
       error: (error) => {

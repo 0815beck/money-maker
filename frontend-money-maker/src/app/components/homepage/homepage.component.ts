@@ -103,16 +103,6 @@ export class HomepageComponent {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-
-  private dateToString(date: Date): string {
-    console.log('[Debug] dateToSting called. Input: ', date);
-    console.log('[Debug] the number of days is: ' + date.getDate())
-    const temp =  `${date.getFullYear()}` + 
-      `-${date.getMonth() < 10 ? '0' : ''}${date.getMonth()}` +
-      `-${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
-    console.log('[Debug] dateToString will return', temp);
-    return temp;
-  }
 }
 
 
