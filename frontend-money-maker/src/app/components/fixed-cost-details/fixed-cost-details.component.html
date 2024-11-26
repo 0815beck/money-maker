@@ -4,7 +4,7 @@
 
 
 <div class="container my-5" *ngIf="fixedCost">
-  <h1 class="text-center text-decoration-underline">Fixed Cost Details   <button class="btn btn-link" (click)="edit = !edit">
+  <h1 class="text-center ">Fixed Cost Details   <button class="btn btn-link" (click)="edit = !edit">
     <i class="bi bi-pencil"></i>
   </button></h1>
   <div class="card shadow-sm bg-yellow">
@@ -34,4 +34,4 @@
     </div>
   </div>
 </div>
-<app-fixed-cost-form [selectedFixedCost]="fixedCost" (closeEvent)="edit=false" *ngIf="edit" (fixedCostEvent)="fixedCost = $event"></app-fixed-cost-form>
+<app-fixed-cost-form [selectedFixedCost]="fixedCost" *ngIf="edit" (fixedCostEvent)="fixedCost = $event; edit=false"></app-fixed-cost-form>

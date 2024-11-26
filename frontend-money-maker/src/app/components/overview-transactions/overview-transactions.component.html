@@ -4,11 +4,28 @@
   </button>
 </div>
 
-<p class="fs-1 text-center p-2">All Transaction</p>
-<p>{{ account?.name }}</p>
-<div *ngFor="let transaction of accountTransactions">
-  <div>{{ transaction.amount }}</div>
+<h1 class="fs-1 text-center p-2">Transaction Overview</h1>
+<div *ngFor="let transaction of transactions; let i = index;"
+class="d-flex align-items-center justify-content-between p-2 m-3 rounded shadow-sm mb-3"
+[ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
+  <div class="d-flex align-items-center">
+    <img [src]="transaction.category.imgUrl"
+    alt="Category Icon"
+    class="me-3"
+    style="width: 30px; height: 30px; object-fit: cover;">
+    <span class="ms-4 fw-bold">{{transaction.amount}} €</span>
+    <span class="ms-5">{{transaction.category.name}}</span>
+  </div>
+  <div>
+    <button class="btn btn-link" (click)="deleteTransaction(transaction)">
+      <i class="bi bi-trash"></i>
+    </button>
+    <button class="btn btn-link text-decoration-none" [routerLink]="['/transaction/', transaction.id]" *ngIf="!inputAccount">
+      <i class="bi bi-chevron-double-right"></i>
+    </button>
+  </div>
 </div>
+
 
 <div *ngIf="formDisplayed; then form"></div>
 <ng-template #form>
