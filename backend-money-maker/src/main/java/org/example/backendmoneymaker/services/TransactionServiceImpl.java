@@ -33,9 +33,9 @@ public class TransactionServiceImpl implements TransactionService {
         Optional <Transaction> transaction = repository.findById(id);
         if(transaction.isPresent()){
             repository.deleteById(id);
-            return ResponseEntity.accepted().build();
+            return new ResponseEntity<>( HttpStatus.ACCEPTED);
         } else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
     }
 

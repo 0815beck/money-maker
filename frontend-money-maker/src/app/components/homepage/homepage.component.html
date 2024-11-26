@@ -61,8 +61,12 @@
     </div>
     <div id="charts" class="container">
         <div class="row">
-            <app-pie-chart [data]="expensesData" class="col rounded-2 me-2"></app-pie-chart>
-            <div class="col bc-yellow rounded-2"></div>
+            <div class="col rounded-2">
+                <app-pie-chart [data]="expensesData"></app-pie-chart>
+            </div>
+            <div class="col rounded-2">
+                <app-bar-chart></app-bar-chart>
+            </div>
         </div>
     </div>
 </section>
