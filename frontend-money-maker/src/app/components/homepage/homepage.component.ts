@@ -15,6 +15,7 @@ export class HomepageComponent {
 
   accounts: Account[] | undefined;
   account: Account | undefined;
+  id: number | undefined;
 
   selectedStartDate: string;
   selectedEndDate: string;
@@ -40,12 +41,14 @@ export class HomepageComponent {
 
     accountService.accounts$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(accounts => {
       this.accounts = accounts;
-    })
+    });
+
     accountService.account$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(account => {
       this.account = account;
+      this.id = account?.id;
       this.transactions = this.account?.transactions;
       this.computeStats();
-    })
+    });
 
     //transactionService.getTransactions().subscribe(transactions => {
     //  this.transactions = transactions;
