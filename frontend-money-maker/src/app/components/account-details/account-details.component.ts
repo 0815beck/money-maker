@@ -3,6 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {Account} from '../../models/account';
 import {AccountService} from '../../services/account.service';
 import {ActivatedRoute} from '@angular/router';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-account-details',
@@ -15,12 +16,13 @@ export class AccountDetailsComponent {
   name!: FormControl;
   showTransactions: boolean = false;
   showFixedCosts: boolean = false;
+  destroy = new  Subject<void>();
 
 
   constructor(private accountService: AccountService, private route: ActivatedRoute) {
     const id = route.snapshot.paramMap.get("id");
     if (id) {
-      accountService.getAccountByID(id).subscribe(data => {
+      accountService.getAccountByID(id).pipe(takeUntil(this.destroy)).subscribe(data => {
         this.account = data;
         this.name = new FormControl(this.account.name, Validators.required);
       })
@@ -33,6 +35,11 @@ export class AccountDetailsComponent {
       this.accountService.modifyAccount(this.account).subscribe(()=> {this.accountService.fetchAccounts(); this.edit=false;})
     }
 
+  }
+
+  ngOnDestroy():void{
+    this.destroy.next();
+    this.destroy.complete();
   }
 
 }

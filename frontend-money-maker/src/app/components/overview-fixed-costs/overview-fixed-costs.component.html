@@ -3,7 +3,7 @@
     +
   </button>
 </div>
-
+<div class="container">
 <h1 *ngIf="!inputAccount">Fixed Costs Overview</h1>
 <div *ngFor="let fixedCost of fixedCosts; let i = index"
      class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-3"
@@ -17,7 +17,7 @@
     <span class="ms-5 ">{{ fixedCost.category.name }}</span>
   </div>
   <div>
-    <button class="btn btn-link" (click)="deleteFixedCost(fixedCost)">
+    <button class="btn btn-link" (click)="deleteFixedCost(fixedCost)" *ngIf="!inputAccount">
       <i class="bi bi-trash"></i>
     </button>
     <button class="btn btn-link text-decoration-none"  [routerLink]="['/fixed-costs/', fixedCost.id]" *ngIf="!inputAccount">
@@ -35,3 +35,4 @@
     </div>
   </div>
 </ng-template>
+</div>

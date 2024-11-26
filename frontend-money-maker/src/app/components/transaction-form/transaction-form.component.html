@@ -1,6 +1,6 @@
 <div *ngIf="!newCategory; then transaction; else category"></div>
 <ng-template #transaction>
-  <p class="fs-1 text-center p-2">Create New Transaction</p>
+  <p class="fs-1 text-center p-2" *ngIf="!selectedTransaction">Create New Transaction</p>
   <form class="p-3" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
     <div class="input-group">
       <span class="input-group-text">Amount</span>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="input-group">
-      <select class="form-select" formControlName="selectedCategory">
+      <select class="form-select" formControlName="category">
         <option value="" disabled selected>Select Category...</option>
         <option *ngFor="let category of categoryList" [ngValue]="category">
           {{ category.name }}
@@ -23,7 +23,7 @@
       <button
         type="button"
         class="btn btn-outline-secondary"
-        (click)="changeToCategoryForm()"
+        (click)="newCategory=!newCategory"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@
         type="button"
         class="btn btn-outline-secondary"
         (click)="deleteSelectedCategory()"
-        [disabled]="!transactionForm.get('selectedCategory')?.value"
+        [disabled]="!transactionForm.get('category')?.value"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

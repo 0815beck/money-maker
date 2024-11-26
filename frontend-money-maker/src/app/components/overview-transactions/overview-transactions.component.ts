@@ -25,8 +25,8 @@ export class OverviewTransactionsComponent {
       this.account = data;
       this.loadTransactions();
     });
-  } 
-  
+  }
+
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
@@ -52,7 +52,6 @@ export class OverviewTransactionsComponent {
     if(this.account){
       this.transactions = this.account?.transactions;
     }
-    
   }
 
   transactionSaved(event: any) {
