@@ -61,18 +61,20 @@ export class OverviewTransactionsComponent {
 
   deleteTransaction(transaction: Transaction){
     if(transaction.id != null){
-      this.transactionService.deleteTransaction(transaction.id).subscribe({
+            this.transactionService.deleteTransaction(transaction.id).subscribe({
         next: () => {
           this.accountService.fetchAccounts();
           console.log('Transaction deleted!')
         },
         error: (error) => {
           console.log('Could not delete Transaction: ', error);
+          alert('Cannot delete Transation, due to Fixed Cost');
         }
       });
       if(this.inputAccount){
         this.transactions = this.transactions?.filter(element => element.id =transaction.id);
       }
     }
+
   }
 }
