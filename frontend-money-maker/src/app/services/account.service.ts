@@ -11,6 +11,7 @@ export class AccountService {
 
   private account = new BehaviorSubject<Account | undefined>(undefined);
   public account$ = this.account.asObservable();
+
   public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
 
   private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
@@ -19,9 +20,13 @@ export class AccountService {
   constructor(private httpClient: HttpClient) {
     httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
       this.accounts.next(accounts);
+      //default account auswahl:
       this.account.next(accounts[0]);
     })
   }
+
+
+
 
   public addAccount(account: Account): Observable<Account> {
     this.accounts.next(this.accounts.getValue()?.concat(account));

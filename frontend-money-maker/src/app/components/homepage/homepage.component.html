@@ -3,7 +3,10 @@
     <div id="select-account-and-month" class="d-flex justify-content-between mb-5">
         <div>
             <label for="select-account" class="c-violett me-1">Select Account: </label>
-            <select id="select-account" (change)="changeAccount($event)" class="me-2">
+            <select id="select-account" 
+            (change)="changeAccount($event)" 
+            class="me-2"
+            [(ngModel)]="id">
                 <!--<option value="undefined">Not Selected</option>-->
                 <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
             </select>
