@@ -47,15 +47,15 @@
         <div class="row">
             <div class="col bc-yellow c-violett rounded-2 me-2 pt-2">
                 <p class="mb-0">Total Income</p> 
-                <p class="fs-1">${{totalIncome}}</p>
+                <p *ngIf="totalIncome" class="fs-1">{{totalIncome | money}}</p>
             </div>
             <div class="col bc-violett c-yellow rounded-2 me-2 pt-2">
                 <p class="mb-0">Total Expenses</p>
-                <p class="fs-1">${{totalExpenses}}</p>
+                <p *ngIf="totalExpenses" class="fs-1">{{totalExpenses | money}}</p>
             </div>
             <div class="col bc-yellow c-violett rounded-2 br-2 pt-2">
                 <p class="mb-0">Balance {{selectedEndDate}}</p>
-                <p class="fs-1">${{balance}}</p>
+                <p *ngIf="balance" class="fs-1">{{balance | money}}</p>
             </div>
         </div>
     </div>
