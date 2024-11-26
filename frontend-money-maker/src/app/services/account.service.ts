@@ -61,7 +61,7 @@ export class AccountService {
   }
 
   deleteAccount(id: number): Observable<void>{
-    const observable = this.httpClient.delete<void>(env.baseUrl + "/account");
+    const observable = this.httpClient.delete<void>(env.baseUrl + "/accounts/" +id);
     observable.subscribe(_ => {
       console.log('[Info] Account with id ' + id + ' will be removed from the accounts list.');
       this.accounts.next(this.accounts.getValue()?.filter(x => x.id !== id));
