@@ -19,6 +19,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import Chart from 'chart.js/auto';
+import { MoneyPipe } from './pipes/money.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import Chart from 'chart.js/auto';
     AccountFormComponent,
     FixedCostFormComponent,
     PieChartComponent,
+    MoneyPipe,
   ],
   imports: [
     BrowserModule,
