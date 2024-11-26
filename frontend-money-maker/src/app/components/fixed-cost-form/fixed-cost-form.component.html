@@ -1,7 +1,7 @@
 <div *ngIf="!newCategory; then fixedCost; else category"></div>
 
 <ng-template #fixedCost>
-  <p class="fs-1 text-center p-2">Create New Fixed Cost</p>
+  <p class="fs-1 text-center p-2" *ngIf="!selectedFixedCost">Create New Fixed Cost</p>
   <form [formGroup]="fixedCostForm" class="p-3" (ngSubmit)="createFixedCost()">
     <div class="input-group">
       <span class="input-group-text">Amount</span>
@@ -58,7 +58,7 @@
         </svg>
       </button>
     </div>
-    <div class="input-group">
+    <div class="input-group" *ngIf="!selectedFixedCost">
       <span class="input-group-text">Start Date</span>
       <input type="date" aria-label="First name" class="form-control" [min]="today" formControlName="start"/>
     </div>

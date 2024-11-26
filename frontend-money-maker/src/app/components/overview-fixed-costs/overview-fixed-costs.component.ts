@@ -20,7 +20,8 @@ export class OverviewFixedCostsComponent {
   constructor(private fixedCostService: FixedCostService, private accountService: AccountService) {
     this.accountService.account$.pipe(takeUntil(this.destroy)).subscribe(data => {
       this.account = data;
-      this.fixedCosts = this.account!.fixedCosts;})
+      if (this.account){
+      this.fixedCosts = this.account.fixedCosts;}})
   }
 
   ngOnChanges(): void{

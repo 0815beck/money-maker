@@ -1,1 +1,37 @@
-<p>fixed-cost-details works!</p>
+<button class="btn btn-link bg-purple" routerLink="/fixed-costs">
+  <i class="bi bi-arrow-left"></i>
+</button>
+
+
+<div class="container my-5" *ngIf="fixedCost">
+  <h1 class="text-center text-decoration-underline">Fixed Cost Details   <button class="btn btn-link" (click)="edit = !edit">
+    <i class="bi bi-pencil"></i>
+  </button></h1>
+  <div class="card shadow-sm bg-yellow">
+    <div class="card-body text-dark rounded">
+      <div class="text-center mb-4">
+        <img [src]="fixedCost.category.imgUrl"
+             alt="Category Icon"
+             class="me-3"
+             style="width: 30px; height: 30px; object-fit: cover;">
+      </div>
+      <div class="row mb-4">
+        <div class="col-6"><strong>Amount:</strong></div>
+        <div class="col-6 text-end">{{fixedCost.amount}}€</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-6"><strong>Category:</strong></div>
+        <div class="col-6 text-end">{{fixedCost.category.name}}</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-6"><strong>First Transaction:</strong></div>
+        <div class="col-6 text-end">{{fixedCost.start}}</div>
+      </div>
+      <hr>
+      <div class="text-center mt-4">
+        <p class="text-muted">{{fixedCost.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-fixed-cost-form [selectedFixedCost]="fixedCost" (closeEvent)="edit=false" *ngIf="edit" (fixedCostEvent)="fixedCost = $event"></app-fixed-cost-form>
