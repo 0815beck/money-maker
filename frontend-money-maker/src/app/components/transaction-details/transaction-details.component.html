@@ -1,1 +1,37 @@
-<p>transaction-details works!</p>
+<button class="btn btn-link bg-purple" routerLink="/transactions">
+  <i class="bi bi-arrow-left"></i>
+</button>
+
+
+<div class="container my-5" *ngIf="transaction">
+  <h1 class="text-center ">Transaction Details   <button class="btn btn-link" (click)="edit = !edit">
+    <i class="bi bi-pencil"></i>
+  </button></h1>
+  <div class="card shadow-sm bg-yellow">
+    <div class="card-body text-dark rounded">
+      <div class="text-center mb-4">
+        <img [src]="transaction.category.imgUrl"
+             alt="Category Icon"
+             class="me-3"
+             style="width: 30px; height: 30px; object-fit: cover;">
+      </div>
+      <div class="row mb-4">
+        <div class="col-6"><strong>Amount:</strong></div>
+        <div class="col-6 text-end">{{transaction.amount}}€</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-6"><strong>Category:</strong></div>
+        <div class="col-6 text-end">{{transaction.category.name}}</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-6"><strong>Datum:</strong></div>
+        <div class="col-6 text-end">{{transaction.timestamp}}</div>
+      </div>
+      <hr>
+      <div class="text-center mt-4">
+        <p class="text-muted">{{transaction.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-transaction-form *ngIf="edit" [selectedTransaction]="transaction" (transactionEvent)="transaction=$event; edit=false"></app-transaction-form>

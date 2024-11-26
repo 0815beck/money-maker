@@ -28,6 +28,10 @@ export class TransactionService {
     return this.http.delete<void>(env.baseUrl + "/transaction/"+id);
   }
 
+  getTransactionByID(id: string): Observable<Transaction>{
+    return this.http.get<Transaction>(env.baseUrl + "/transaction/"+id);
+  }
+
 //TODO: Vllt noch so ändern, dass der globale state
 //angepasst wird, nachdem transaktionen gelöscht/... wurden
 //Gerade ist es so, dass sowohl die accounts liste (mit ALLEN TRANSAKTIONEN JEMALS)
