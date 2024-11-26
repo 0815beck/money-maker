@@ -5,6 +5,8 @@ import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
 import { TransactionService } from '../../services/transaction.service';
 import { Category } from '../../models/category';
+import { pieChartData, stats, Stats } from '../../utils/statistics';
+import { toString } from '../../utils/date';
 
 @Component({
   selector: 'app-homepage',
@@ -33,11 +35,11 @@ export class HomepageComponent {
   ) {
 
     let today = new Date();
-    this.selectedStartDate = this.dateToString(new Date(today.getFullYear() - 1, 1, 1));
+    this.selectedStartDate = toString(new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()));
     //  .toISOString().split('T')[0];
 
     //this.selectedEndDate = today.toISOString().split('T')[0];
-    this.selectedEndDate = this.dateToString(today);
+    this.selectedEndDate = toString(today);
 
     accountService.accounts$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(accounts => {
       this.accounts = accounts;
@@ -67,71 +69,22 @@ export class HomepageComponent {
   }
 
   computeStats() {
+    const start = new Date(this.selectedStartDate);
+    const end = new Date(this.selectedEndDate);
 
-    console.log('[Debug] all transaction of the selected user are: ', this.transactions);
-    console.log('[Debug] The selected start date is: ', this.selectedStartDate);
-    console.log('[Debug] The selected end date is: ', this.selectedEndDate);
+    if (!this.transactions) { return; }
 
-    const transactionsUntilEndDate = this.transactions
-      ?.filter(transaction => new Date(transaction.timestamp) <= new Date(this.selectedEndDate));
+    const statistic: Stats = stats(start, end, this.transactions);
 
-    const relevantTransactions = transactionsUntilEndDate
-      ?.filter(transaction => new Date(this.selectedStartDate) <= new Date(transaction.timestamp));
+    console.log('[Debug] statistic has been computed', statistic);
+    this.balance = statistic.balance;
+    this.totalExpenses = statistic.expenses;
+    this.totalIncome = statistic.income;
 
-    console.log('[Debug] The relevant transactions in the selected time frame are: ', relevantTransactions);
+    const expensesData = pieChartData(start, end, this.transactions);
 
-    if (!relevantTransactions) {
-      return;
-    }
-    
-    let totalExpenses = 0;
-    let totalIncome = 0;
-    for(let transaction of relevantTransactions) {
-      if (transaction.amount < 0) {
-        totalExpenses += transaction.amount;
-      } else {
-        totalIncome += transaction.amount;
-      }
-    }
-
-    console.log('[Debug] The total expenses are: ' + totalExpenses);
-    console.log('[Debug] The total income is: ' + totalIncome);
-    this.totalExpenses = totalExpenses;
-    this.totalIncome = totalIncome;
-
-    if (!transactionsUntilEndDate) {
-      return;
-    }
-
-    let balance = 0;
-    for(let transaction of transactionsUntilEndDate) {
-      balance += transaction.amount;
-    }
-
-    console.log('[Debug] The balance at the end date is: ' + balance);
-    this.balance = balance;
-
-
-//Compute expenses per category:
-//IN ARBEIT!!!!
-    let pairs : {catName: string, total: number}[] = []
-    let map = new Map<string, number>();
-    map = relevantTransactions.reduce<Map<string, number>>((currentMap, nextTransaction) => {
-      const key = nextTransaction.category.name;
-      if (nextTransaction.amount >= 0) {
-        return currentMap;
-      }
-      if (currentMap.has(key)) {
-        currentMap.set(key, currentMap.get(key)! + nextTransaction.amount)
-      } else {
-        currentMap.set(key, nextTransaction.amount);
-      }
-      return currentMap;
-    }, map);
-
-    let array
-
-    let expensesData = {
+    console.log('[Debug] Data for the Pie Chart has been computed.', expensesData);
+    /*let expensesData = {
       labels: ['Miete', 'Lebensmittel', 'Kleidung', 'Unterhaltung', 'Fahrtkosten', 'Sonstiges'],
       datasets: [
         {
@@ -139,8 +92,8 @@ export class HomepageComponent {
           data: [12, 19, 3, 5, 2, 3]
         },
       ],
-    }
-    this.expensesData = expensesData
+    }*/
+    this.expensesData = expensesData;
   }
 
 //unsubscribe logic
