@@ -1,7 +1,12 @@
 .sidebar {
-  width: 300px;
+  width: 250px;
   height: 100vh;
+  min-height: 200px;
+  overflow: auto;
+  position: -webkit-sticky;
+  position: sticky;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.402);
+  background-color: white;
 }
 
 a {
