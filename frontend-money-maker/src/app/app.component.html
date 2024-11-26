@@ -1,4 +1,14 @@
-<main class="d-flex flex-nowrap">
-  <app-navbar></app-navbar>
-  <div class="container"><router-outlet></router-outlet></div>
-</main>
+<nav class="navbar navbar-light">
+  <div class="container-fluid d-flex justify-content-center">
+    <button class="btn btn-outline-dark mx-2" *ngIf="!isSidebarOpen" (click)="toggleSidebar()">☰ Open</button>
+    <button class="btn btn-outline-dark mx-2" *ngIf="isSidebarOpen" (click)="toggleSidebar()">☰ Close</button>
+  </div>
+</nav>
+
+<div class="d-flex">
+  <app-navbar 
+  [isSidebarOpen]="isSidebarOpen"
+  ></app-navbar>
+  <div class="content">
+    <router-outlet></router-outlet></div>
+  </div>

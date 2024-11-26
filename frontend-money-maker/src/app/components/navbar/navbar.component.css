@@ -1,17 +1,23 @@
 .sidebar {
-  width: 250px;
-  height: 100vh;
-  min-height: 200px;
-  overflow: auto;
-  position: -webkit-sticky;
-  position: sticky;
+  min-height: fit-content;
+  position: fixed;
+  top: 0;
+  left: 0;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.402);
   background-color: white;
+  transform: translateY(-600px);
+  transition: transform 0.3s ease-out;
+}
+
+.sidebar.show {
+  transform: translateY(0);
+  transition: all 0.3s ease-in;
+  width: 100%;
 }
 
 a {
   opacity: 50%;
-  color: blueviolet;
+  color: var(--color-palette-violette);
   font-size: larger;
 }
 
@@ -23,4 +29,12 @@ a:hover {
 .active {
   opacity: 100% !important;
   color: blueviolet !important;
+}
+
+@media (min-width: 700px){
+  .sidebar {
+    transform: translateX(0);
+    min-height: 100%;
+    width: 250px;
+  }
 }
