@@ -40,12 +40,12 @@ export class AccountService {
   }
 
   public addAccount(account: Account): Observable<Account> {
-    const observable =  this.httpClient.post<Account>(env.baseUrl + "/accounts", account);
-    observable.subscribe(account => {
-      this.accounts.next(this.accounts.getValue()?.concat(account));
-      console.log('[Info] A new account has been added to the global account list:', account);
-    });
-    return observable;
+    return this.httpClient
+      .post<Account>(env.baseUrl + "/accounts", account)
+      .pipe(tap(account => {
+        this.accounts.next(this.accounts.getValue()?.concat(account));
+        console.log('[Info] A new account has been added to the global account list:', account);
+      }));
   }
 
 //Bemerkung: Richtiger/sicherer wäre es hier Observable<Account | undefined> zurückzugeben,
@@ -61,16 +61,16 @@ export class AccountService {
   }
 
   deleteAccount(id: number): Observable<void>{
-    const observable = this.httpClient.delete<void>(env.baseUrl + "/accounts/" +id);
-    observable.subscribe(_ => {
-      console.log('[Info] Account with id ' + id + ' will be removed from the accounts list.');
-      this.accounts.next(this.accounts.getValue()?.filter(x => x.id !== id));
-      const selectedAccount = this.account.getValue();
-      if (selectedAccount?.id === id) {
-        this.account.next(undefined);
-      }
-    });
-    return observable;
+    return this.httpClient
+      .delete<void>(env.baseUrl + "/accounts/" + id)
+      .pipe(tap(_ => {
+        console.log('[Info] Account with id ' + id + ' will be removed from the accounts list.');
+        this.accounts.next(this.accounts.getValue()?.filter(x => x.id !== id));
+        const selectedAccount = this.account.getValue();
+        if (selectedAccount?.id === id) {
+          this.account.next(undefined);
+        }
+      }));
   }
 
 //Die alten Methoden:
@@ -113,11 +113,11 @@ export class AccountService {
   }
 
   modifyAccount(modifiedAccount: Account): Observable<Account> {
-    const observable = this.httpClient.put<Account>(env.baseUrl + "/accounts", modifiedAccount);
-    observable.subscribe(account => {
-      this.accounts.next(this.accounts.getValue()?.map(a => a.id === account.id ? account : a));
-      this.account.next(this.account.getValue()?.id === account.id ? account : this.account.getValue());
-    });
-    return observable;
+    return this.httpClient
+      .put<Account>(env.baseUrl + "/accounts", modifiedAccount)
+      .pipe(tap(account => {
+        this.accounts.next(this.accounts.getValue()?.map(a => a.id === account.id ? account : a));
+        this.account.next(this.account.getValue()?.id === account.id ? account : this.account.getValue());
+      }));
   }
 }
