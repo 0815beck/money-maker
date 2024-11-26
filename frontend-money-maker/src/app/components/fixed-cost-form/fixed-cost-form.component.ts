@@ -106,13 +106,11 @@ export class FixedCostFormComponent implements OnDestroy {
   saveFixedCost(fixedCost: FixedCost): void {
     if (fixedCost.id === null) {
       this.fixedCostService.addFixedCost(fixedCost).subscribe((data) => {
-        this.accountService.fetchAccounts();
         this.accountService.refetchSelectedAccount();
         this.closeForm();
       });
     } else {
       this.fixedCostService.modifyFixedCost(fixedCost).subscribe(data => {
-        this.accountService.fetchAccounts();
         this.accountService.refetchSelectedAccount();
         this.updateFixedCost(data);
         this.closeForm();

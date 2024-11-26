@@ -45,7 +45,9 @@ public class AccountController {
         if (accountService.getAccountById(account.getId()).isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(accountService.saveAccount(account));
+        Account existingAccount = accountService.getAccountById(account.getId()).get();
+        existingAccount.setName(account.getName());
+        return ResponseEntity.ok(accountService.saveAccount(existingAccount));
     }
 
     @DeleteMapping("/{id}")

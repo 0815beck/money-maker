@@ -35,7 +35,7 @@ export class OverviewFixedCostsComponent {
 
   deleteFixedCost(fixedCost: FixedCost): void{
     if (fixedCost.id != null) {
-      this.fixedCostService.deleteFixedCost(fixedCost.id).subscribe(() => this.accountService.refetchSelectedAccount())
+      this.fixedCostService.deleteFixedCost(fixedCost.id).subscribe(() => this.accountService.fetchAccounts())
       if (this.inputAccount){
         this.fixedCosts = this.fixedCosts.filter(element => element.id!=fixedCost.id);
       }
