@@ -20,6 +20,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import Chart from 'chart.js/auto';
 import { MoneyPipe } from './pipes/money.pipe';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MoneyPipe } from './pipes/money.pipe';
     FixedCostFormComponent,
     PieChartComponent,
     MoneyPipe,
+    BarChartComponent,
   ],
   imports: [
     BrowserModule,
