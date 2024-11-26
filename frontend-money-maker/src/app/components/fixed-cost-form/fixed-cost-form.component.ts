@@ -47,26 +47,41 @@ export class FixedCostFormComponent implements OnDestroy {
   }
 
   ngOnChanges() {
-    if (this.selectedFixedCost) {
-      this.fixedCostForm = this.fb.group(
-        {
-          id: [this.selectedFixedCost.id],
-          amount: [this.selectedFixedCost.amount, Validators.required],
-          start: [this.selectedFixedCost.start, Validators.required],
-          description: [this.selectedFixedCost.description],
-          category: [this.selectedFixedCost.category, Validators.required],
-          account: [this.selectedFixedCost.account],
-          generatedTransactions: [this.selectedFixedCost.generatedTransactions]
-        }
-      )
+    this.fillFormWithDefaultValues();
+  }
+
+  private fillFormWithDefaultValues() {
+    if (!this.selectedFixedCost) {
+      return;
     }
+    if (this.categoryList.length === 0) {
+      return;
+    }
+    const category = this.categoryList?.find(c => c.id === this.selectedFixedCost?.category.id);
+    this.fixedCostForm = this.fb.group(
+      {
+        id: [this.selectedFixedCost.id],
+        amount: [this.selectedFixedCost.amount, Validators.required],
+        start: [this.selectedFixedCost.start, Validators.required],
+        description: [this.selectedFixedCost.description],
+        category: [category, Validators.required],
+        account: [this.selectedFixedCost.account],
+        generatedTransactions: [this.selectedFixedCost.generatedTransactions]
+      }
+    )
   }
 
 
   ngOnInit() {
-    this.loadCategories();
+    this.initCategories();
   }
 
+  private initCategories() {
+    this.categoryService.getCategories().subscribe(categories => {
+      this.categoryList = categories;
+      this.fillFormWithDefaultValues();
+    });
+  }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe({
@@ -127,6 +142,7 @@ export class FixedCostFormComponent implements OnDestroy {
     this.fixedCostEvent.emit(fixedCost);
   }
 
+  
   return(boolean: boolean) {
     this.newCategory = boolean;
     this.loadCategories();
@@ -138,6 +154,7 @@ export class FixedCostFormComponent implements OnDestroy {
     this.destroy.complete();
   }
 
+  
   deleteSelectedCategory() {
     const selectedCategory =
       this.fixedCostForm.get('category')?.value;
