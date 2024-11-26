@@ -20,7 +20,8 @@ export class OverviewFixedCostsComponent {
   constructor(private fixedCostService: FixedCostService, private accountService: AccountService) {
     this.accountService.account$.pipe(takeUntil(this.destroy)).subscribe(data => {
       this.account = data;
-      this.fixedCosts = this.account!.fixedCosts;})
+      if (this.account){
+      this.fixedCosts = this.account.fixedCosts;}})
   }
 
   ngOnChanges(): void{
@@ -34,7 +35,7 @@ export class OverviewFixedCostsComponent {
 
   deleteFixedCost(fixedCost: FixedCost): void{
     if (fixedCost.id != null) {
-      this.fixedCostService.deleteFixedCost(fixedCost.id).subscribe(() => this.accountService.refetchSelectedAccount())
+      this.fixedCostService.deleteFixedCost(fixedCost.id).subscribe(() => this.accountService.fetchAccounts())
       if (this.inputAccount){
         this.fixedCosts = this.fixedCosts.filter(element => element.id!=fixedCost.id);
       }

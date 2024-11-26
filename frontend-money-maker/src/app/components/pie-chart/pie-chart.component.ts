@@ -77,9 +77,10 @@ export class PieChartComponent {
 
   ngOnChanges() {
     if (!this.data) {
-      console.log('[Error] data is undefined');
+      console.log('[Error] Pie chart data input is undefined.');
       return;
     }
+    console.log('[Debug] Pie chart data was updated in the pie chart component. New input: ', this.data);
 
     this.data.datasets[0].backgroundColor = this.colors;
     this.data.datasets[0].borderWidth = 1;
@@ -96,8 +97,10 @@ export class PieChartComponent {
       }
     }
 
-    this.chart = new Chart('canvas', chartConfig);
+    if(Chart.getChart("canvas")) {
+      Chart.getChart("canvas")?.destroy()
+    }
 
-    console.log('[Debug] Something happened, the input data is now: ', this.data);
+    this.chart = new Chart('canvas', chartConfig);
   }
 }

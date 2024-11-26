@@ -2,8 +2,8 @@
 
 <form [formGroup]="accountForm" class="p-3" (submit)="createAccount()">
   <div class="input-group">
-    <span class="input-group-text">name</span>
-    <input type="text" aria-label="First name" class="form-control" formControlName="name"/>
+    <label class="input-group-text" for="name">name</label>
+    <input id="name" type="text" aria-label="First name" class="form-control" formControlName="name"/>
   </div>
   <div class="d-grid">
   <br><button type="submit" [disabled]="accountForm.invalid" class="btn-outline-secondary btn">Speichern</button>

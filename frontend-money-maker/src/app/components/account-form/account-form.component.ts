@@ -27,7 +27,6 @@ export class AccountFormComponent {
   createAccount(): void {
     const account: Account = this.accountForm.value;
     this.accountService.addAccount(account).subscribe(data => {
-      this.accountService.fetchAccounts();
       this.closeForm();
     });
   }

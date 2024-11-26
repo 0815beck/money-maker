@@ -18,6 +18,7 @@ import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import Chart from 'chart.js/auto';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

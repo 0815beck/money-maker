@@ -4,6 +4,7 @@
   </button>
 </div>
 
+<h1 *ngIf="!inputAccount">Fixed Costs Overview</h1>
 <div *ngFor="let fixedCost of fixedCosts; let i = index"
      class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-3"
      [ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
@@ -19,7 +20,7 @@
     <button class="btn btn-link" (click)="deleteFixedCost(fixedCost)">
       <i class="bi bi-trash"></i>
     </button>
-    <button class="btn btn-link text-decoration-none"  [routerLink]="['/fix-costs/', fixedCost.id]">
+    <button class="btn btn-link text-decoration-none"  [routerLink]="['/fixed-costs/', fixedCost.id]" *ngIf="!inputAccount">
       <i class="bi bi-chevron-double-right"></i>
     </button>
   </div>
