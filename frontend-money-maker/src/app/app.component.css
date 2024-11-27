@@ -3,11 +3,9 @@
     top: 0;
     width: 100%;
     z-index: 200;
+    background-color: white;
 }
 
-.content {
-    flex: 0;
-}
 
 @media (min-width: 700px){
     .navbar {

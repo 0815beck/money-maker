@@ -1,33 +1,14 @@
 
 <section class="mt-4 ms-4 me-4">
-    <div id="select-account-and-month" class="d-flex justify-content-between mb-5">
+    <div id="select-account-and-month" class="d-flex justify-content-between mb-5 flex-wrap gap-2">
         <div>
             <label for="select-account" class="c-violett me-1">Account: </label>
             <select id="select-account" 
             (change)="changeAccount($event)" 
-            class="me-2"
             [(ngModel)]="id">
-                <!--<option value="undefined">Not Selected</option>-->
                 <option *ngFor="let account of accounts" [value]="account.id">{{account.name}}</option>
             </select>
         </div>
-        <!-- <div>
-            <label for="select-month" class="c-violett me-1">Select Month: </label>
-            <select id="select-month">
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
-        </div> -->
         <div>
             <label for="select-start-date" class="c-violett me-1">Start Date:</label>
             <input type="date" [(ngModel)]="selectedStartDate"
@@ -44,15 +25,15 @@
 
 
     <div id="stats" class="container mb-3">
-        <div class="row">
-            <div class="col bc-yellow c-violett rounded-2 me-2 pt-2">
+        <div class="d-flex gap-2 flex-wrap">
+            <div class=" flex-fill bc-yellow c-violett rounded-2 p-2">
                 <p class="mb-0">Income</p> 
                 <p class="fs-1">
                     <span *ngIf="!totalIncome">-</span>
                     <span *ngIf="totalIncome">{{totalIncome | money}}</span>
                 </p>
             </div>
-            <div class="col bc-violett c-yellow rounded-2 me-2 pt-2">
+            <div class=" flex-fill bc-violett c-yellow rounded-2 p-2">
                 <p class="mb-0">Expenses</p>
                 <p class="fs-1">
                     <span *ngIf="!totalExpenses">
@@ -63,7 +44,7 @@
                     </span>
                 </p>
             </div>
-            <div class="col bc-yellow c-violett rounded-2 br-2 pt-2">
+            <div class=" flex-fill bc-violett c-yellow rounded-2 br-2 p-2">
                 <p class="mb-0">Balance {{selectedEndDate}}</p>
                 <p class="fs-1">
                     <span *ngIf="!balance">-</span>
@@ -72,15 +53,20 @@
             </div>
         </div>
     </div>
+
     <div id="charts" class="container">
         <div class="row">
-            <div *ngIf="expensesData | interesting" class="col rounded-2">
-                <app-pie-chart [data]="expensesData"
+            <div class="p-2 col-lg-6">            
+                <div *ngIf="expensesData | interesting" class="border rounded-2 p-2 ">      
+                    <app-pie-chart [data]="expensesData"
                 [start]="selectedStartDate" [end]="selectedEndDate"></app-pie-chart>
+                </div>
             </div>
-            <div *ngIf="historyData | interesting" class="col rounded-2">
+            <div class="p-2 col-lg-6">
+                <div *ngIf="historyData | interesting" class=" border rounded-2 p-2">
                 <app-bar-chart [data]="historyData"></app-bar-chart>
-            </div>
+            </div></div>
+
         </div>
     </div>
 </section>

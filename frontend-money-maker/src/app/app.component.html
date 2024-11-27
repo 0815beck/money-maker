@@ -1,12 +1,14 @@
-<nav (window:resize)="onResize()" class="navbar navbar-light">
-  <div class="container-fluid d-flex justify-content-center mb-2">
-    <button class="btn btn-outline-dark mx-2" *ngIf="!isSidebarOpen" (click)="toggleSidebar()">☰ Open</button>
-    <button class="btn btn-outline-dark mx-2" *ngIf="isSidebarOpen" (click)="toggleSidebar()">☰ Close</button>
-  </div>
-</nav>
 
-<div class="d-flex">
-  <app-navbar 
+
+
+<div class="d-flex flex-column">
+  <div (window:resize)="onResize()" class="navbar flex-fill">
+    <div class="container flex-fill">
+      <button class="btn btn-outline-dark mx-2" *ngIf="!isSidebarOpen" (click)="toggleSidebar()">☰ Open</button>
+      <button class="btn btn-outline-dark mx-2" *ngIf="isSidebarOpen" (click)="toggleSidebar()">☰ Close</button>
+    </div>
+  </div>
+  <app-navbar class="flex-fill"
   [isSidebarOpen]="isSidebarOpen"
   ></app-navbar>
   <div class="content flex-fill">

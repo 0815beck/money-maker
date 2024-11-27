@@ -13,7 +13,7 @@ export class BarChartComponent {
   constructor() { }
 
   ngOnInit(): void {
-    this.createChart();
+    //this.createChart();
   }
 
   public chart: any;
@@ -102,6 +102,7 @@ export class BarChartComponent {
     };
 
     this.chart = new Chart("MyChart", config);
-  }*/
+  }
+  */
 }
 
