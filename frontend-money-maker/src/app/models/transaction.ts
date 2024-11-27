@@ -8,4 +8,5 @@ export interface Transaction {
   description?: string;
   category: Category;
   account: Account;
+  isFixedCost: boolean;
 }

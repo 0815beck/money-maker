@@ -37,6 +37,7 @@ export class TransactionFormComponent {
       timestamp: ['', Validators.required],
       description: [''],
       account: [this.account],
+      isFixedCost: false
     });
     accountService.account$.pipe(takeUntil(this.destroy)).subscribe((data) => {
       this.account = data;
@@ -75,6 +76,7 @@ export class TransactionFormComponent {
         description: [this.selectedTransaction.description],
         category: [category, Validators.required],
         account: [this.selectedTransaction.account],
+        isFixedCost: false
       }
     )
   }
