@@ -1,5 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import Chart from 'chart.js/auto';
+import {Chart, registerables} from 'chart.js/auto';
+import { toString } from '../../utils/date';
+
+//Chart.register(...registerables);
 
 @Component({
   selector: 'app-pie-chart',
@@ -9,8 +13,11 @@ import Chart from 'chart.js/auto';
 export class PieChartComponent {
 
   @Input() data: any;
+  @Input() start: string | undefined;
+  @Input() end: string | undefined;
 
-  chart: any = [];
+  chart: any;
+  
   colors = [
     'rgb(255, 25, 75)',
     'rgb(0, 233, 225)',
@@ -23,7 +30,7 @@ export class PieChartComponent {
   constructor() {}
 
   ngOnChanges() {
-    if (!this.data) {
+    if (!this.data || !this.start || !this.end) {
       console.log('[Error] Pie chart data input is undefined.');
       return;
     }
@@ -33,22 +40,26 @@ export class PieChartComponent {
     this.data.datasets[0].backgroundColor = this.colors;
     this.data.datasets[0].borderWidth = 1;
 
-    const chartConfig = {
-      type: 'pie',
-      data: this.data,
-      options: {
-        responsive: true,
-        scales: {
-          x: { beginAtZero: true },
-          y: { beginAtZero: true,},
-        },
-      }
-    }
+    let config: any = {};
+    config.type = 'pie';
+    config.data = this.data;
+    config.options = {};
+    config.options.responsive = true;
+    config.options.scales = {
+      x: { beginAtZero: true, grid: {display: false}, display: false },
+      y: { beginAtZero: true, grid: {display: false}, display: false }
+    };
+    config.options.plugins = {};
+    config.options.plugins.title = {
+      display: true,
+      text: 'Expenses ' + 'between '+ this.start + ' and ' + this.end,
+      font: { size: 18, weight: 'bold' }
+    };
 
     if(Chart.getChart("canvas")) {
       Chart.getChart("canvas")?.destroy()
     }
 
-    this.chart = new Chart("canvas", chartConfig);
+    this.chart = new Chart("canvas", config);
   }
 }

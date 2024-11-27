@@ -28,11 +28,6 @@ export class OverviewTransactionsComponent {
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
-  }
-
   ngOnChanges(): void{
     if(this.inputAccount){
       this.destroy.next();
@@ -41,13 +36,6 @@ export class OverviewTransactionsComponent {
     }
   }
 
-  showForm() {
-    if (!this.formDisplayed) {
-      this.formDisplayed = true;
-    } else {
-      this.formDisplayed = false;
-    }
-  }
 
   loadTransactions() {
     if(this.account){
@@ -56,7 +44,7 @@ export class OverviewTransactionsComponent {
   }
 
   transactionSaved(event: any) {
-    this.showForm();
+    this.formDisplayed = !this.formDisplayed;
     this.loadTransactions();
   }
 
@@ -76,6 +64,10 @@ export class OverviewTransactionsComponent {
         this.transactions = this.transactions?.filter(element => element.id =transaction.id);
       }
     }
+  }
 
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

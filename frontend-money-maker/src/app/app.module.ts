@@ -23,6 +23,7 @@ import { MoneyPipe } from './pipes/money.pipe';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

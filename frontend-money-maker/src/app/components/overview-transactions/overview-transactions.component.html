@@ -1,9 +1,10 @@
 <div class="p-3 d-grid justify-content-md-end">
-  <button type="button" (click)="showForm()" class="btn btn-outline-secondary">
+  <button *ngIf="!inputAccount" type="button" (click)="formDisplayed=!formDisplayed" class="btn btn-outline-secondary">
     +
   </button>
 </div>
 
+<h1 class="fs-1 text-center p-2" *ngIf="!inputAccount">Transaction Overview</h1>
 <h1 class="fs-1 text-center p-2">Transaction Overview</h1>
 <app-toolbar [transactions] = "transactions"></app-toolbar>
 <div *ngFor="let transaction of transactions; let i = index;"
@@ -18,7 +19,7 @@ class="d-flex align-items-center justify-content-between p-2 m-3 rounded shadow-
     <span class="ms-5">{{transaction.category.name}}</span>
   </div>
   <div>
-    <button class="btn btn-link" (click)="deleteTransaction(transaction)">
+    <button class="btn btn-link" (click)="deleteTransaction(transaction)" *ngIf="!inputAccount">
       <i class="bi bi-trash"></i>
     </button>
     <button class="btn btn-link text-decoration-none" [routerLink]="['/transactions/', transaction.id]" *ngIf="!inputAccount">
@@ -31,7 +32,7 @@ class="d-flex align-items-center justify-content-between p-2 m-3 rounded shadow-
 <div *ngIf="formDisplayed; then form"></div>
 <ng-template #form>
   <div class="modal-container">
-    <button (click)="showForm()" class="close">&times;</button>
+    <button (click)="formDisplayed=!formDisplayed" class="close">&times;</button>
     <div class="modal-content animate">
       <app-transaction-form
         (returnWhenSaved)="transactionSaved($event)"

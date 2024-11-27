@@ -1,4 +1,5 @@
 import { Transaction } from "../models/transaction";
+import { toString } from "./date";
 
 export type Stats = {
     start: Date,
@@ -32,12 +33,12 @@ export function stats(start: Date, end: Date, transactions: Transaction[]): Stat
     return {start, end, balance, income, expenses}
 }
 
-export type PieChartData = {
-    labels: string[],
+export type ChartData = {
+    labels: (string | string[])[],
     datasets: { label: string, data: number[] }[]
 }
 
-export function pieChartData(start: Date, end: Date, transactions: Transaction[]): PieChartData {
+export function pieChartData(start: Date, end: Date, transactions: Transaction[]): ChartData {
 //First step: compute the expenses by category    
     const dictionary: { [key: string]: number } =  {};
     for (let transaction of transactions) {
@@ -78,15 +79,53 @@ export function pieChartData(start: Date, end: Date, transactions: Transaction[]
         labels,
         datasets: [{ label: "Expenses", data }]
     };
-
 }
 
-let expensesData = {
-labels: ['Miete', 'Lebensmittel', 'Kleidung', 'Unterhaltung', 'Fahrtkosten', 'Sonstiges'],
-datasets: [
-    {
-    label: 'Ausgaben',
-    data: [12, 19, 3, 5, 2, 3]
-    },
-],
+export function barChartData(end: Date, transactions: Transaction[]): ChartData {
+    let tempEnd = new Date(end)
+    let tempStart: Date = new Date(tempEnd); 
+    tempStart.setMonth(tempStart.getMonth() - 1);
+    let chartData: ChartData = {
+        labels: [],
+        datasets: [ 
+            { label: "Income", data: [] },
+            { label: "Expenses", data: [] },
+            { label: "Total", data: [] }
+        ]
+    };
+
+    for(let i = 0; i < 3; i++) {
+        const statistic = stats(tempStart, tempEnd, transactions);
+        const label = ['between ' + toString(tempStart), 'and ' + toString(tempEnd)];
+        chartData.labels.push(label);
+        chartData.datasets[0].data.push(statistic.income);
+        chartData.datasets[1].data.push(statistic.expenses);
+        chartData.datasets[2].data.push(statistic.income + statistic.expenses);
+        tempEnd.setMonth(tempEnd.getMonth() - 1);
+        tempStart.setMonth(tempEnd.getMonth() - 1);
+    }
+
+    console.log('[Debug] barChartData(end: Date, transaction: Transaction[]): ChartData will return the following',
+        chartData
+    );
+    return chartData;
 }
+
+/*
+const data: any = {};
+data.labels = ['January', 'February', 'March', 'April'];
+data.datasets = [
+      {
+        label: "Income",
+        data: ["500", "200", "600", "20"],
+      }, 
+      {
+        label: "Expenses",
+        data: ["-300", "-240", "-30", "-540"],
+      },
+      {
+        label: "Total",
+        data: ["200", "-40", "570", "-520"],
+      },
+    ]
+*/

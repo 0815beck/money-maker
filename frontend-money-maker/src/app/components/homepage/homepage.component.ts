@@ -5,7 +5,7 @@ import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
 import { TransactionService } from '../../services/transaction.service';
 import { Category } from '../../models/category';
-import { pieChartData, stats, Stats } from '../../utils/statistics';
+import { barChartData, pieChartData, stats, Stats } from '../../utils/statistics';
 import { toString } from '../../utils/date';
 
 @Component({
@@ -28,7 +28,9 @@ export class HomepageComponent {
   totalExpenses: number | undefined;
   balance: number | undefined;
 
+  //Data for the charts!
   expensesData: any;
+  historyData: any;
 
   constructor(
     private accountService: AccountService
@@ -82,18 +84,11 @@ export class HomepageComponent {
     this.totalIncome = statistic.income;
 
     const expensesData = pieChartData(start, end, this.transactions);
-
-    console.log('[Debug] Data for the Pie Chart has been computed.', expensesData);
-    /*let expensesData = {
-      labels: ['Miete', 'Lebensmittel', 'Kleidung', 'Unterhaltung', 'Fahrtkosten', 'Sonstiges'],
-      datasets: [
-        {
-          label: 'Ausgaben',
-          data: [12, 19, 3, 5, 2, 3]
-        },
-      ],
-    }*/
+    //console.log('[Debug] Data for the Pie Chart has been computed.', expensesData);
     this.expensesData = expensesData;
+    const historyData = barChartData(end, this.transactions);
+    console.log('[Debug] Bar chart data has been computed:', historyData);
+    this.historyData = historyData;
   }
 
 //unsubscribe logic
