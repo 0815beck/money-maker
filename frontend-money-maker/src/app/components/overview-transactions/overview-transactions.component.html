@@ -5,6 +5,7 @@
 </div>
 
 <h1 class="fs-1 text-center p-2">Transaction Overview</h1>
+<app-toolbar></app-toolbar>
 <div *ngFor="let transaction of transactions; let i = index;"
 class="d-flex align-items-center justify-content-between p-2 m-3 rounded shadow-sm mb-3"
 [ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
@@ -20,7 +21,7 @@ class="d-flex align-items-center justify-content-between p-2 m-3 rounded shadow-
     <button class="btn btn-link" (click)="deleteTransaction(transaction)">
       <i class="bi bi-trash"></i>
     </button>
-    <button class="btn btn-link text-decoration-none" [routerLink]="['/transaction/', transaction.id]" *ngIf="!inputAccount">
+    <button class="btn btn-link text-decoration-none" [routerLink]="['/transactions/', transaction.id]" *ngIf="!inputAccount">
       <i class="bi bi-chevron-double-right"></i>
     </button>
   </div>

@@ -68,7 +68,7 @@ export class OverviewTransactionsComponent {
         },
         error: (error) => {
           console.log('Could not delete Transaction: ', error);
-          alert('Cannot delete Transation, due to Fixed Cost');
+          alert('Cannot delete Fixed Cost');
         }
       });
       if(this.inputAccount){
