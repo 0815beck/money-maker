@@ -74,11 +74,11 @@
     </div>
     <div id="charts" class="container">
         <div class="row">
-            <div class="col rounded-2">
+            <div *ngIf="expensesData | interesting" class="col rounded-2">
                 <app-pie-chart [data]="expensesData"
                 [start]="selectedStartDate" [end]="selectedEndDate"></app-pie-chart>
             </div>
-            <div class="col rounded-2">
+            <div *ngIf="historyData | interesting" class="col rounded-2">
                 <app-bar-chart [data]="historyData"></app-bar-chart>
             </div>
         </div>

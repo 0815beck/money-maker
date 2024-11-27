@@ -5,7 +5,7 @@ import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
 import { TransactionService } from '../../services/transaction.service';
 import { Category } from '../../models/category';
-import { barChartData, pieChartData, stats, Stats } from '../../utils/statistics';
+import { barChartData, ChartData, pieChartData, stats, Stats } from '../../utils/statistics';
 import { toString } from '../../utils/date';
 
 @Component({
@@ -29,8 +29,8 @@ export class HomepageComponent {
   balance: number | undefined;
 
   //Data for the charts!
-  expensesData: any;
-  historyData: any;
+  expensesData: ChartData | undefined;
+  historyData: ChartData | undefined;
 
   constructor(
     private accountService: AccountService
