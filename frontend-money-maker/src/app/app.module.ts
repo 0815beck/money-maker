@@ -22,6 +22,7 @@ import Chart from 'chart.js/auto';
 import { MoneyPipe } from './pipes/money.pipe';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

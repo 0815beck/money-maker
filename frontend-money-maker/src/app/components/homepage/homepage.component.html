@@ -47,25 +47,39 @@
         <div class="row">
             <div class="col bc-yellow c-violett rounded-2 me-2 pt-2">
                 <p class="mb-0">Total Income</p> 
-                <p *ngIf="totalIncome" class="fs-1">{{totalIncome | money}}</p>
+                <p class="fs-1">
+                    <span *ngIf="!totalIncome">-</span>
+                    <span *ngIf="totalIncome">{{totalIncome | money}}</span>
+                </p>
             </div>
             <div class="col bc-violett c-yellow rounded-2 me-2 pt-2">
                 <p class="mb-0">Total Expenses</p>
-                <p *ngIf="totalExpenses" class="fs-1">{{totalExpenses | money}}</p>
+                <p class="fs-1">
+                    <span *ngIf="!totalExpenses">
+                        -
+                    </span>
+                    <span *ngIf="totalExpenses">
+                        {{totalExpenses | money}}
+                    </span>
+                </p>
             </div>
             <div class="col bc-yellow c-violett rounded-2 br-2 pt-2">
                 <p class="mb-0">Balance {{selectedEndDate}}</p>
-                <p *ngIf="balance" class="fs-1">{{balance | money}}</p>
+                <p class="fs-1">
+                    <span *ngIf="!balance">-</span>
+                    <span *ngIf="balance">{{balance | money}}</span>
+                </p>
             </div>
         </div>
     </div>
     <div id="charts" class="container">
         <div class="row">
             <div class="col rounded-2">
-                <app-pie-chart [data]="expensesData"></app-pie-chart>
+                <app-pie-chart [data]="expensesData"
+                [start]="selectedStartDate" [end]="selectedEndDate"></app-pie-chart>
             </div>
             <div class="col rounded-2">
-                <app-bar-chart></app-bar-chart>
+                <app-bar-chart [data]="historyData"></app-bar-chart>
             </div>
         </div>
     </div>
