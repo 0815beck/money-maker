@@ -16,13 +16,15 @@ class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm m
     class="me-3"
     style="width: 30px; height: 30px; object-fit: cover;">
     <span class="ms-4 fw-bold">{{transaction.amount}} €</span>
-    <span class="ms-5">{{transaction.category.name}}</span>
+    <span class="ms-5">{{ window.screen.width < 400 ? 
+    (transaction.category.name | truncate) : transaction.category.name }}</span>
   </div>
   <div>
     <button class="btn btn-link" (click)="deleteTransaction(transaction)" *ngIf="!inputAccount">
       <i class="bi bi-trash"></i>
     </button>
-    <button class="btn btn-link text-decoration-none" [routerLink]="['/transactions/', transaction.id]" *ngIf="!inputAccount">
+    <button class="btn btn-link text-decoration-none" 
+    [routerLink]="['/transactions/', transaction.id]" *ngIf="!inputAccount">
       <i class="bi bi-chevron-double-right"></i>
     </button>
   </div>

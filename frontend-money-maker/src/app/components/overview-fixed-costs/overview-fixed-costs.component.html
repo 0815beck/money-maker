@@ -14,13 +14,15 @@
          class="me-3"
          style="width: 30px; height: 30px; object-fit: cover;">
     <span class="ms-4 fw-bold">{{ fixedCost.amount}} €</span>
-    <span class="ms-5 ">{{ fixedCost.category.name }}</span>
+    <span class="ms-5 ">{{ window.screen.width < 400 ? 
+    (fixedCost.category.name | truncate) : fixedCost.category.name }}</span>
   </div>
   <div>
     <button class="btn btn-link" (click)="deleteFixedCost(fixedCost)" *ngIf="!inputAccount">
       <i class="bi bi-trash"></i>
     </button>
-    <button class="btn btn-link text-decoration-none"  [routerLink]="['/fixed-costs/', fixedCost.id]" *ngIf="!inputAccount">
+    <button class="btn btn-link text-decoration-none"  
+    [routerLink]="['/fixed-costs/', fixedCost.id]" *ngIf="!inputAccount">
       <i class="bi bi-chevron-double-right"></i>
     </button>
   </div>

@@ -19,6 +19,7 @@ export class OverviewTransactionsComponent {
   formDisplayed: boolean = false;
   transactions: Transaction[] = [];
   account?: Account;
+  window = window;
   destroy = new Subject<void>();
 
   constructor(private accountService: AccountService, private transactionService: TransactionService) {
