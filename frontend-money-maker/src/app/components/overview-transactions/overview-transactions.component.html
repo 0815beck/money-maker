@@ -34,7 +34,7 @@ class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm m
 <ng-template #form>
   <div class="modal-container">
     <button (click)="formDisplayed=!formDisplayed" class="close">&times;</button>
-    <div class="modal-content animate">
+    <div class="modal-content animate p-4">
       <app-transaction-form
         (returnWhenSaved)="transactionSaved($event)"
       ></app-transaction-form>

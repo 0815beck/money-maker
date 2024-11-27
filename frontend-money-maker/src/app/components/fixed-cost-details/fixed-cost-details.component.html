@@ -32,6 +32,6 @@
         <p class="text-muted">{{fixedCost.description}}</p>
       </div>
     </div>
-  </div>
+  </div><div class="mt-4"><app-fixed-cost-form [selectedFixedCost]="fixedCost" *ngIf="edit" (fixedCostEvent)="fixedCost = $event; edit=false"></app-fixed-cost-form>
 </div>
-<app-fixed-cost-form [selectedFixedCost]="fixedCost" *ngIf="edit" (fixedCostEvent)="fixedCost = $event; edit=false"></app-fixed-cost-form>
+</div>

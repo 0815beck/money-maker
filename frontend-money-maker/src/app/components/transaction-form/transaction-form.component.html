@@ -23,7 +23,7 @@
       <label class="form-check-label">Expense</label>
     </div>
   </div>
-  <form class="p-3" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
 
     <div class="input-group">
       <span class="input-group-text">Amount</span>
@@ -98,7 +98,7 @@
         formControlName="timestamp"
       />
     </div>
-    <div data-mdb-input-init class="form-outline p-2">
+    <div data-mdb-input-init class="form-outline">
       <textarea
         class="form-control"
         id="textAreaExample"

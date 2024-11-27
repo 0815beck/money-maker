@@ -57,3 +57,9 @@ a:hover {
     display:inline-block;
   }
 }
+
+@media (min-height: 400px){
+  .picture {
+    display: none;
+  }
+}
