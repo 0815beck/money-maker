@@ -17,6 +17,8 @@ import {Subject, takeUntil} from 'rxjs';
 })
 export class FixedCostFormComponent implements OnDestroy {
   @Input() selectedFixedCost?: FixedCost;
+  @Output() closeEvent = new EventEmitter<void>();
+  @Output() fixedCostEvent = new EventEmitter<FixedCost>();
   today: string;
   fixedCostForm: FormGroup;
   account?: Account;
@@ -24,8 +26,6 @@ export class FixedCostFormComponent implements OnDestroy {
   destroy = new Subject<void>();
   newCategory: boolean = false;
   transactionType?: number;
-  @Output() closeEvent = new EventEmitter<void>();
-  @Output() fixedCostEvent = new EventEmitter<FixedCost>();
 
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private categoryService: CategoryService, private fixedCostService: FixedCostService, private transactionService: TransactionService) {
@@ -66,7 +66,7 @@ export class FixedCostFormComponent implements OnDestroy {
     this.fixedCostForm = this.fb.group(
       {
         id: [this.selectedFixedCost.id],
-        amount: [this.selectedFixedCost.amount, Validators.required],
+        amount: [Math.abs(this.selectedFixedCost.amount), Validators.required],
         start: [this.selectedFixedCost.start, Validators.required],
         description: [this.selectedFixedCost.description],
         category: [category, Validators.required],
@@ -74,13 +74,21 @@ export class FixedCostFormComponent implements OnDestroy {
         generatedTransactions: [this.selectedFixedCost.generatedTransactions]
       }
     )
+    if (this.selectedFixedCost) {
+      if (this.selectedFixedCost.amount > 0) {
+        this.transactionType = 1;
+      } else if (this.selectedFixedCost.amount < 0) {
+        this.transactionType = -1;
+      }
+    }
   }
 
 
   createFixedCost(): void {
     const fixedCost: FixedCost = this.fixedCostForm.value;
-    if (this.transactionType){
-    fixedCost.amount = fixedCost.amount*this.transactionType;}
+    if (this.transactionType) {
+      fixedCost.amount = fixedCost.amount * this.transactionType;
+    }
     if ((new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) && !this.selectedFixedCost)) {
       let transaction: Transaction = {
         amount: fixedCost.amount,
@@ -108,12 +116,13 @@ export class FixedCostFormComponent implements OnDestroy {
       });
     } else {
       this.fixedCostService.modifyFixedCost(fixedCost).subscribe(data => {
-        this.accountService.refetchSelectedAccount();
         this.updateFixedCost(data);
         this.closeForm();
+        this.accountService.refetchSelectedAccount();
       })
     }
   }
+
 
   updateFixedCost(fixedCost: FixedCost) {
     this.fixedCostEvent.emit(fixedCost);
