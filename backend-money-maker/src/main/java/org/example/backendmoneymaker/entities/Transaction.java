@@ -32,4 +32,6 @@ public class Transaction {
     @ManyToOne
     @JsonIgnoreProperties({"transactions", "fixedCosts"})
     private Account account;
+
+    private boolean isFixedCost = false;
 }
