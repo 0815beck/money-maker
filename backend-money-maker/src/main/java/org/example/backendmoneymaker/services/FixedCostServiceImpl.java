@@ -38,6 +38,11 @@ public class FixedCostServiceImpl implements FixedCostService {
         }
     }
 
+//    @Scheduled(cron = "* * * * * *")
+//    public void test() {
+//        System.out.println("Hello, I am scheduled :)");
+//    }
+
     private void generateTransactions(Account account) {
 
         List<FixedCost> fixedCosts = account.getFixedCosts();

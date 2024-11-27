@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light">
+<nav (window:resize)="onResize()" class="navbar navbar-light">
   <div class="container-fluid d-flex justify-content-center">
     <button class="btn btn-outline-dark mx-2" *ngIf="!isSidebarOpen" (click)="toggleSidebar()">☰ Open</button>
     <button class="btn btn-outline-dark mx-2" *ngIf="isSidebarOpen" (click)="toggleSidebar()">☰ Close</button>
@@ -9,6 +9,7 @@
   <app-navbar 
   [isSidebarOpen]="isSidebarOpen"
   ></app-navbar>
-  <div class="content">
-    <router-outlet></router-outlet></div>
+  <div class="content flex-fill">
+    <router-outlet></router-outlet>
   </div>
+</div>

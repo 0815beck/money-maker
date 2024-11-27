@@ -24,4 +24,8 @@ export class AppComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  onResize() {
+    this.isSidebarOpen = false;
+  } 
+
 }
