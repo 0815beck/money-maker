@@ -83,6 +83,7 @@ public class FixedCostServiceImpl implements FixedCostService {
         transaction.setDescription(fixedCost.getDescription());
         transaction.setCategory(fixedCost.getCategory());
         transaction.setAccount(fixedCost.getAccount());
+        transaction.setFixedCost(true);
 
         return transaction;
     }

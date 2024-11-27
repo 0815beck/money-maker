@@ -84,7 +84,8 @@ export class FixedCostFormComponent implements OnDestroy {
         account: fixedCost.account,
         category: fixedCost.category,
         description: fixedCost.description,
-        timestamp: new Date()
+        timestamp: new Date(),
+        isFixedCost: true
       }
       this.transactionService.addTransaction(transaction).subscribe(data => {
         transaction = data;

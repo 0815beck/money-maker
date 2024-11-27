@@ -63,7 +63,7 @@ export class OverviewTransactionsComponent {
     if(transaction.id != null){
             this.transactionService.deleteTransaction(transaction.id).subscribe({
         next: () => {
-          this.accountService.fetchAccounts();
+          this.accountService.refetchSelectedAccount();
           console.log('Transaction deleted!')
         },
         error: (error) => {
