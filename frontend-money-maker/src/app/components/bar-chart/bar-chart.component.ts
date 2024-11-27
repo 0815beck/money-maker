@@ -34,9 +34,9 @@ export class BarChartComponent {
     config.options = {};
     config.options.scales = {
       x: { beginAtZero: true },
-      y: { beginAtZero: true,},
+      y: { beginAtZero: true, ticks: { align: 'center' }},
     };
-    config.options.indexAxis = 'y';
+    config.options.indexAxis = 'x';
     config.options.aspectRatio = 1;
     config.options.plugins = {};
     config.options.plugins.title = {
