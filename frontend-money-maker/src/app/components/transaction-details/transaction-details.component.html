@@ -33,5 +33,7 @@
       </div>
     </div>
   </div>
+  <div class="mt-4">
+    <app-transaction-form *ngIf="edit" [selectedTransaction]="transaction" (transactionEvent)="transaction=$event; edit=false"></app-transaction-form>
+  </div>
 </div>
-<app-transaction-form *ngIf="edit" [selectedTransaction]="transaction" (transactionEvent)="transaction=$event; edit=false"></app-transaction-form>

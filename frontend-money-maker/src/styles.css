@@ -5,7 +5,7 @@
 
 .modal-container {
   position: fixed;
-  z-index: 1;
+  z-index: 201;
   left: 0;
   top: 0;
   width: 100%;
@@ -19,8 +19,8 @@
 
 .modal-content {
   background-color: white;
-  margin: 5px auto;
-  width: 80%;
+  margin: 20px auto;
+  width: 100%;
   border-radius: 15px;
 }
 
@@ -33,6 +33,7 @@
   background-color: rgba(250, 235, 215, 0);
   color: var(--color-palette-yellow);
   border: 0;
+  
 }
 
 .animate {

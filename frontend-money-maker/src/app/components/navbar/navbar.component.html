@@ -1,15 +1,16 @@
 
 <div class="sidebar border-end"
 [class.show]="isSidebarOpen">
-  <div class="sidebar-heading text-center py-4">
+  <div class="sidebar-heading text-center">
     <img
       src="https://cdn.pixabay.com/photo/2022/03/13/08/47/money-7065558_1280.png"
       width="200px"
+      class="picture"
     />
-    <span class="fs-1">MoneyMaker</span>
+    <h1 class="fs-1">MoneyMaker</h1>
   </div>
 
-  <ul class="nav flex-column mb-auto p-3">
+  <ul class="nav flex-column mb-auto p-3 align-items-center">
     <li class="nav-item">
       <a
         [routerLink]="'/homepage'"
