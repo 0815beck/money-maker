@@ -15,10 +15,9 @@ import { TransactionFormComponent } from './components/transaction-form/transact
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { FixedCostFormComponent } from './components/fixed-cost-form/fixed-cost-form.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
-import Chart from 'chart.js/auto';
 import { MoneyPipe } from './pipes/money.pipe';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { InterestingPipe } from './pipes/interesting.pipe';

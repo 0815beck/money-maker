@@ -23,7 +23,7 @@ export class TransactionFormComponent {
   newCategory: boolean = false;
   account?: Account;
   destroy = new Subject<void>();
-  transactionType?: number;
+  transactionType?: string;
 
 
 
@@ -85,9 +85,9 @@ export class TransactionFormComponent {
     )
     if (this.selectedTransaction){
       if (this.selectedTransaction.amount > 0) {
-        this.transactionType = 1;
+        this.transactionType = "1";
       } else if (this.selectedTransaction.amount < 0) {
-        this.transactionType = -1;
+        this.transactionType = "-1";
       }
     }
   }
@@ -119,7 +119,7 @@ export class TransactionFormComponent {
   onSubmit() {
     const newTransaction: Transaction = this.transactionForm.value;
     if (this.transactionType){
-      newTransaction.amount = newTransaction.amount*this.transactionType;}
+      newTransaction.amount = newTransaction.amount*parseInt(this.transactionType);}
     console.log(newTransaction);
     if (newTransaction.id === null) {
       this.saveTransaction(newTransaction);

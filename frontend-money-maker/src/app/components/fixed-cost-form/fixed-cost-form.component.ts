@@ -25,7 +25,7 @@ export class FixedCostFormComponent implements OnDestroy {
   categoryList: Category[] = [];
   destroy = new Subject<void>();
   newCategory: boolean = false;
-  transactionType?: number;
+  transactionType?: string;
 
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private categoryService: CategoryService, private fixedCostService: FixedCostService, private transactionService: TransactionService) {
@@ -76,9 +76,9 @@ export class FixedCostFormComponent implements OnDestroy {
     )
     if (this.selectedFixedCost) {
       if (this.selectedFixedCost.amount > 0) {
-        this.transactionType = 1;
+        this.transactionType = "1";
       } else if (this.selectedFixedCost.amount < 0) {
-        this.transactionType = -1;
+        this.transactionType = "-1";
       }
     }
   }
@@ -87,7 +87,7 @@ export class FixedCostFormComponent implements OnDestroy {
   createFixedCost(): void {
     const fixedCost: FixedCost = this.fixedCostForm.value;
     if (this.transactionType) {
-      fixedCost.amount = fixedCost.amount * this.transactionType;
+      fixedCost.amount = fixedCost.amount * parseInt(this.transactionType);
     }
     if ((new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) && !this.selectedFixedCost)) {
       let transaction: Transaction = {
