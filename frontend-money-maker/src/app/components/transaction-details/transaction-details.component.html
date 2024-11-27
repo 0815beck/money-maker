@@ -4,7 +4,7 @@
 
 
 <div class="container my-5" *ngIf="transaction">
-  <h1 class="text-center ">Transaction Details   <button class="btn btn-link bg-yellow" (click)="edit = !edit">
+  <h1 class="text-center ">Transaction Details   <button class="btn btn-link bg-yellow" (click)="edit = !edit" *ngIf="!transaction.isFixedCost">
     <i class="bi bi-pencil"></i>
   </button></h1>
   <div class="card shadow-sm bg-yellow">

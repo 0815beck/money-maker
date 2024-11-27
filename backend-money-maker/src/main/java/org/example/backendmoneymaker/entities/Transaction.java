@@ -1,6 +1,7 @@
 package org.example.backendmoneymaker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -22,6 +23,9 @@ public class Transaction {
     @NotNull
     private LocalDate timestamp;
     private String description;
+    @NotNull
+    @JsonProperty("isFixedCost")
+    private boolean isFixedCost;
 
     @NotNull
     @ManyToOne
@@ -33,5 +37,4 @@ public class Transaction {
     @JsonIgnoreProperties({"transactions", "fixedCosts"})
     private Account account;
 
-    private boolean isFixedCost = false;
 }
