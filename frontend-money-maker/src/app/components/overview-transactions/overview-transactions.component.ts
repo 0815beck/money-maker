@@ -7,6 +7,7 @@ import { Account } from '../../models/account';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, takeUntil } from 'rxjs';
 import { TransactionService } from '../../services/transaction.service';
+import { FixedCost } from '../../models/fixed-cost';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -56,7 +57,7 @@ export class OverviewTransactionsComponent {
         },
         error: (error) => {
           console.log('Could not delete Transaction: ', error);
-          alert('Cannot delete Transation, due to Fixed Cost');
+          alert('Cannot delete Fixed Cost');
         }
       });
       if(this.inputAccount){

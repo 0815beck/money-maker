@@ -15,14 +15,17 @@ import {FixedCost} from '../../models/fixed-cost';
   styleUrl: './transaction-form.component.css',
 })
 export class TransactionFormComponent {
+  @Input() selectedTransaction?: Transaction;
+  @Output() transactionEvent = new EventEmitter<Transaction>();
+  @Output() returnWhenSaved = new EventEmitter<boolean>();
   categoryList: Category[] = [];
   transactionForm: FormGroup;
   newCategory: boolean = false;
   account?: Account;
   destroy = new Subject<void>();
-  @Input() selectedTransaction?: Transaction;
-  @Output() transactionEvent = new EventEmitter<Transaction>();
-  @Output() returnWhenSaved = new EventEmitter<boolean>();
+  transactionType?: number;
+
+
 
   constructor(
     private categoryService: CategoryService,
@@ -47,6 +50,7 @@ export class TransactionFormComponent {
 
   ngOnChanges() {
     this.fillFormWithDefaultValues();
+
   }
 
   ngOnInit() {
@@ -71,7 +75,7 @@ export class TransactionFormComponent {
     this.transactionForm = this.fb.group(
       {
         id: [this.selectedTransaction.id],
-        amount: [this.selectedTransaction.amount, Validators.required],
+        amount: [Math.abs(this.selectedTransaction.amount), Validators.required],
         timestamp: [this.selectedTransaction.timestamp, Validators.required],
         description: [this.selectedTransaction.description],
         category: [category, Validators.required],
@@ -79,6 +83,13 @@ export class TransactionFormComponent {
         isFixedCost: false
       }
     )
+    if (this.selectedTransaction){
+      if (this.selectedTransaction.amount > 0) {
+        this.transactionType = 1;
+      } else if (this.selectedTransaction.amount < 0) {
+        this.transactionType = -1;
+      }
+    }
   }
 
   loadCategories() {
@@ -107,6 +118,8 @@ export class TransactionFormComponent {
 
   onSubmit() {
     const newTransaction: Transaction = this.transactionForm.value;
+    if (this.transactionType){
+      newTransaction.amount = newTransaction.amount*this.transactionType;}
     console.log(newTransaction);
     if (newTransaction.id === null) {
       this.saveTransaction(newTransaction);

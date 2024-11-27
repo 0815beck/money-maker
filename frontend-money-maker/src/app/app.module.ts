@@ -21,7 +21,6 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import Chart from 'chart.js/auto';
 import { MoneyPipe } from './pipes/money.pipe';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
-import { InterestingPipe } from './pipes/interesting.pipe';
 
 
 @NgModule({
@@ -42,7 +41,6 @@ import { InterestingPipe } from './pipes/interesting.pipe';
     PieChartComponent,
     MoneyPipe,
     BarChartComponent,
-    InterestingPipe,
   ],
   imports: [
     BrowserModule,
