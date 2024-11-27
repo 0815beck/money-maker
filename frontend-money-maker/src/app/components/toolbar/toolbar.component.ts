@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 import { Filter } from '../../models/filter';
 import { Transaction } from '../../models/transaction';
 import { FixedCost } from '../../models/fixed-cost';
+import { transition } from '@angular/animations';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,23 +12,26 @@ import { FixedCost } from '../../models/fixed-cost';
 })
 export class ToolbarComponent {
   @Input() transactions: Transaction[] = [];
-  @Input() fixedCosts: FixedCost[] = [];
   @Output() transactionUpdated = new EventEmitter<Transaction[]>();
+
+  filterCategory?: Category;
+  filterFixedCost: boolean = false;
+  filterTransactions: boolean = false;
+  filterIncome: boolean = false;
+  filterExpense: boolean = false;
 
   filters: Filter[] = [
     {label: "Expenses", value: "expenses", checked: false},
     {label: "Incomes", value: "incomes", checked: false},
     {label: "Fixed Costs", value: "ixedCosts", checked: false},
     {label: "Transactions", value: "transactions", checked: false},
+    {label: "Category", value: "category", checked: false}
   ]
   selectAllChecked = false;
 
   ngOnChanges(changes: SimpleChanges): void{
     if(changes['transactions'] && this.transactions.length >0){
       console.log(this.transactions);
-    }
-    if(changes['fixedCosts'] && this.fixedCosts.length >0){
-      console.log(this.fixedCosts);
     }
   }
 
@@ -38,11 +43,32 @@ export class ToolbarComponent {
     this.selectAllChecked = this.filters.every(filter => filter.checked)
   }
 
-  filterItems(type: string): void {
-    let filteredItems;
-    if(this.transactions.length > 0){
-      
+  filterItems(): void {
+    let filteredTransactions = this.transactions;
+    if(this.filterIncome) {
+      filteredTransactions = filteredTransactions.filter(transaction => transaction.amount > 0);
     }
+    if(this.filterExpense){
+      filteredTransactions = filteredTransactions.filter(transaction => transaction.amount < 0);
+    }
+
+    if(this.filterCategory){
+      filteredTransactions = filteredTransactions.filter(transaction => this.filterCategory === transaction.category);
+    }
+
+    if(this.filterFixedCost){
+      filteredTransactions = filteredTransactions.filter(transaction => this.filterFixedCost === transaction.isFixedCost )
+    }
+
+    if(this.filterTransactions){
+      filteredTransactions = filteredTransactions.filter(transaction => this.filterTransactions === !transaction.isFixedCost)
+    }
+
+    this.transactionUpdated.emit(filteredTransactions);
+    console.log('Filtered Transactions: ', filteredTransactions)
+
+
+
   }
 
 }

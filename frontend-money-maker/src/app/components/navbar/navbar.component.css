@@ -3,6 +3,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.402);
   background-color: white;
   transform: translateY(-600px);

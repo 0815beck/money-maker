@@ -9,7 +9,7 @@
         <ul class="dropdown-menu">
             <li>
                 <div class="form-check dropdown-item">
-                    <input class="form-check-input" type="checkbox" id="selectAll" [(ngModel)]="selectAllChecked" (change)="toggleSelectAll()">
+                    <input class="form-check-input" type="checkbox" id="selectAll"  [(ngModel)]="selectAllChecked" (change)="toggleSelectAll()">
                     <label class="form-check-label" for="selectAll">
                         Select All
                     </label>
@@ -18,7 +18,7 @@
             <li><hr class="dropdown-divider"></li>
             <li *ngFor="let filter of filters">
                 <div class="form-check dropdown-item">
-                    <input class="form-check-input" type="checkbox" [id]="filter.value" [(ngModel)]="filter.checked" (change)="updateSelectAllState()">
+                    <input class="form-check-input" type="checkbox" [id]="filter.value" [(ngModel)]="filter.checked"  (change)="updateSelectAllState()">
                     <label class="form-check-label" for="selectAll">
                         {{filter.label}}
                     </label>
