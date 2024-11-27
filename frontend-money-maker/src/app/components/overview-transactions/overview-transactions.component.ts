@@ -7,6 +7,7 @@ import { Account } from '../../models/account';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, takeUntil } from 'rxjs';
 import { TransactionService } from '../../services/transaction.service';
+import { FixedCost } from '../../models/fixed-cost';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -16,7 +17,7 @@ import { TransactionService } from '../../services/transaction.service';
 export class OverviewTransactionsComponent {
   @Input() inputAccount?: Account;
   formDisplayed: boolean = false;
-  transactions?: Transaction[];
+  transactions: Transaction[] = [];
   account?: Account;
   destroy = new Subject<void>();
 
