@@ -56,6 +56,7 @@ export class BarChartComponent {
     this.chart = new Chart("MyChart", config);
   }
 
+  /*
   createChart() {
     const data: any = {};
     data.labels = ['January', 'February', 'March', 'April'];
@@ -101,6 +102,6 @@ export class BarChartComponent {
     };
 
     this.chart = new Chart("MyChart", config);
-  }
+  }*/
 }
 
