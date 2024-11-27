@@ -41,9 +41,11 @@ export class PieChartComponent {
     this.data.datasets[0].borderWidth = 1;
 
     let config: any = {};
+    
     config.type = 'pie';
     config.data = this.data;
     config.options = {};
+    config.options.aspectRatio = 1;
     config.options.responsive = true;
     config.options.scales = {
       x: { beginAtZero: true, grid: {display: false}, display: false },
