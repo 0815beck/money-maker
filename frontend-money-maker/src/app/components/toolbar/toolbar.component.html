@@ -1,0 +1,39 @@
+<div class="toolbar d-flex gap-2 m-2 justify-content-between">
+    <div class="input-group searchbar">
+        <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
+        <button class="btn btn-outline-secondary" type="button">Search</button>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >Filter</button>
+        <ul class="dropdown-menu">
+            <li>
+                <div class="form-check dropdown-item">
+                    <input class="form-check-input" type="checkbox" id="selectAll" [(ngModel)]="selectAllChecked" (change)="toggleSelectAll()">
+                    <label class="form-check-label" for="selectAll">
+                        Select All
+                    </label>
+                </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li *ngFor="let filter of filters">
+                <div class="form-check dropdown-item">
+                    <input class="form-check-input" type="checkbox" [id]="filter.value" [(ngModel)]="filter.checked" (change)="updateSelectAllState()">
+                    <label class="form-check-label" for="selectAll">
+                        {{filter.label}}
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Amount</a></li>
+            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i> Amount</a></li>
+            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Date</a></li>
+            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i>Date</a></li>
+        </ul>
+    </div>
+</div>
