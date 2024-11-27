@@ -114,3 +114,9 @@ button:hover {
 .bg-yellow i, h5{
   color: var(--color-palette-violett);
 }
+
+.radio-group {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}

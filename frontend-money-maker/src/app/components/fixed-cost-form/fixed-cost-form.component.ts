@@ -23,6 +23,7 @@ export class FixedCostFormComponent implements OnDestroy {
   categoryList: Category[] = [];
   destroy = new Subject<void>();
   newCategory: boolean = false;
+  transactionType?: number;
   @Output() closeEvent = new EventEmitter<void>();
   @Output() fixedCostEvent = new EventEmitter<FixedCost>();
 
@@ -78,6 +79,8 @@ export class FixedCostFormComponent implements OnDestroy {
 
   createFixedCost(): void {
     const fixedCost: FixedCost = this.fixedCostForm.value;
+    if (this.transactionType){
+    fixedCost.amount = fixedCost.amount*this.transactionType;}
     if ((new Date(fixedCost.start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) && !this.selectedFixedCost)) {
       let transaction: Transaction = {
         amount: fixedCost.amount,
