@@ -157,9 +157,9 @@ export class FixedCostFormComponent implements OnDestroy {
     if (selectedCategory) {
       this.categoryService.deleteCategory(selectedCategory.id).subscribe({
         next: () => {
-          console.log('Delete Category successfull');
+          console.log('Delete Category successfully');
           this.loadCategories();
-          this.fixedCostForm.get('selectedCategory')?.setValue('');
+          this.fixedCostForm.get('category')?.setValue('');
         },
         error: (error) => {
           console.log('Can not delete Category: ', error);

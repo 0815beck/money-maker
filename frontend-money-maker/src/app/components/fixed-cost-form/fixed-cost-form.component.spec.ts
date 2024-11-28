@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FixedCostFormComponent } from './fixed-cost-form.component';
-import { AccountService } from '../../services/account.service';
-import { CategoryService } from '../../services/category.service';
-import { FixedCostService } from '../../services/fixed-cost.service';
-import { TransactionService } from '../../services/transaction.service';
-import { of } from 'rxjs';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {FixedCostFormComponent} from './fixed-cost-form.component';
+import {AccountService} from '../../services/account.service';
+import {CategoryService} from '../../services/category.service';
+import {FixedCostService} from '../../services/fixed-cost.service';
+import {TransactionService} from '../../services/transaction.service';
+import {of} from 'rxjs';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FixedCost} from '../../models/fixed-cost';
 import {Category} from '../../models/category';
 import {Account} from '../../models/account';
@@ -23,12 +23,12 @@ describe('FixedCostFormComponent', () => {
 
   beforeEach(async () => {
     mockAccountService = jasmine.createSpyObj('AccountService', ['refetchSelectedAccount']);
-    mockCategoryService = jasmine.createSpyObj('CategoryService', ['getCategories']);
+    mockCategoryService = jasmine.createSpyObj('CategoryService', ['getCategories', 'deleteCategory']);
     mockFixedCostService = jasmine.createSpyObj('FixedCostService', ['addFixedCost', 'modifyFixedCost']);
     mockTransactionService = jasmine.createSpyObj('TransactionService', ['addTransaction']);
 
-    const testAccount: Account = { id: 1, name: 'Test Account', transactions: [], fixedCosts: [] };
-    const testCategory: Category = { id: 1, name: 'Test Category' };
+    const testAccount: Account = {id: 1, name: 'Test Account', transactions: [], fixedCosts: []};
+    const testCategory: Category = {id: 1, name: 'Test Category'};
     const testFixedCost: FixedCost = {
       id: 1,
       amount: 100,
@@ -51,16 +51,17 @@ describe('FixedCostFormComponent', () => {
       timestamp: new Date(),
       isFixedCost: true
     } as Transaction));
+    mockCategoryService.deleteCategory.and.returnValue(of(undefined));
 
 
     await TestBed.configureTestingModule({
       imports: [],
       declarations: [FixedCostFormComponent],
       providers: [
-        { provide: AccountService, useValue: mockAccountService },
-        { provide: CategoryService, useValue: mockCategoryService },
-        { provide: FixedCostService, useValue: mockFixedCostService },
-        { provide: TransactionService, useValue: mockTransactionService },
+        {provide: AccountService, useValue: mockAccountService},
+        {provide: CategoryService, useValue: mockCategoryService},
+        {provide: FixedCostService, useValue: mockFixedCostService},
+        {provide: TransactionService, useValue: mockTransactionService},
         FormBuilder
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -81,8 +82,8 @@ describe('FixedCostFormComponent', () => {
       amount: 100,
       start: new Date('2024-01-01'),
       description: 'Test Fixed Cost',
-      category: { id: 1, name: 'Test Category' },
-      account: { id: 1, name: 'Test Account', transactions: [], fixedCosts: [] },
+      category: {id: 1, name: 'Test Category'},
+      account: {id: 1, name: 'Test Account', transactions: [], fixedCosts: []},
       generatedTransactions: []
     };
     component.selectedFixedCost = selectedFixedCost;
@@ -113,8 +114,8 @@ describe('FixedCostFormComponent', () => {
       amount: 100,
       start: new Date('2024-01-01'),
       description: 'Test Fixed Cost',
-      category: { id: 1, name: 'Test Category' },
-      account: { id: 1, name: 'Test Account', transactions: [], fixedCosts: [] },
+      category: {id: 1, name: 'Test Category'},
+      account: {id: 1, name: 'Test Account', transactions: [], fixedCosts: []},
       generatedTransactions: []
     };
     component.categoryList = [];
@@ -130,8 +131,8 @@ describe('FixedCostFormComponent', () => {
       amount: 100,
       start: new Date(),
       description: 'Test',
-      category: { id: 1, name: 'Test Category' },
-      account: { id: 1, name: 'Test Account', transactions: [], fixedCosts: [] },
+      category: {id: 1, name: 'Test Category'},
+      account: {id: 1, name: 'Test Account', transactions: [], fixedCosts: []},
       generatedTransactions: []
     };
     component.fixedCostForm.setValue(newFixedCost);
@@ -166,8 +167,8 @@ describe('FixedCostFormComponent', () => {
       amount: 100,
       start: new Date('22-11-2023'),
       description: 'Test',
-      category: { id: 1, name: 'Test Category' },
-      account: { id: 1, name: 'Test Account', transactions: [], fixedCosts: [] },
+      category: {id: 1, name: 'Test Category'},
+      account: {id: 1, name: 'Test Account', transactions: [], fixedCosts: []},
       generatedTransactions: []
     };
     component.fixedCostForm.setValue(newFixedCost);
@@ -184,8 +185,8 @@ describe('FixedCostFormComponent', () => {
       amount: 100,
       start: new Date(),
       description: 'Test',
-      category: { id: 1, name: 'Test Category' },
-      account: { id: 1, name: 'Test Account', transactions: [], fixedCosts: [] },
+      category: {id: 1, name: 'Test Category'},
+      account: {id: 1, name: 'Test Account', transactions: [], fixedCosts: []},
       generatedTransactions: []
     };
     component.fixedCostForm.setValue(existingFixedCost);
@@ -202,5 +203,26 @@ describe('FixedCostFormComponent', () => {
     expect(component.closeForm).toHaveBeenCalled();
   });
 
+  it('should call getCategories and populate categoryList on success', () => {
+    const mockCategories = [{id: 1, name: 'Test Category'}];
+    component.loadCategories();
+    fixture.detectChanges();
+    expect(mockCategoryService.getCategories).toHaveBeenCalled();
+    expect(component.categoryList).toEqual(mockCategories);
+  });
+
+  it('should call delete with the id of the selected category', () => {
+    const mockCategory = {id: 1, name: 'Test Category'};
+    component.fixedCostForm.get('category')?.setValue(mockCategory);
+    spyOn(component, 'loadCategories')
+
+    component.deleteSelectedCategory();
+    fixture.detectChanges();
+
+
+    expect(mockCategoryService.deleteCategory).toHaveBeenCalledOnceWith(1);
+    expect(component.loadCategories).toHaveBeenCalled();
+    expect(component.fixedCostForm.get('category')?.value).toEqual('');
+  });
 
 });
