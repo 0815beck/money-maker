@@ -3,7 +3,7 @@ import { Category } from "./category";
 import { Transaction } from "./transaction";
 
 export interface FixedCost {
-    id?: number;
+    id?: number|null;
     amount: number;
     start: Date;
     description?: string;
