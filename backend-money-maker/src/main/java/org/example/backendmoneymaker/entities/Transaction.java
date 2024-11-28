@@ -28,12 +28,12 @@ public class Transaction {
     private boolean isFixedCost;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"transactions", "fixedCosts"})
     private Account account;
 

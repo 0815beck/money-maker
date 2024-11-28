@@ -16,12 +16,12 @@ public class Account {
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("account")
     private List<FixedCost> fixedCosts;
 
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("account")
     private List<Transaction> transactions;
 }

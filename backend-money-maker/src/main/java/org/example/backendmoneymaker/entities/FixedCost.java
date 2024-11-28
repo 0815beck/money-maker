@@ -29,11 +29,11 @@ public class FixedCost {
     @ManyToOne
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"fixedCosts", "transactions"})
     private Account account;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "fixed_cost_transactions",
             joinColumns = @JoinColumn(name = "fixed_cost_id"),
