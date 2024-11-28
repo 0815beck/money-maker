@@ -30,8 +30,9 @@ public class FixedCostServiceImpl implements FixedCostService {
     }
 
     @Override
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(cron = "0 0 */12 * * *")
     public void generateTransactionsForAllAccounts() {
+        System.out.println("Hi :) (I am scheduled to say that)");
         List<Account> accounts = accountRepository.findAll();
         for (Account account : accounts) {
             generateTransactions(account);

@@ -20,6 +20,7 @@ export class OverviewTransactionsComponent {
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
   account?: Account;
+  window = window;
   destroy = new Subject<void>();
 
   constructor(private accountService: AccountService, private transactionService: TransactionService) {
@@ -64,7 +65,7 @@ export class OverviewTransactionsComponent {
         },
         error: (error) => {
           console.log('Could not delete Transaction: ', error);
-          alert('Cannot delete Fixed Cost');
+          alert('The transaction you are trying to delete is still linked to an active fixed cost and therefore cannot be deleted');
         }
       });
       if(this.inputAccount){

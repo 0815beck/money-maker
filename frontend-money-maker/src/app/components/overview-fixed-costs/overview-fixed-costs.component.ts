@@ -15,6 +15,7 @@ export class OverviewFixedCostsComponent {
   formDisplayed: boolean = false;
   account?: Account;
   fixedCosts: FixedCost[] = [];
+  window = window;
   destroy = new Subject<void>();
 
   constructor(private fixedCostService: FixedCostService, private accountService: AccountService) {
@@ -35,7 +36,8 @@ export class OverviewFixedCostsComponent {
 
   deleteFixedCost(fixedCost: FixedCost): void{
     if (fixedCost.id != null) {
-      this.fixedCostService.deleteFixedCost(fixedCost.id).subscribe(() => this.accountService.fetchAccounts())
+      this.fixedCostService.deleteFixedCost(fixedCost.id)
+        .subscribe(() => this.accountService.fetchAccounts())
       if (this.inputAccount){
         this.fixedCosts = this.fixedCosts.filter(element => element.id!=fixedCost.id);
       }

@@ -35,19 +35,24 @@
       value=""
       formControlName="image"
     />
-    <p>Choose your picture:</p>
-    <div class="picture-list" *ngFor="let picture of pictureList">
-      <button
-        class="picture"
-        type="button"
-        ngFor="let picture of pictureList"
-        [class.selected]="picture === selectedPicture"
-        (click)="selectPicture(picture)"
-      >
-        <img src="{{ picture }}" width="30px" />
-      </button>
+    <div class="d-flex flex-column p-2">
+      <p class="mb-2">Choose your picture:</p>
+      <div class="d-flex flex-wrap gap-2">
+        <div class="picture-list" *ngFor="let picture of pictureList">
+          <button
+            class="picture"
+            type="button"
+            ngFor="let picture of pictureList"
+            [class.selected]="picture === selectedPicture"
+            (click)="selectPicture(picture)"
+          >
+            <img src="{{ picture }}" alt="icon" width="30px"/>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
+
 
   <div class="d-grid">
     <button type="submit" class="btn-outline-secondary btn">Speichern</button>

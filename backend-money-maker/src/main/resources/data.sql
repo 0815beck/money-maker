@@ -12,7 +12,8 @@ INSERT INTO category (name) VALUES ('transportation');
 INSERT INTO fixed_cost (amount, description, start, account_id, category_id) VALUES
     (-450, 'monthly rent', '2024-09-01', 1, 1),
     (2240, 'salary web dev', '2024-10-03', 1, 2),
-    (-9.99, 'netflix abo', '2024-10-14', 1,4);
+    (-9.99, 'netflix abo', '2024-10-14', 1,4),
+    (10.25, 'amazon prime abo', '2024-11-28', 1, 4);
 
 INSERT INTO transaction (amount, description, timestamp, account_id, category_id, is_fixed_cost) VALUES
   (-450, 'monthly rent', '2024-09-01', 1,1, true),
