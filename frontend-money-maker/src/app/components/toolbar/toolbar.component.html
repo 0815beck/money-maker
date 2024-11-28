@@ -10,6 +10,20 @@
         <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
     </div>
 
+    <select class="form-select w-50" [(ngModel)]="sortBy" (change)="onSortChange()">
+        <option value="" disabled>Sort By</option>
+        <option value="amount">Amount</option>
+        <option value="date">Date</option>
+        <option value="category">Category</option>
+    </select>
+
+    <select class="form-select w-50"[(ngModel)]="sortOrder" (change)="onSortChange()">
+        <option value = "" disabled>Sort Order</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+
     <div class="dropdown custom-checkbox">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >Filter</button>
         <ul class="dropdown-menu">
@@ -27,7 +41,7 @@
                 </div>
             </li>
             <li><hr class="dropdown-divider"></li>
-            <li *ngFor="let filter of filters">
+            <li *ngFor="let filter of filters; let i = index">
                 <div class="form-check dropdown-item">
                     <input
                     class="form-check-input"
@@ -38,6 +52,7 @@
                     <label class="form-check-label" for="filter.value">
                         {{filter.label}}
                     </label>
+                    <li *ngIf="i === 1"><hr class= "dropdown-divider"></li>
                 </div>
             </li>
         </ul>

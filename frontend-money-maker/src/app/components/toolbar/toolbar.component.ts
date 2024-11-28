@@ -24,6 +24,8 @@ export class ToolbarComponent {
 
   selectAll: boolean = true;
   searchQuery: string = '';
+  sortBy: string = '';
+  sortOrder: string = 'asc';
 
   ngOnInit(): void {
     if(this.selectAll) {
@@ -40,6 +42,10 @@ export class ToolbarComponent {
   }
 
   onSearchChange(){
+    this.filterItems();
+  }
+
+  onSortChange(){
     this.filterItems();
   }
 
@@ -99,10 +105,42 @@ export class ToolbarComponent {
 
     });
 
+    if(this.sortBy && this.sortOrder) {
+      filteredTransactions = this.sortTransactions(filteredTransactions);
+    }
+
     this.transactionUpdated.emit(filteredTransactions);
     console.log('Filtered Transactions: ', filteredTransactions)
   }
 
-
-
+  sortTransactions( transactions: Transaction[]): Transaction[]{
+    let comparison = 0;
+    if(this.sortBy === 'date'){
+      return transactions.sort((a, b) => {
+        const dateA = new Date (a.timestamp);
+        const dateB = new Date (b.timestamp);
+        if(this.sortOrder === 'asc'){
+          return dateA.getTime() - dateB.getTime();
+        } else {
+          return dateB.getTime() - dateA.getTime();
+        }
+      }); 
+    } else if (this.sortBy === 'amount'){
+      return transactions.sort((a,b)=> {
+        if(this.sortOrder === 'asc'){
+          return a.amount - b.amount;
+        } else {
+          return b.amount - a.amount;
+        }
+      });
+    } else if(this.sortBy === 'category'){
+      return transactions.sort((a,b) => {
+        const categoryA = a.category.name.toLowerCase() || '';
+        const categoryB = b.category.name.toLowerCase() || '';
+        comparison = categoryA.localeCompare(categoryB);
+        return this.sortOrder === 'asc' ? comparison : - comparison;
+      })
+    }
+    return transactions;
+  }
 }
