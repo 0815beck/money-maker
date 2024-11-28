@@ -4,6 +4,7 @@ import { Transaction } from '../../models/transaction';
 import { FixedCost } from '../../models/fixed-cost';
 import { transition } from '@angular/animations';
 import { Category } from '../../models/category';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,61 +15,84 @@ export class ToolbarComponent {
   @Input() transactions: Transaction[] = [];
   @Output() transactionUpdated = new EventEmitter<Transaction[]>();
 
-  filterCategory?: Category;
-  filterFixedCost: boolean = false;
-  filterTransactions: boolean = false;
-  filterIncome: boolean = false;
-  filterExpense: boolean = false;
-
   filters: Filter[] = [
     {label: "Expenses", value: "expenses", checked: false},
     {label: "Incomes", value: "incomes", checked: false},
-    {label: "Fixed Costs", value: "ixedCosts", checked: false},
+    {label: "Fixed Costs", value: "fixedCosts", checked: false},
     {label: "Transactions", value: "transactions", checked: false},
-    {label: "Category", value: "category", checked: false}
   ]
-  selectAllChecked = false;
+
+  selectAll: boolean = true;
+
+  ngOnInit(): void {
+    if(this.selectAll) {
+      this.filters.forEach(filter => filter.checked = true);
+    }
+    this.filterItems();
+  }
 
   ngOnChanges(changes: SimpleChanges): void{
-    if(changes['transactions'] && this.transactions.length >0){
+    if(changes['transactions']){
       console.log(this.transactions);
+
     }
   }
 
-  toggleSelectAll(){
-    this.filters.forEach(filter => filter.checked = this.selectAllChecked);
+  onSelectAllChange(): void {
+    if(this.selectAll){
+      this.filters.forEach(filter => filter.checked = true);
+    } else {
+      this.filters.forEach(filter => filter.checked = false);
+    }
+    this.filterItems();
   }
 
-  updateSelectAllState(){
-    this.selectAllChecked = this.filters.every(filter => filter.checked)
+  onFilterChange(): void {
+    this.selectAll = false;
+    if(this.filters.every(filter => filter.checked)){
+      this.selectAll = true;
+    }
+    this.filterItems()
   }
 
   filterItems(): void {
-    let filteredTransactions = this.transactions;
-    if(this.filterIncome) {
-      filteredTransactions = filteredTransactions.filter(transaction => transaction.amount > 0);
-    }
-    if(this.filterExpense){
-      filteredTransactions = filteredTransactions.filter(transaction => transaction.amount < 0);
+    if(this.filters.every(filter => !filter.checked)){
+      this.transactionUpdated.emit(this.transactions);
+      return;
     }
 
-    if(this.filterCategory){
-      filteredTransactions = filteredTransactions.filter(transaction => this.filterCategory === transaction.category);
-    }
+    const filteredTransactions = this.transactions.filter(transaction => {
 
-    if(this.filterFixedCost){
-      filteredTransactions = filteredTransactions.filter(transaction => this.filterFixedCost === transaction.isFixedCost )
-    }
+      const isIncome = transaction.amount > 0;
+      const isExpense = transaction.amount < 0;
+      const isFixedCost = transaction.isFixedCost;
+      const isVariableCost = !transaction.isFixedCost;
 
-    if(this.filterTransactions){
-      filteredTransactions = filteredTransactions.filter(transaction => this.filterTransactions === !transaction.isFixedCost)
-    }
+      const includeExpense = this.filters[0].checked && isExpense;
+      const includeIncome = this.filters[1].checked && isIncome;
+      const includeFixedCost = this.filters[2].checked && isFixedCost;
+      const includeVariableCost = this.filters[3].checked && isVariableCost;
 
+      const typeFilterActive = this.filters[0].checked || this.filters[1].checked;
+    const matchesType = 
+      (!typeFilterActive) || // Kein Typfilter aktiv, alles wird akzeptiert
+      (this.filters[0].checked && isExpense) || // Expenses
+      (this.filters[1].checked && isIncome);    // Incomes
+
+    // Logik für Kostenfilter (Fixed und Variable Costs)
+    const matchesCost = 
+      (this.filters[2].checked && isFixedCost) || // Fixed Costs
+      (this.filters[3].checked && isVariableCost) || // Variable Costs
+      (!this.filters[2].checked && !this.filters[3].checked); // Kein Kostenfilter aktiv
+
+    // Die Transaktion wird eingeschlossen, wenn sie alle aktiven Filterbedingungen erfüllt
+    return matchesType && matchesCost;
+
+    });
     this.transactionUpdated.emit(filteredTransactions);
     console.log('Filtered Transactions: ', filteredTransactions)
-
-
-
   }
+
+
 
 }

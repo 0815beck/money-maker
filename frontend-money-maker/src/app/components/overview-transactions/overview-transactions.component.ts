@@ -18,6 +18,7 @@ export class OverviewTransactionsComponent {
   @Input() inputAccount?: Account;
   formDisplayed: boolean = false;
   transactions: Transaction[] = [];
+  filteredTransactions: Transaction[] = [];
   account?: Account;
   window = window;
   destroy = new Subject<void>();
@@ -34,13 +35,19 @@ export class OverviewTransactionsComponent {
       this.destroy.next();
       this.account = this.inputAccount;
       this.transactions = this.account.transactions;
+      this.filteredTransactions = this.transactions;
     }
+  }
+
+  updatedFilteredTransactions(filteredTransactions: Transaction[]): void {
+    this.filteredTransactions = filteredTransactions;
   }
 
 
   loadTransactions() {
     if(this.account){
       this.transactions = this.account?.transactions;
+      this.filteredTransactions = this.transactions;
     }
   }
 
