@@ -11,7 +11,7 @@
         </div>
         <div>
             <label for="select-start-date" class="c-violett me-1">Start Date:</label>
-            <input type="date" [(ngModel)]="selectedStartDate"
+            <input type="date" [(ngModel)]="selectedStartDate" [max]="selectedEndDate"
             (change)="computeStats()"/>
         </div>
         <div>
