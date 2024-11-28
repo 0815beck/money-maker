@@ -1,5 +1,5 @@
 <div class="toolbar d-flex gap-2 justify-content-center mb-3">
-    <div class="input-group searchbar">
+    <div class="input-group searchbar w-100 w-md-auto">
         <input
         type="text"
         class="form-control"
@@ -10,14 +10,14 @@
         <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
     </div>
 
-    <select class="form-select w-sm-100 w-md-50" [(ngModel)]="sortBy" (change)="onSortChange()">
+    <select class="form-select  w-auto" [(ngModel)]="sortBy" (change)="onSortChange()">
         <option value="" disabled>Sort By</option>
         <option value="amount">Amount</option>
         <option value="date">Date</option>
         <option value="category">Category</option>
     </select>
 
-    <select class="form-select w-sm-100 w-md-50"[(ngModel)]="sortOrder" (change)="onSortChange()">
+    <select class="form-select w-auto"[(ngModel)]="sortOrder" (change)="onSortChange()">
         <option value = "" disabled>Sort Order</option>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
