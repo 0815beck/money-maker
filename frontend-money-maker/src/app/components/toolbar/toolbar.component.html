@@ -10,14 +10,14 @@
         <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
     </div>
 
-    <select class="form-select w-50" [(ngModel)]="sortBy" (change)="onSortChange()">
+    <select class="form-select w-sm-100 w-md-50" [(ngModel)]="sortBy" (change)="onSortChange()">
         <option value="" disabled>Sort By</option>
         <option value="amount">Amount</option>
         <option value="date">Date</option>
         <option value="category">Category</option>
     </select>
 
-    <select class="form-select w-50"[(ngModel)]="sortOrder" (change)="onSortChange()">
+    <select class="form-select w-sm-100 w-md-50"[(ngModel)]="sortOrder" (change)="onSortChange()">
         <option value = "" disabled>Sort Order</option>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
@@ -55,16 +55,6 @@
                     <li *ngIf="i === 1"><hr class= "dropdown-divider"></li>
                 </div>
             </li>
-        </ul>
-    </div>
-
-    <div class="dropdown">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Amount</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i> Amount</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Date</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i>Date</a></li>
         </ul>
     </div>
 </div>
