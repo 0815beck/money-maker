@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import {FixedCost} from '../../models/fixed-cost';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FixedCostService} from '../../services/fixed-cost.service';
 import {AccountService} from '../../services/account.service';
 import {Transaction} from '../../models/transaction';
 import {TransactionService} from '../../services/transaction.service';
@@ -15,11 +13,13 @@ export class TransactionDetailsComponent {
   edit: boolean = false;
   transaction?: Transaction;
 
-  constructor(private route: ActivatedRoute, private transactionService: TransactionService, private accountService: AccountService) {
+  constructor(
+    private route: ActivatedRoute,
+    private transactionService: TransactionService,
+    private accountService: AccountService) {
     const id = route.snapshot.paramMap.get("id");
-    if(id){
+    if (id) {
       transactionService.getTransactionByID(id).subscribe(data => this.transaction = data);
     }
   }
-
 }

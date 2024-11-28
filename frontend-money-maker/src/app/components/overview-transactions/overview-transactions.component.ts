@@ -23,7 +23,8 @@ export class OverviewTransactionsComponent {
   window = window;
   destroy = new Subject<void>();
 
-  constructor(private accountService: AccountService, private transactionService: TransactionService) {
+  constructor(private accountService: AccountService,
+              private transactionService: TransactionService) {
     accountService.account$.pipe(takeUntil(this.destroy)).subscribe((data) => {
       this.account = data;
       this.loadTransactions();
@@ -39,16 +40,15 @@ export class OverviewTransactionsComponent {
     }
   }
 
-  updatedFilteredTransactions(filteredTransactions: Transaction[]): void {
-    this.filteredTransactions = filteredTransactions;
-  }
-
-
   loadTransactions() {
     if(this.account){
       this.transactions = this.account?.transactions;
       this.filteredTransactions = this.transactions;
     }
+  }
+
+  updatedFilteredTransactions(filteredTransactions: Transaction[]): void {
+    this.filteredTransactions = filteredTransactions;
   }
 
   transactionSaved(event: any) {
