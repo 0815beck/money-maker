@@ -6,8 +6,10 @@
 
 <h1 class="fs-1 text-center p-2" *ngIf="!inputAccount">Transaction Overview</h1>
 <div class="container">
-  <app-toolbar [transactions]="transactions"></app-toolbar>
-<div *ngFor="let transaction of transactions; let i = index;"
+  <app-toolbar 
+  [transactions]="transactions"
+  (transactionUpdated)="updatedFilteredTransactions($event)"></app-toolbar>
+<div *ngFor="let transaction of filteredTransactions; let i = index;"
 class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-3"
 [ngClass]="i % 2 === 0 ? 'bg-purple' : 'bg-yellow'">
   <div class="d-flex align-items-center">
