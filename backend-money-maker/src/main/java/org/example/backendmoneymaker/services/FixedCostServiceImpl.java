@@ -30,7 +30,7 @@ public class FixedCostServiceImpl implements FixedCostService {
     }
 
     @Override
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(cron = "0 5 9 * * *")
     public void generateTransactionsForAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
         for (Account account : accounts) {
