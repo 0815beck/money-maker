@@ -146,7 +146,7 @@ export class FixedCostFormComponent implements OnDestroy {
         this.categoryList = data;
       },
       error: (error) => {
-        console.log('Fehler beim Laden der Categorien: ', error);
+        console.log('error loading categories: ', error);
       },
     });
   }
@@ -163,7 +163,7 @@ export class FixedCostFormComponent implements OnDestroy {
         },
         error: (error) => {
           console.log('Can not delete Category: ', error);
-          alert('Can not delete Category, if it is still in use');
+          alert('Cannot delete Category while it is still in use');
         },
       });
     }

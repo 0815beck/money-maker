@@ -33,7 +33,7 @@
   background-color: rgba(250, 235, 215, 0);
   color: var(--color-palette-yellow);
   border: 0;
-  
+
 }
 
 .animate {
@@ -121,3 +121,16 @@ button:hover {
   justify-content: center;
   gap: 30px;
 }
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: var(--color-palette-violett);
+  border: solid 1px var(--color-palette-violett);
+}
+
+.custom-checkbox input[type="checkbox"]:focus {
+  outline: 2px solid var(--color-palette-violett);
+  outline-offset: 2px;
+}
+
+
+
