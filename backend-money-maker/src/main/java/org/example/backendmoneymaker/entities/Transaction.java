@@ -37,4 +37,10 @@ public class Transaction {
     @JsonIgnoreProperties({"transactions", "fixedCosts"})
     private Account account;
 
+    @Override
+    public String toString() {
+        return "{id: " + id + ", description: " + description
+                + ", amount: " + amount + ", timestamp: " + timestamp + "}";
+    }
+
 }
