@@ -54,6 +54,6 @@
   </div>
 
   <div class="d-grid">
-    <button type="submit" class="btn-outline-secondary btn">Speichern</button>
+    <button type="submit" class="btn-outline-secondary btn" [disabled]="categoryForm.invalid || !selectedPicture">Save</button>
   </div>
 </form>
