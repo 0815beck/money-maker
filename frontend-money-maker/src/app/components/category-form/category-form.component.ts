@@ -23,7 +23,22 @@ export class CategoryFormComponent {
     'https://img.icons8.com/?size=100&id=73815&format=png&color=000000',
     'https://img.icons8.com/?size=100&id=l5Br0fxxE35Q&format=png&color=000000',
     'https://img.icons8.com/?size=100&id=86123&format=png&color=000000',
-    'https://img.icons8.com/?size=100&id=9351&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=241&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=4823&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=106514&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=11441&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=62370&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=2772&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=35583&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=11587&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=8242&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=381&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=GXbDr_HC5ZF1&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=6632&format=png&color=000000',
+    'https://img.icons8.com/?size=100&id=jiAKUZAnt9go&format=png&color=000000'
+
+
+
   ];
 
   constructor(
