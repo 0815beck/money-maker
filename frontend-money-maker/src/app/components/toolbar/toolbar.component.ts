@@ -23,6 +23,7 @@ export class ToolbarComponent {
   ]
 
   selectAll: boolean = true;
+  searchQuery: string = '';
 
   ngOnInit(): void {
     if(this.selectAll) {
@@ -36,6 +37,10 @@ export class ToolbarComponent {
       console.log(this.transactions);
 
     }
+  }
+
+  onSearchChange(){
+    this.filterItems();
   }
 
   onSelectAllChange(): void {
@@ -61,7 +66,7 @@ export class ToolbarComponent {
       return;
     }
 
-    const filteredTransactions = this.transactions.filter(transaction => {
+    let filteredTransactions = this.transactions.filter(transaction => {
 
       const isIncome = transaction.amount > 0;
       const isExpense = transaction.amount < 0;
@@ -85,10 +90,15 @@ export class ToolbarComponent {
       (this.filters[3].checked && isVariableCost) || // Variable Costs
       (!this.filters[2].checked && !this.filters[3].checked); // Kein Kostenfilter aktiv
 
+    //Kategorie-Suche
+    const matchesCategory = this.searchQuery.trim() === '' ||
+    (transaction.category && transaction.category.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+
     // Die Transaktion wird eingeschlossen, wenn sie alle aktiven Filterbedingungen erfüllt
-    return matchesType && matchesCost;
+    return matchesType && matchesCost && matchesCategory;
 
     });
+
     this.transactionUpdated.emit(filteredTransactions);
     console.log('Filtered Transactions: ', filteredTransactions)
   }

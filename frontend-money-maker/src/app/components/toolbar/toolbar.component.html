@@ -1,7 +1,13 @@
 <div class="toolbar d-flex gap-2 justify-content-center mb-3">
     <div class="input-group searchbar">
-        <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
-        <button class="btn btn-outline-secondary" type="button">Search</button>
+        <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Search Category ..." 
+        [(ngModel)]="searchQuery" 
+        (input)="onSearchChange()"
+        aria-label="Search">
+        <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
     </div>
 
     <div class="dropdown">
