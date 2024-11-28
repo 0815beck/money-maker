@@ -35,7 +35,7 @@
       value=""
       formControlName="image"
     />
-    <div class="d-flex flex-column p-2">
+    <div class="d-flex flex-column pt-2 pb-2">
       <p class="mb-2">Choose your picture:</p>
       <div class="d-flex flex-wrap gap-2">
         <div class="picture-list" *ngFor="let picture of pictureList">
@@ -53,8 +53,7 @@
     </div>
   </div>
 
-
   <div class="d-grid">
-    <button type="submit" class="btn-outline-secondary btn">Speichern</button>
+    <button type="submit" class="btn-outline-secondary btn" [disabled]="categoryForm.invalid || !selectedPicture">Save</button>
   </div>
 </form>

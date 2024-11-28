@@ -1,25 +1,38 @@
-<div class="toolbar d-flex gap-2 justify-content-center mb-3">
-    <div class="input-group searchbar">
-        <input 
-        type="text" 
-        class="form-control" 
-        placeholder="Search Category ..." 
-        [(ngModel)]="searchQuery" 
+<div class="toolbar d-flex gap-2 justify-content-center align-items-md-center mb-3 w-100">
+    <div class="input-group searchbar w-100 w-md-auto">
+        <input
+        type="text"
+        class="form-control"
+        placeholder="Search Category ..."
+        [(ngModel)]="searchQuery"
         (input)="onSearchChange()"
         aria-label="Search">
         <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
     </div>
 
-    <div class="dropdown">
+    <select class="form-select  w-auto" [(ngModel)]="sortBy" (change)="onSortChange()">
+        <option value="" disabled>Sort By</option>
+        <option value="amount">Amount</option>
+        <option value="date">Date</option>
+        <option value="category">Category</option>
+    </select>
+
+    <select class="form-select w-auto"[(ngModel)]="sortOrder" (change)="onSortChange()">
+        <option value = "" disabled>Sort Order</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+    <div class="dropdown custom-checkbox">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >Filter</button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu mt-1">
             <li>
                 <div class="form-check dropdown-item">
-                    <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    [id]="selectAll" 
-                    [(ngModel)]="selectAll" 
+                    <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="selectAll"
+                    [(ngModel)]="selectAll"
                     (change)="onSelectAllChange()">
                     <label class="form-check-label" for="filter.value">
                         Select All
@@ -27,29 +40,23 @@
                 </div>
             </li>
             <li><hr class="dropdown-divider"></li>
-            <li *ngFor="let filter of filters">
+            <li *ngFor="let filter of filters; let i = index">
                 <div class="form-check dropdown-item">
-                    <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    [id]="filter.value" 
-                    [(ngModel)]="filter.checked"  
+                    <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="filter.value"
+                    [(ngModel)]="filter.checked"
                     (change)="onFilterChange()">
                     <label class="form-check-label" for="filter.value">
                         {{filter.label}}
                     </label>
+                    <li *ngIf="i === 1"><hr class= "dropdown-divider"></li>
                 </div>
             </li>
         </ul>
     </div>
+    <button class="btn btn-outline-secondary currentMonth " (click)="onSelectCurrentMonth()">{{ showCurrentMonth ? 'Show All' : 'Current Month'}}</button>
 
-    <div class="dropdown">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Amount</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i> Amount</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Date</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i>Date</a></li>
-        </ul>
-    </div>
 </div>
+

@@ -19,11 +19,14 @@ export class ToolbarComponent {
     {label: "Expenses", value: "expenses", checked: false},
     {label: "Incomes", value: "incomes", checked: false},
     {label: "Fixed Costs", value: "fixedCosts", checked: false},
-    {label: "Transactions", value: "transactions", checked: false},
+    {label: "Transactions", value: "transactions", checked:false}
   ]
 
   selectAll: boolean = true;
   searchQuery: string = '';
+  sortBy: string = '';
+  sortOrder: string = 'asc';
+  showCurrentMonth: boolean = false;
 
   ngOnInit(): void {
     if(this.selectAll) {
@@ -40,6 +43,10 @@ export class ToolbarComponent {
   }
 
   onSearchChange(){
+    this.filterItems();
+  }
+
+  onSortChange(){
     this.filterItems();
   }
 
@@ -60,6 +67,11 @@ export class ToolbarComponent {
     this.filterItems()
   }
 
+  onSelectCurrentMonth(): void {
+    this.showCurrentMonth = !this.showCurrentMonth;
+    this.filterItems();
+  }
+
   filterItems(): void {
     if(this.filters.every(filter => !filter.checked)){
       this.transactionUpdated.emit(this.transactions);
@@ -72,11 +84,6 @@ export class ToolbarComponent {
       const isExpense = transaction.amount < 0;
       const isFixedCost = transaction.isFixedCost;
       const isVariableCost = !transaction.isFixedCost;
-
-      const includeExpense = this.filters[0].checked && isExpense;
-      const includeIncome = this.filters[1].checked && isIncome;
-      const includeFixedCost = this.filters[2].checked && isFixedCost;
-      const includeVariableCost = this.filters[3].checked && isVariableCost;
 
       const typeFilterActive = this.filters[0].checked || this.filters[1].checked;
     const matchesType = 
@@ -94,15 +101,56 @@ export class ToolbarComponent {
     const matchesCategory = this.searchQuery.trim() === '' ||
     (transaction.category && transaction.category.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
 
+    //Aktueller Monat
+    const matchesCurrentMonth = !this.showCurrentMonth || this.isCurrentMonth(transaction.timestamp);
+
     // Die Transaktion wird eingeschlossen, wenn sie alle aktiven Filterbedingungen erfüllt
-    return matchesType && matchesCost && matchesCategory;
+    return matchesType && matchesCost && matchesCategory && matchesCurrentMonth;
 
     });
+
+    if(this.sortBy && this.sortOrder) {
+      filteredTransactions = this.sortTransactions(filteredTransactions);
+    }
 
     this.transactionUpdated.emit(filteredTransactions);
     console.log('Filtered Transactions: ', filteredTransactions)
   }
 
+  sortTransactions( transactions: Transaction[]): Transaction[]{
+    let comparison = 0;
+    if(this.sortBy === 'date'){
+      return transactions.sort((a, b) => {
+        const dateA = new Date (a.timestamp);
+        const dateB = new Date (b.timestamp);
+        if(this.sortOrder === 'asc'){
+          return dateA.getTime() - dateB.getTime();
+        } else {
+          return dateB.getTime() - dateA.getTime();
+        }
+      }); 
+    } else if (this.sortBy === 'amount'){
+      return transactions.sort((a,b)=> {
+        if(this.sortOrder === 'asc'){
+          return a.amount - b.amount;
+        } else {
+          return b.amount - a.amount;
+        }
+      });
+    } else if(this.sortBy === 'category'){
+      return transactions.sort((a,b) => {
+        const categoryA = a.category.name.toLowerCase() || '';
+        const categoryB = b.category.name.toLowerCase() || '';
+        comparison = categoryA.localeCompare(categoryB);
+        return this.sortOrder === 'asc' ? comparison : - comparison;
+      })
+    }
+    return transactions;
+  }
 
-
+  private isCurrentMonth(timestamp: string | Date): boolean {
+    const date = new Date(timestamp);
+    const now = new Date();
+    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+  }
 }
