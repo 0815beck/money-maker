@@ -1,10 +1,10 @@
 <div class="toolbar d-flex gap-2 justify-content-center mb-3">
     <div class="input-group searchbar">
-        <input 
-        type="text" 
-        class="form-control" 
-        placeholder="Search Category ..." 
-        [(ngModel)]="searchQuery" 
+        <input
+        type="text"
+        class="form-control"
+        placeholder="Search Category ..."
+        [(ngModel)]="searchQuery"
         (input)="onSearchChange()"
         aria-label="Search">
         <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
@@ -15,7 +15,7 @@
         <option value="amount">Amount</option>
         <option value="date">Date</option>
         <option value="category">Category</option>
-    </select> 
+    </select>
 
     <select class="form-select w-50"[(ngModel)]="sortOrder" (change)="onSortChange()">
         <option value = "" disabled>Sort Order</option>
@@ -24,16 +24,16 @@
     </select>
 
 
-    <div class="dropdown">
+    <div class="dropdown custom-checkbox">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >Filter</button>
         <ul class="dropdown-menu">
             <li>
                 <div class="form-check dropdown-item">
-                    <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    [id]="selectAll" 
-                    [(ngModel)]="selectAll" 
+                    <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="selectAll"
+                    [(ngModel)]="selectAll"
                     (change)="onSelectAllChange()">
                     <label class="form-check-label" for="filter.value">
                         Select All
@@ -43,11 +43,11 @@
             <li><hr class="dropdown-divider"></li>
             <li *ngFor="let filter of filters; let i = index">
                 <div class="form-check dropdown-item">
-                    <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    [id]="filter.value" 
-                    [(ngModel)]="filter.checked"  
+                    <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="filter.value"
+                    [(ngModel)]="filter.checked"
                     (change)="onFilterChange()">
                     <label class="form-check-label" for="filter.value">
                         {{filter.label}}
@@ -56,5 +56,15 @@
                 </div>
             </li>
         </ul>
-    </div>       
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Amount</a></li>
+            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i> Amount</a></li>
+            <li><a class="dropdown-item"><i class="bi bi-arrow-up"></i> Date</a></li>
+            <li><a class="dropdown-item"><i class="bi bi-arrow-down"></i>Date</a></li>
+        </ul>
+    </div>
 </div>
