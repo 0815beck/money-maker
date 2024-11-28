@@ -14,7 +14,8 @@ export class AccountFormComponent {
   @Output()closeEvent=new EventEmitter<void>
 
 
-  constructor(private fb: FormBuilder, private accountService: AccountService) {
+  constructor(private fb: FormBuilder,
+              private accountService: AccountService) {
     this.accountForm = fb.group({
         id: [],
         name: ["", Validators.required],

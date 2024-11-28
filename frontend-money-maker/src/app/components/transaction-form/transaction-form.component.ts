@@ -25,8 +25,6 @@ export class TransactionFormComponent {
   destroy = new Subject<void>();
   transactionType?: string;
 
-
-
   constructor(
     private categoryService: CategoryService,
     private transactionService: TransactionService,
@@ -64,6 +62,42 @@ export class TransactionFormComponent {
     });
   }
 
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        setTimeout(() => 'Loading ...', 4000);
+        this.categoryList = data;
+      },
+      error: (error) => {
+        console.log('Fehler beim Laden der Categorien: ', error);
+      },
+    });
+  }
+
+  deleteSelectedCategory() {
+    const selectedCategory =
+      this.transactionForm.get('category')?.value;
+    if (selectedCategory) {
+      this.categoryService.deleteCategory(selectedCategory.id).subscribe({
+        next: () => {
+          console.log('Delete Category successfull');
+          this.loadCategories();
+          this.transactionForm.get('category')?.setValue('');
+        },
+        error: (error) => {
+          console.log('Can not delete Category: ', error);
+          alert('Can not delete Category, if it is still in use');
+        },
+      });
+    }
+  }
+
+  return(boolean: boolean) {
+    this.newCategory = boolean;
+    this.loadCategories();
+    this.transactionForm.get('selectedCategory')?.setValue('');
+  }
+
   private fillFormWithDefaultValues() {
     if (!this.selectedTransaction) {
       return;
@@ -83,7 +117,7 @@ export class TransactionFormComponent {
         isFixedCost: false
       }
     )
-    if (this.selectedTransaction){
+    if (this.selectedTransaction) {
       if (this.selectedTransaction.amount > 0) {
         this.transactionType = "1";
       } else if (this.selectedTransaction.amount < 0) {
@@ -92,41 +126,17 @@ export class TransactionFormComponent {
     }
   }
 
-  loadCategories() {
-    this.categoryService.getCategories().subscribe({
-      next: (data) => {
-        setTimeout(() => 'Loading ...', 4000);
-        this.categoryList = data;
-      },
-      error: (error) => {
-        console.log('Fehler beim Laden der Categorien: ', error);
-      },
-    });
-  }
-
-
-  return(boolean: boolean) {
-    this.newCategory = boolean;
-    this.loadCategories();
-    this.transactionForm.get('selectedCategory')?.setValue('');
-  }
-
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
-  }
-
   onSubmit() {
     const newTransaction: Transaction = this.transactionForm.value;
-    if (this.transactionType){
-      newTransaction.amount = newTransaction.amount*parseInt(this.transactionType);}
+    if (this.transactionType) {
+      newTransaction.amount = newTransaction.amount * parseInt(this.transactionType);
+    }
     console.log(newTransaction);
     if (newTransaction.id === null) {
       this.saveTransaction(newTransaction);
     } else {
       this.modifyTransaction(newTransaction)
     }
-
   }
 
   modifyTransaction(newTransaction: Transaction) {
@@ -135,7 +145,6 @@ export class TransactionFormComponent {
       this.accountService.refetchSelectedAccount();
       this.updateTransaction(data)
     })
-
   }
 
   saveTransaction(newTransaction: Transaction): void {
@@ -160,21 +169,8 @@ export class TransactionFormComponent {
     this.transactionEvent.emit(transaction);
   }
 
-  deleteSelectedCategory() {
-    const selectedCategory =
-      this.transactionForm.get('category')?.value;
-    if (selectedCategory) {
-      this.categoryService.deleteCategory(selectedCategory.id).subscribe({
-        next: () => {
-          console.log('Delete Category successfull');
-          this.loadCategories();
-          this.transactionForm.get('category')?.setValue('');
-        },
-        error: (error) => {
-          console.log('Can not delete Category: ', error);
-          alert('Can not delete Category, if it is still in use');
-        },
-      });
-    }
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

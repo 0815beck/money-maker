@@ -18,7 +18,8 @@ export class OverviewFixedCostsComponent {
   window = window;
   destroy = new Subject<void>();
 
-  constructor(private fixedCostService: FixedCostService, private accountService: AccountService) {
+  constructor(private fixedCostService: FixedCostService,
+              private accountService: AccountService) {
     this.accountService.account$.pipe(takeUntil(this.destroy)).subscribe(data => {
       this.account = data;
       if (this.account){

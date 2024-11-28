@@ -18,8 +18,8 @@ export class AccountDetailsComponent {
   showFixedCosts: boolean = false;
   destroy = new  Subject<void>();
 
-
-  constructor(private accountService: AccountService, private route: ActivatedRoute) {
+  constructor(private accountService: AccountService,
+              private route: ActivatedRoute) {
     const id = route.snapshot.paramMap.get("id");
     if (id) {
       accountService.getAccountByID(id).pipe(takeUntil(this.destroy)).subscribe(data => {
@@ -34,12 +34,10 @@ export class AccountDetailsComponent {
      this.account.name = this.name?.value;
       this.accountService.modifyAccount(this.account).subscribe(()=> {this.accountService.fetchAccounts(); this.edit=false;})
     }
-
   }
 
   ngOnDestroy():void{
     this.destroy.next();
     this.destroy.complete();
   }
-
 }
