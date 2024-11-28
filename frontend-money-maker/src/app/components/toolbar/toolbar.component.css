@@ -5,6 +5,10 @@
     padding: 10px;
 }
 
+.currentMonth {
+    min-width: max-content;
+}
+
 @media (max-width: 800px ){
     .toolbar {
         flex-direction: column;

@@ -1,4 +1,4 @@
-<div class="toolbar d-flex gap-2 justify-content-center mb-3">
+<div class="toolbar d-flex gap-2 justify-content-center align-items-center mb-3 w-100">
     <div class="input-group searchbar w-100 w-md-auto">
         <input
         type="text"
@@ -23,10 +23,9 @@
         <option value="desc">Descending</option>
     </select>
 
-
     <div class="dropdown custom-checkbox">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >Filter</button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu mt-1">
             <li>
                 <div class="form-check dropdown-item">
                     <input
@@ -57,4 +56,7 @@
             </li>
         </ul>
     </div>
+    <button class="btn btn-outline-secondary currentMonth " (click)="onSelectCurrentMonth()">{{ showCurrentMonth ? 'Show All' : 'Current Month'}}</button>
+
 </div>
+
