@@ -39,10 +39,6 @@ public class FixedCostServiceImpl implements FixedCostService {
         }
     }
 
-//    @Scheduled(cron = "* * * * * *")
-//    public void test() {
-//        System.out.println("Hello, I am scheduled :)");
-//    }
 
     private void generateTransactions(Account account) {
 
@@ -60,8 +56,6 @@ public class FixedCostServiceImpl implements FixedCostService {
                     newTransaction = transactionRepository.save(newTransaction);
                     transactionRepository.markTransactionAsGeneratedByFixCost(fixedCost.getId(),
                             newTransaction.getId());
-//                    fixedCost.getGeneratedTransactions().add(newTransaction);
-//                    fixedCostRepository.save(fixedCost);
                     break;
                 }
 
