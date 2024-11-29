@@ -1,6 +1,7 @@
 package org.example.backendmoneymaker.controllers;
 
 import org.example.backendmoneymaker.entities.FixedCost;
+import org.example.backendmoneymaker.entities.Transaction;
 import org.example.backendmoneymaker.services.FixedCostService;
 import org.example.backendmoneymaker.services.FixedCostServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +47,10 @@ public class FixedCostController {
     public ResponseEntity<FixedCost> create(@RequestBody @Validated FixedCost fixedCost) {
         if (fixedCost.getId() != null) {
             return ResponseEntity.badRequest().build();
+        }
+
+        if (fixedCost.getStart().equals(LocalDate.now())) {
+
         }
 
         return ResponseEntity
