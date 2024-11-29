@@ -74,6 +74,7 @@ export class HomepageComponent {
       return;
     }
     this.accountService.setSelectedAccount(parseInt(selectedValue));
+    this.wisdom = getRandomWisdom();
   }
 
   computeStats() {

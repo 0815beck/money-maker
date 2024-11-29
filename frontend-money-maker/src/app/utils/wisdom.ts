@@ -16,7 +16,9 @@ const wisdom: Wisdom[] = [
     {content: ["Der eine wartet, dass die Zeit sich wandelt,", "der andre packt sie an und handelt"], source: "Lindner 1997"},
     {content: ["Rann an die Arbeit, Arbeit bewältigen.", "Probleme sind nur dornige Chancen."], source: "Lindner 1997"},
     {content: ["Auf dem Weg zum Erfolg gibt es keinen Aufzug.", "Man muss schon die Treppen benutzen."], source: "Lindner 1997"},
-    {content: ["Bankraub ist für Amateure", "wahre Profis gründen eine Bank."], source: "nicht Lindner"}
+    
+    {content: ["Bankraub ist für Amateure", "wahre Profis gründen eine Bank."], source: "nicht Lindner"},
+    {content: ["Die wichtigste Regel beim Shoppen:", "benutz nie dein eigenes Geld."], source: "nicht Lindner"}
 ];
 
 export function getRandomWisdom(): Wisdom {
