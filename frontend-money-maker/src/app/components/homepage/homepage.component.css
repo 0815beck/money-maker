@@ -17,3 +17,15 @@
 h1 {
     text-align: center;
 }
+
+#motivation-container {
+    background-color: rgb(237, 237, 240);
+}
+
+#motivation-content > div {
+    text-align: center;
+}
+
+#motivation-source {
+    text-align: center;
+}

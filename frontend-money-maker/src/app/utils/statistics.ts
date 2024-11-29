@@ -1,3 +1,4 @@
+import { start } from "@popperjs/core";
 import { Transaction } from "../models/transaction";
 import { toString } from "./date";
 
@@ -82,9 +83,6 @@ export function pieChartData(start: Date, end: Date, transactions: Transaction[]
 }
 
 export function barChartData(end: Date, transactions: Transaction[]): ChartData {
-    let tempEnd = new Date(end)
-    let tempStart: Date = new Date(tempEnd); 
-    tempStart.setMonth(tempStart.getMonth() - 1);
     let chartData: ChartData = {
         labels: [],
         datasets: [ 
@@ -94,38 +92,91 @@ export function barChartData(end: Date, transactions: Transaction[]): ChartData 
         ]
     };
 
-    for(let i = 0; i < 3; i++) {
-        const statistic = stats(tempStart, tempEnd, transactions);
-        const label = ['between ' + toString(tempStart), 'and ' + toString(tempEnd)];
-        chartData.labels.push(label);
-        chartData.datasets[0].data.push(statistic.income);
-        chartData.datasets[1].data.push(statistic.expenses);
-        chartData.datasets[2].data.push(statistic.income + statistic.expenses);
-        tempEnd.setMonth(tempEnd.getMonth() - 1);
-        tempStart.setMonth(tempEnd.getMonth() - 1);
-    }
+    let startOfMonth = new Date(end.getFullYear(), end.getMonth(), 1);
+    console.log('[Debug] startOfMonth: ', startOfMonth);
+    console.log('[Debug] end date', end);
+    let statistic = stats(startOfMonth, end, transactions);
+    let label: string = getMonth(startOfMonth) + ' ' + startOfMonth.getFullYear();
+    chartData.labels.push(label);
+    chartData.datasets[0].data.push(statistic.income);
+    chartData.datasets[1].data.push(statistic.expenses);
+    chartData.datasets[2].data.push(statistic.income + statistic.expenses);
 
-    console.log('[Debug] barChartData(end: Date, transaction: Transaction[]): ChartData will return the following',
+    startOfMonth.setMonth(startOfMonth.getMonth() - 1);
+    let endOfMonth = new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 0)
+    console.log('[Debug] Start of month: ', startOfMonth);
+    console.log('[Debug] End of month:  ', endOfMonth);
+    statistic = stats(startOfMonth, endOfMonth, transactions);
+    label = getMonth(startOfMonth) + ' ' + startOfMonth.getFullYear();
+    chartData.labels.push(label);
+    chartData.datasets[0].data.push(statistic.income);
+    chartData.datasets[1].data.push(statistic.expenses);
+    chartData.datasets[2].data.push(statistic.income + statistic.expenses);
+
+    startOfMonth.setMonth(startOfMonth.getMonth() - 1);
+    endOfMonth = new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 0)
+    console.log('[Debug] Start of month: ', startOfMonth);
+    console.log('[Debug] End of month:  ', endOfMonth);
+    statistic = stats(startOfMonth, endOfMonth, transactions);
+    label = getMonth(startOfMonth) + ' ' + startOfMonth.getFullYear();
+    chartData.labels.push(label);
+    chartData.datasets[0].data.push(statistic.income);
+    chartData.datasets[1].data.push(statistic.expenses);
+    chartData.datasets[2].data.push(statistic.income + statistic.expenses);
+
+
+    console.log(
+        '[Debug] barChartData(end: Date, transaction: Transaction[]): '
+        + 'ChartData will return the following',
         chartData
     );
+
     return chartData;
 }
 
-/*
-const data: any = {};
-data.labels = ['January', 'February', 'March', 'April'];
-data.datasets = [
-      {
-        label: "Income",
-        data: ["500", "200", "600", "20"],
-      }, 
-      {
-        label: "Expenses",
-        data: ["-300", "-240", "-30", "-540"],
-      },
-      {
-        label: "Total",
-        data: ["200", "-40", "570", "-520"],
-      },
-    ]
-*/
+
+function getMonth(date: Date) {
+    let x : number = date.getMonth()
+    let month : string = ''
+    switch (x) {
+        case 0: 
+            month = "January"; 
+            break;
+        case 1: 
+            month = "February"; 
+            break;
+        case 2: 
+            month = "March"; 
+            break;
+        case 3: 
+            month = "April"; 
+            break;
+        case 4: 
+            month = "May"; 
+            break;
+        case 5: 
+            month = "June"; 
+            break;
+        case 6: 
+            month = "July"; 
+            break;
+        case 7: 
+            month = "August"; 
+            break;
+        case 8: 
+            month = "September"; 
+            break;
+        case 9: 
+            month = "October"; 
+            break;
+        case 10: 
+            month = "November"; 
+            break;
+        case 11: 
+            month = "December"; 
+            break;
+        default: 
+            month = "Invalid month"; 
+    }
+    return month;
+}

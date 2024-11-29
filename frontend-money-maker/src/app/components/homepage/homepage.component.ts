@@ -7,6 +7,8 @@ import { TransactionService } from '../../services/transaction.service';
 import { Category } from '../../models/category';
 import { barChartData, ChartData, pieChartData, stats, Stats } from '../../utils/statistics';
 import { toString } from '../../utils/date';
+import { getRandomWisdom, Wisdom } from '../../utils/wisdom';
+
 
 @Component({
   selector: 'app-homepage',
@@ -31,6 +33,8 @@ export class HomepageComponent {
   //Data for the charts!
   expensesData: ChartData | undefined;
   historyData: ChartData | undefined;
+
+  wisdom: Wisdom | undefined;
 
   constructor(
     private accountService: AccountService
@@ -58,6 +62,8 @@ export class HomepageComponent {
     //  this.transactions = transactions;
     //  this.computeStats();
     //})
+
+    this.wisdom = getRandomWisdom();
   }
 
   changeAccount(event: Event) {
