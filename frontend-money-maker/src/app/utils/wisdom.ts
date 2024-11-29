@@ -22,7 +22,6 @@ const wisdom: Wisdom[] = [
     {content: ["Kauf dir doch heut mal einen Kaffe-To-Go weniger,", "du gieriges Schwein."], source:"nicht Lindner"},
     {content: ["Wenn du jeden Tag 300€ sparst,", "dann hast du die erste Millionen in 10 Jahren."], source: "nicht Lindner"},
     {content: ["Sei Alpha, nicht Omega."], source: "nicht Lindner"}
-
 ];
 
 export function getRandomWisdom(): Wisdom {
