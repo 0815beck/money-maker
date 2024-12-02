@@ -30,6 +30,31 @@ public class FixedCostServiceImpl implements FixedCostService {
     }
 
     @Override
+    public List<FixedCost> getAll() {
+        return fixedCostRepository.findAll();
+    }
+
+    @Override
+    public Optional<FixedCost> findById(Long id) {
+        return fixedCostRepository.findById(id);
+    }
+
+    @Override
+    public FixedCost create(FixedCost fixedCost) {
+        return fixedCostRepository.save(fixedCost);
+    }
+
+    @Override
+    public FixedCost modify(FixedCost fixedCost) {
+        return fixedCostRepository.save(fixedCost);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        fixedCostRepository.deleteById(id);
+    }
+
+    @Override
     @Scheduled(cron = "0 0 */12 * * *")
     public void generateTransactionsForAllAccounts() {
         System.out.println("Hi :) (I am scheduled to say that)");
@@ -38,7 +63,6 @@ public class FixedCostServiceImpl implements FixedCostService {
             generateTransactions(account);
         }
     }
-
 
     private void generateTransactions(Account account) {
 
@@ -86,30 +110,5 @@ public class FixedCostServiceImpl implements FixedCostService {
         transaction.setFixedCost(true);
 
         return transaction;
-    }
-
-    @Override
-    public List<FixedCost> getAll() {
-        return fixedCostRepository.findAll();
-    }
-
-    @Override
-    public Optional<FixedCost> findById(Long id) {
-        return fixedCostRepository.findById(id);
-    }
-
-    @Override
-    public FixedCost create(FixedCost fixedCost) {
-        return fixedCostRepository.save(fixedCost);
-    }
-
-    @Override
-    public FixedCost modify(FixedCost fixedCost) {
-        return fixedCostRepository.save(fixedCost);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        fixedCostRepository.deleteById(id);
     }
 }
