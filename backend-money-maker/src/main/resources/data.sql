@@ -61,6 +61,10 @@ VALUES (-450, 'monthly rent', '2024-09-01', 1, 1, true),
        (-210, 'savings account', '2024-11-02', 3, 8, true),
        (-50, 'phone bill', '2024-10-25', 3, 12, true),
        (-50, 'phone bill', '2024-11-25', 3, 12, true),
+       (-450, 'monthly rent', '2024-12-01', 1, 1, true),
+       (-800, 'monthly rent', '2024-12-01', 2, 1, true),
+       (-600, 'monthly rent', '2024-12-01', 3, 1, true),
+       (-210, 'savings account', '2024-12-02', 3, 8, true),
        (-100, 'edeka groceries', '2024-11-13', 1, 3, false),
        (-50, 'edeka', '2024-11-13', 1, 3, false),
        (-50, 'movie night', '2024-11-15', 1, 4, false),
@@ -119,7 +123,16 @@ VALUES (-450, 'monthly rent', '2024-09-01', 1, 1, true),
        (-115, 'fresh produce', '2024-11-14', 2, 3, false),
        (-125, 'whole foods', '2024-11-20', 3, 3, false),
        (950, 'side job payment', '2024-09-08', 1, 2, false),
-       (700, 'refund from insurance', '2024-09-18', 3, 2, false);
+       (700, 'refund from insurance', '2024-09-18', 3, 2, false),
+       (-250, 'Holiday travel', '2024-12-01', 3, 9, false),
+       (-90, 'Concert tickets', '2024-12-02', 3, 10, false),
+       (-130, 'Pet supplies', '2024-12-02', 3, 7, false),
+       (-300, 'Charity donation', '2024-12-01', 2, 8, false),
+       (-80, 'Dinner with friends', '2024-12-02', 2, 4, false),
+       (-100, 'Books for holiday reading', '2024-12-02', 2, 11, false),
+       (-200, 'Christmas gifts', '2024-12-01', 1, 4, false),
+       (-150, 'New Year decorations', '2024-12-02', 1, 4, false),
+       (-120, 'Winter clothes', '2024-12-02', 1, 5, false);
 
 
 
@@ -150,4 +163,8 @@ VALUES (1, 1),
        (8, 24),
        (8, 25),
        (9, 26),
-       (9, 27);
+       (9, 27),
+       (1, 28),
+       (4, 29),
+       (5, 30),
+       (7, 31);
