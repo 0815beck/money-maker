@@ -22,6 +22,7 @@ const wisdom: Wisdom[] = [
     {content: ["Sei Alpha, nicht Omega."], source: "nicht Lindner"},
     {content: ["Bankraub ist für Amateure", "wahre Profis gründen eine Bank."], source: "nicht Lindner"},
     {content: ["Die wichtigste Regel beim Shoppen:", "benutz nie dein eigenes Geld."], source: "nicht Lindner"},
+    {content: ["Ich lasse auch nur mit Wasser koche."], source: "vllt Lindner"}
 ];
 
 export function getRandomWisdom(): Wisdom {
