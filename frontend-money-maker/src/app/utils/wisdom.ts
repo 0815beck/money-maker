@@ -19,7 +19,7 @@ const wisdom: Wisdom[] = [
     {content: ["Ich bin reich gewesen, ich bin arm gewesen.", "Reich ist besser."], source: "nicht Lindner"},
     {content: ["Kauf dir doch heut mal einen Kaffe-To-Go weniger,", "du gieriges Schwein."], source:"nicht Lindner"},
     {content: ["Wenn du jeden Tag 300€ sparst,", "dann hast du die erste Millionen in 10 Jahren."], source: "nicht Lindner"},
-    {content: ["Sei Alpha, nicht Omega."], source: "nicht Lindner"},
+    //{content: ["Sei Alpha, nicht Omega."], source: "nicht Lindner"},
     {content: ["Bankraub ist für Amateure", "wahre Profis gründen eine Bank."], source: "nicht Lindner"},
     {content: ["Die wichtigste Regel beim Shoppen:", "benutz nie dein eigenes Geld."], source: "nicht Lindner"},
     {content: ["Ich lasse auch nur mit Wasser koche."], source: "vllt Lindner"}
