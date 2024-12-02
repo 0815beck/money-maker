@@ -30,7 +30,6 @@ export class HomepageComponent {
   totalExpenses: number | undefined;
   balance: number | undefined;
 
-  //Data for the charts!
   expensesData: ChartData | undefined;
   historyData: ChartData | undefined;
 
@@ -41,33 +40,25 @@ export class HomepageComponent {
   ) {
 
     let today = new Date();
-    this.selectedStartDate = toString(new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()));
-    //  .toISOString().split('T')[0];
-
-    //this.selectedEndDate = today.toISOString().split('T')[0];
+    this.selectedStartDate = 
+      toString(new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()));
     this.selectedEndDate = toString(today);
 
-    accountService.accounts$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(accounts => {
+    accountService.accounts$.pipe(takeUntil(this.destroy)).subscribe(accounts => {
       this.accounts = accounts;
     });
 
-    accountService.account$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(account => {
+    accountService.account$.pipe(takeUntil(this.destroy)).subscribe(account => {
       this.account = account;
       this.id = account?.id;
       this.transactions = this.account?.transactions;
       this.computeStats();
     });
 
-    //transactionService.getTransactions().subscribe(transactions => {
-    //  this.transactions = transactions;
-    //  this.computeStats();
-    //})
-
     this.wisdom = getRandomWisdom();
   }
 
   changeAccount(event: Event) {
-    console.log('[Debug] changeAccount event handler triggered')
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue === "undefined") {
       this.accountService.setSelectedAccountToUndefined();
@@ -85,25 +76,22 @@ export class HomepageComponent {
 
     const statistic: Stats = stats(start, end, this.transactions);
 
-    console.log('[Debug] statistic has been computed', statistic);
     this.balance = statistic.balance;
     this.totalExpenses = statistic.expenses;
     this.totalIncome = statistic.income;
 
     const expensesData = pieChartData(start, end, this.transactions);
-    //console.log('[Debug] Data for the Pie Chart has been computed.', expensesData);
     this.expensesData = expensesData;
+
     const historyData = barChartData(end, this.transactions);
-    console.log('[Debug] Bar chart data has been computed:', historyData);
     this.historyData = historyData;
   }
 
-//unsubscribe logic
-  private ngUnsubscribe = new Subject<void>();
+  private destroy = new Subject<void>();
 
   ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
 
