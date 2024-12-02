@@ -42,7 +42,7 @@ export type ChartData = {
 }
 
 export function pieChartData(start: Date, end: Date, transactions: Transaction[]): ChartData {
-    
+
 //COMPUTE EXPENSES PER CATEGORY
     const dictionary: { [key: string]: number } =  {};
     for (let transaction of transactions) {
@@ -126,7 +126,7 @@ export function barChartData(end: Date, transactions: Transaction[]): ChartData 
 
     chartData.labels = chartData.labels.reverse();
     for(let i = 0; i < 3; i++) {
-        chartData.datasets[0].data = chartData.datasets[0].data.reverse();
+        chartData.datasets[i].data = chartData.datasets[i].data.reverse();
     }
 
     return chartData;
