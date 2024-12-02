@@ -42,14 +42,6 @@ export class ToolbarComponent {
     }
   }
 
-  onSearchChange(){
-    this.filterItems();
-  }
-
-  onSortChange(){
-    this.filterItems();
-  }
-
   onSelectAllChange(): void {
     if(this.selectAll){
       this.filters.forEach(filter => filter.checked = true);
@@ -87,24 +79,21 @@ export class ToolbarComponent {
 
       const typeFilterActive = this.filters[0].checked || this.filters[1].checked;
     const matchesType = 
-      (!typeFilterActive) || // Kein Typfilter aktiv, alles wird akzeptiert
-      (this.filters[0].checked && isExpense) || // Expenses
-      (this.filters[1].checked && isIncome);    // Incomes
+      (!typeFilterActive) || 
+      (this.filters[0].checked && isExpense) || 
+      (this.filters[1].checked && isIncome);   
 
-    // Logik für Kostenfilter (Fixed und Variable Costs)
     const matchesCost = 
-      (this.filters[2].checked && isFixedCost) || // Fixed Costs
-      (this.filters[3].checked && isVariableCost) || // Variable Costs
-      (!this.filters[2].checked && !this.filters[3].checked); // Kein Kostenfilter aktiv
+      (this.filters[2].checked && isFixedCost) || 
+      (this.filters[3].checked && isVariableCost) ||
+      (!this.filters[2].checked && !this.filters[3].checked); 
 
-    //Kategorie-Suche
+   
     const matchesCategory = this.searchQuery.trim() === '' ||
     (transaction.category && transaction.category.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
 
-    //Aktueller Monat
     const matchesCurrentMonth = !this.showCurrentMonth || this.isCurrentMonth(transaction.timestamp);
 
-    // Die Transaktion wird eingeschlossen, wenn sie alle aktiven Filterbedingungen erfüllt
     return matchesType && matchesCost && matchesCategory && matchesCurrentMonth;
 
     });

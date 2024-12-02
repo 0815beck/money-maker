@@ -5,19 +5,19 @@
         class="form-control"
         placeholder="Search Category ..."
         [(ngModel)]="searchQuery"
-        (input)="onSearchChange()"
+        (input)="filterItems()"
         aria-label="Search">
-        <button class="btn btn-outline-secondary" type="button" (click)="onSearchChange()">Search</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="filterItems()">Search</button>
     </div>
 
-    <select class="form-select  w-auto" [(ngModel)]="sortBy" (change)="onSortChange()">
+    <select class="form-select  w-auto" [(ngModel)]="sortBy" (change)="filterItems()">
         <option value="" disabled>Sort By</option>
         <option value="amount">Amount</option>
         <option value="date">Date</option>
         <option value="category">Category</option>
     </select>
 
-    <select class="form-select w-auto"[(ngModel)]="sortOrder" (change)="onSortChange()">
+    <select class="form-select w-auto"[(ngModel)]="sortOrder" (change)="filterItems()">
         <option value = "" disabled>Sort Order</option>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
