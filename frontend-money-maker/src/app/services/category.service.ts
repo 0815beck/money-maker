@@ -9,7 +9,6 @@ import {env} from '../env';
 })
 export class CategoryService {
 
-
   constructor(private http: HttpClient) {
   }
 
@@ -23,9 +22,5 @@ export class CategoryService {
 
   addCategory(category: Category): Observable<Category>{
     return this.http.post<Category>(env.baseUrl+"/categories", category);
-  }
-
-  getCategory(id: number): Observable<Category>{
-    return this.http.get<Category>(env.baseUrl + "/categories/" +id)
   }
 }
