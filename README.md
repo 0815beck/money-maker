@@ -23,4 +23,6 @@ Features
 
 -> Visuelle Übersicht: Diagramme und Berichte zeigen deine finanzielle Situation auf einen Blick.
 
+-> Garantiert kapitalistische Motivationssprüche auf der Startseite!
+
 Link zum Wireframe: https://www.figma.com/design/c5ZVFzcoaVCp2aKInQVMf1/Budgetplan?node-id=0-1&t=nsVapuetMF8IjlPb-1
