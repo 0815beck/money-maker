@@ -1,7 +1,6 @@
 package org.example.backendmoneymaker.services;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.example.backendmoneymaker.entities.Account;
 import org.example.backendmoneymaker.repositories.AccountRepository;
 import org.springframework.stereotype.Service;

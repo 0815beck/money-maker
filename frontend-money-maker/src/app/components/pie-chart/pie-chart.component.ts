@@ -34,8 +34,6 @@ export class PieChartComponent {
       console.log('[Error] Pie chart data input is undefined.');
       return;
     }
-    console.log('[Debug] Pie chart data was updated'
-      + ' in the pie chart component. New input: ', this.data);
 
     this.data.datasets[0].backgroundColor = this.colors;
     this.data.datasets[0].borderWidth = 1;
