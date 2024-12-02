@@ -12,30 +12,27 @@ export class AccountService {
   private account = new BehaviorSubject<Account | undefined>(undefined);
   public account$ = this.account.asObservable();
 
-//public loggedIn$ = this.account$.pipe(map(x => !x === undefined));
-
   private accounts = new BehaviorSubject<Account[] | undefined>(undefined);
   public accounts$ = this.accounts.asObservable();
 
   constructor(private httpClient: HttpClient) {
-//At the start of the application, fetch accounts and choose a default account:
     httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
       this.accounts.next(accounts);
       this.account.next(accounts[0]);
     });
-
   }
 
-//Methods to change the state of the accounts list variable:
+  //METHODS TO CONTROL THE STATE OF accounts:
+
   public fetchAccounts() {
     this.httpClient.get<Account[]>(env.baseUrl + '/accounts').subscribe(accounts => {
-//update state
       this.accounts.next(accounts);
       const selectedAccount = this.account.getValue();
       const updatedSelectedAccount = accounts.find(a => a.id === selectedAccount?.id);
       if (updatedSelectedAccount) {
         this.account.next(updatedSelectedAccount);
       }
+      console.log('[Info] The accounts (and its associated data) has been updated.');
     });
   }
 
@@ -48,8 +45,6 @@ export class AccountService {
       }));
   }
 
-//Bemerkung: Richtiger/sicherer wäre es hier Observable<Account | undefined> zurückzugeben,
-//aber dann müsste die Details-Komponente geändert werden
   public getAccountByID(id: string): Observable<Account> {
     const idAsNum = parseInt(id);
     return this.accounts
@@ -73,30 +68,13 @@ export class AccountService {
       }));
   }
 
-//Die alten Methoden:
-  /*
-  getAccountByID(id: string): Observable<Account>{
-    return this.httpClient.get<Account>(env.baseUrl + "/accounts/" + id)
-  }
-  */
-  /*
-  public addAccount(account: Account): Observable<Account> {
-    this.accounts.next(this.accounts.getValue()?.concat(account));
-    return this.httpClient.post<Account>(env.baseUrl + "/accounts", account)
-  };
-  */
 
-
-//Methoden, um den ausgewählten account zu steuern:
+//METHODS TO CONTROL THE STATE OF account:
 
   public setSelectedAccount(id: number) {
     this.account.next(
       this.accounts.getValue()?.find(account => account.id === id)
     )
-    /*    this.httpClient
-          .get<Account>(env.baseUrl+ '/accounts' + '/' + id).subscribe(account => {
-            this.account.next(account);
-          });*/
   }
 
   public setSelectedAccountToUndefined() {
@@ -108,7 +86,8 @@ export class AccountService {
       .get<Account>(env.baseUrl
         + '/accounts' + '/' + this.account?.getValue()?.id).subscribe(account => {
       this.account.next(account);
-      this.accounts.next(this.accounts.getValue()?.map(a => a.id === account.id ? account : a));
+      this.accounts.next(this.accounts.getValue()
+        ?.map(a => a.id === account.id ? account : a));
     });
   }
 
@@ -116,8 +95,10 @@ export class AccountService {
     return this.httpClient
       .put<Account>(env.baseUrl + "/accounts", modifiedAccount)
       .pipe(tap(account => {
-        this.accounts.next(this.accounts.getValue()?.map(a => a.id === account.id ? account : a));
-        this.account.next(this.account.getValue()?.id === account.id ? account : this.account.getValue());
+        this.accounts.next(this.accounts.getValue()
+          ?.map(a => a.id === account.id ? account : a));
+        this.account.next(this.account.getValue()
+          ?.id === account.id ? account : this.account.getValue());
       }));
   }
 }

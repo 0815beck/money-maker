@@ -11,10 +11,11 @@ export type Stats = {
 }
 
 export function stats(start: Date, end: Date, transactions: Transaction[]): Stats {
-    console.log('[Debug] Computing stats. Transactions: ', transactions);
+    
     let balance = 0;
     let income = 0;
     let expenses = 0;
+
     for(let transaction of transactions) {
         const transactionDate = new Date(transaction.timestamp);
         if (transactionDate > end) {
@@ -31,6 +32,7 @@ export function stats(start: Date, end: Date, transactions: Transaction[]): Stat
             income += transaction.amount;
         }
     }
+
     return {start, end, balance, income, expenses}
 }
 
@@ -40,7 +42,8 @@ export type ChartData = {
 }
 
 export function pieChartData(start: Date, end: Date, transactions: Transaction[]): ChartData {
-//First step: compute the expenses by category    
+    
+//COMPUTE EXPENSES PER CATEGORY
     const dictionary: { [key: string]: number } =  {};
     for (let transaction of transactions) {
         const transactionDate = new Date(transaction.timestamp);
@@ -57,12 +60,13 @@ export function pieChartData(start: Date, end: Date, transactions: Transaction[]
             dictionary[key] += transaction.amount;
         }
     }
-//find the five categories with the most expenses:
+
+//COMPUTE STATS
     const topEntries = Object.entries(dictionary)
         .sort((x, y) => x[1] - y[1])
         .slice(0, 5);
     const topKeys = topEntries.map(entry => entry[0]);
-//sum up all the other expenses
+
     let allOtherExpenses = 0;
     for (let key of Object.keys(dictionary)) {
         if (topKeys.includes(key)) {
@@ -70,12 +74,14 @@ export function pieChartData(start: Date, end: Date, transactions: Transaction[]
         }
         allOtherExpenses += dictionary[key];
     }
+
     const labels = topKeys
     const data = topEntries.map(entry => entry[1]);
     if (allOtherExpenses !== 0) {
         labels.concat("_Other");
         data.concat(allOtherExpenses);
     }
+
     return {
         labels,
         datasets: [{ label: "Expenses", data }]
@@ -93,8 +99,6 @@ export function barChartData(end: Date, transactions: Transaction[]): ChartData 
     };
 
     let startOfMonth = new Date(end.getFullYear(), end.getMonth(), 1);
-    console.log('[Debug] startOfMonth: ', startOfMonth);
-    console.log('[Debug] end date', end);
     let statistic = stats(startOfMonth, end, transactions);
     let label: string = getMonth(startOfMonth) + ' ' + startOfMonth.getFullYear();
     chartData.labels.push(label);
@@ -104,8 +108,6 @@ export function barChartData(end: Date, transactions: Transaction[]): ChartData 
 
     startOfMonth.setMonth(startOfMonth.getMonth() - 1);
     let endOfMonth = new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 0)
-    console.log('[Debug] Start of month: ', startOfMonth);
-    console.log('[Debug] End of month:  ', endOfMonth);
     statistic = stats(startOfMonth, endOfMonth, transactions);
     label = getMonth(startOfMonth) + ' ' + startOfMonth.getFullYear();
     chartData.labels.push(label);
@@ -115,8 +117,6 @@ export function barChartData(end: Date, transactions: Transaction[]): ChartData 
 
     startOfMonth.setMonth(startOfMonth.getMonth() - 1);
     endOfMonth = new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 0)
-    console.log('[Debug] Start of month: ', startOfMonth);
-    console.log('[Debug] End of month:  ', endOfMonth);
     statistic = stats(startOfMonth, endOfMonth, transactions);
     label = getMonth(startOfMonth) + ' ' + startOfMonth.getFullYear();
     chartData.labels.push(label);
@@ -124,16 +124,13 @@ export function barChartData(end: Date, transactions: Transaction[]): ChartData 
     chartData.datasets[1].data.push(statistic.expenses);
     chartData.datasets[2].data.push(statistic.income + statistic.expenses);
 
-
-    console.log(
-        '[Debug] barChartData(end: Date, transaction: Transaction[]): '
-        + 'ChartData will return the following',
-        chartData
-    );
+    chartData.labels = chartData.labels.reverse();
+    for(let i = 0; i < 3; i++) {
+        chartData.datasets[0].data = chartData.datasets[0].data.reverse();
+    }
 
     return chartData;
 }
-
 
 function getMonth(date: Date) {
     let x : number = date.getMonth()
