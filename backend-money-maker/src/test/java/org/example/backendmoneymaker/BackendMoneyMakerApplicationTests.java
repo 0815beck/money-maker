@@ -61,11 +61,12 @@ class BackendMoneyMakerApplicationTests {
         assertThat(testAccount).isNotEmpty();
     }
 
+//TESTS FÜR DEN ACCOUNTS REST-ENDPOINT
+
     @Test
     void accountEndPointWorksCorrectly() {
         String url = "http://localhost:" + port + "/accounts";
 
-//GET accounts returns the test account
         ResponseEntity<Account[]> response = http.getForEntity(url, Account[].class);
         Account[] accounts = response.getBody();
         if (accounts == null) {
@@ -74,23 +75,21 @@ class BackendMoneyMakerApplicationTests {
         assertThat(accounts.length).isEqualTo(1);
         assertThat(accounts[0].getName()).isEqualTo("__TEST ACCOUNT__");
 
-//GET .../accounts/id with a non existing id returns an error code
         ResponseEntity<Account> response2 =
                 http.getForEntity(url + "/100", Account.class);
         assertThat(response2.getStatusCode().isError()).isTrue();
         assertThat(response2.getBody()).isNull();
 
-//Posting a new account without setting a name gets responded to with an error
         Account newAccount = new Account();
         ResponseEntity<Account> response3 =
                 http.postForEntity(url, newAccount, Account.class);
         assertThat(response3.getStatusCode().isError()).isTrue();
-//The new account is not saved to the database
+
         assertThat(accountRepository.findAll().size()).isEqualTo(1);
     }
 
 //TESTS FÜR DIE HAUPTLOGIK (TRANSAKTIONEN VON FIX-KOSTEN GENERIEREN)
-//KOMMEN HIER DRUNTER
+
     @Test
     void generatingTransactionsMethodActuallyGeneratesTransactions() {
         Account testAccount = accountRepository.findAll().getFirst();
