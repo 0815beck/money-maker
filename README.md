@@ -2,7 +2,7 @@
 
 Das hier ist das Abschlussprojekt meines Web-Development Bootcamps bei YouGrow-Academy.
 
-Geschrieben habe ich den Code zusammen mit Ronja und Corinna. 
+Geschrieben habe ich den Code zusammen mit Ronja Pieroth und Corinna Bödigheimer. 
 
 Der Vibe der App ist sehr kapitalistisch, aber wir haben versucht das mit (über)motivierenden Sprüchen auf dem Dashboard ironisch zu brechen. Die sind zum Teil von mir, zum Teil von Ronja gedichtet, zum Teil Orginale vom jungen Christian Lindner. (Falls du das Video noch nicht kennst: https://youtu.be/w0rL6Ju9H2Q?si=AEQIrJbJZHpNMtcl . Das sind drei sehr gut investierte Minuten!). 
 
