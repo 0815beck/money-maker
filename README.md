@@ -1,28 +1,9 @@
 # money-maker
 
-Money Maker ist eine benutzerfreundliche App, die dir hilft, deine Finanzen zu verfolgen, eine Übersicht über deine
-Ausgaben zu gewinnen und zu analysieren, ob deine Einnahmen deine Ausgaben übersteigen.
+Das hier ist das Abschlussprojekt meines Web-Development Bootcamps bei YouGrow-Academy.
 
-Mit Money Maker kannst du:
+Geschrieben habe ich den Code zusammen mit Ronja und Corinna. 
 
--> Deine Einnahmen und Ausgaben übersichtlich dokumentieren.
+Der Vibe der App ist sehr kapitalistisch, aber wir haben versucht das mit (über)motivierenden Sprüchen auf dem Dashboard ironisch zu brechen. Die sind zum Teil von mir, zum Teil von Ronja gedichtet, zum Teil Orginale vom jungen Christian Lindner. (Falls du das Video noch nicht kennst: https://youtu.be/w0rL6Ju9H2Q?si=AEQIrJbJZHpNMtcl . Das sind 3 sehr gut investierte Minuten!). 
 
--> Analysen durchführen, um zu erkennen, wofür du am meisten Geld ausgibst.
-
--> Finanzielle Trends erkennen, um bessere Entscheidungen zu treffen.
-
-Money Maker ist ideal für alle, die ihre Finanzen einfach und effizient organisieren wollen – egal, ob privat oder geschäftlich.
-
-Features
-
--> Einnahmen- und Ausgabentracking: Erfasse alle deine Geldflüsse an einem Ort.
-
--> Ausgabeanalyse: Identifiziere Kategorien mit den höchsten Kosten.
-
--> Automatisches erstellen von Fixkosten Transaktionen.
-
--> Visuelle Übersicht: Diagramme und Berichte zeigen deine finanzielle Situation auf einen Blick.
-
--> Garantiert kapitalistische Motivationssprüche auf der Startseite!
-
-Link zum Wireframe: https://www.figma.com/design/c5ZVFzcoaVCp2aKInQVMf1/Budgetplan?node-id=0-1&t=nsVapuetMF8IjlPb-1
+Leider ist die App grad nirgendwo online. Um sie anzuschauen brauchst musst du das Repo clonen und Backend und Frontend auf deinem eigenen Computer starten (das Frontend mit ng serve und das Backend mit irgendetwas, das mit Maven-Projekten umgehen kann). Es ist eine h2-Datenbank mit Testdaten eingebaut.
