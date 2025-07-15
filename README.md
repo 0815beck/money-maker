@@ -27,6 +27,9 @@ ist eine grobe Anleitung:
 - Konfiguriere nginx (oder was auch immer du benutzt), so dass es bei Anfragen an das Frontend mit statischen Files aus diesem Ordner zu antworten.
 - Du solltest die In-Memory-Entwicklungsdatenbank H2 durch eine richtige Datenbank ersetzen (z.B. MySQL). Das Projekt enthät Schemata dafür.
 
+Das Projekt enthält Datenbank-Konfigurationsfiles mit Datenbank-Passwörtern und Zugangsdaten im Klartext als Beispiele. Denke daran die Konfigurations-Files zu 
+gitignore hinzuzufügen, oder denke dir etwas sichereres aus!
+
 Viel Spaß!
 
 ## about
