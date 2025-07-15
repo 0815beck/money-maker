@@ -8,9 +8,26 @@ Eine App zur Finanzübersicht. Sie hat die folgenden Features:
 
 ## run it locally
 
-Um die App lokal laufen zu lassen sind folgende Schritte notwendig:
+Hier ist eine Anleitung, mit der du die App lokal laufen lassen kannst:
 
+1. Clone das git repository
+2. Wechsle in der Unterordner "backend-money-maker"
+3. Benutze eine IDE deiner Wahl mit Maven support um das Projekt zu kompilieren, oder führe "mvn package" aus
+4. Starte das Backend mit "java -jar target/backend-money-maker-0.0.1.jar"
+5. wechsel in den frontend-money-maker Unterordner
+6. Führe die Befehle "npm install", "npm run build" und "npm run start" aus
+7. Schaue dir das Ergebnis an
 
+Die App kommt mit Beispieldaten. Wenn du die App auf einem richtigen Server laufen lassen willst, musst du ein paar Sachen selber konfigurieren. Hier
+ist eine grobe Anleitung:
+
+- Benutze einen richtigen Webserver mit Rate-Limiting und Https-Support als reverse Proxy. Auf Linux bietet sich nginx an.
+- Konfiguriere nginx Anfragen an das Backend an die Spring Boot Application weiterzuleiten. Diese kannst du auf irgendeinem lokalen Port laufen lassen.
+- Für das Frontend, lass dir von Angular die JS-Files bündeln und mach sie in irgendeinen Unterordner auf deinem Server.
+- Konfiguriere nginx (oder was auch immer du benutzt) bei Anfragen an das Frontend mit statischen Files aus diesem Ordner zu antworten.
+- Du solltest die RAM-Entwicklungsdatenbank durch eine richtige Ersetzen (z.B. MySQL). Das Projekt enthät Schemata dafür.
+
+Viel Spaß!
 ## about
 
 Das hier ist das Abschlussprojekt des YouGrow-Academy Web-Development Bootcamps. Geschrieben habe ich den Code zusammen mit Ronja Pieroth und Corinna Bödigheimer. 
