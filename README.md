@@ -22,12 +22,13 @@ Die App kommt mit Beispieldaten. Wenn du die App auf einem richtigen Server lauf
 ist eine grobe Anleitung:
 
 - Benutze einen richtigen Webserver mit Rate-Limiting und Https-Support als reverse Proxy. Auf Linux bietet sich nginx an.
-- Konfiguriere nginx Anfragen an das Backend an die Spring Boot Application weiterzuleiten. Diese kannst du auf irgendeinem lokalen Port laufen lassen.
-- Für das Frontend, lass dir von Angular die JS-Files bündeln und mach sie in irgendeinen Unterordner auf deinem Server.
-- Konfiguriere nginx (oder was auch immer du benutzt) bei Anfragen an das Frontend mit statischen Files aus diesem Ordner zu antworten.
-- Du solltest die RAM-Entwicklungsdatenbank durch eine richtige Ersetzen (z.B. MySQL). Das Projekt enthät Schemata dafür.
+- Konfiguriere nginx, so dass es Anfragen an das Backend an die Spring Boot Application weiterzuleiten. Diese kannst du auf irgendeinem lokalen Port laufen lassen.
+- Für das Frontend, lass dir von Angular die JS-Files bündeln und kopiere sie in irgendeinen Unterordner auf deinem Server.
+- Konfiguriere nginx (oder was auch immer du benutzt), so dass es bei Anfragen an das Frontend mit statischen Files aus diesem Ordner zu antworten.
+- Du solltest die In-Memory-Entwicklungsdatenbank H2 durch eine richtige Datenbank ersetzen (z.B. MySQL). Das Projekt enthät Schemata dafür.
 
 Viel Spaß!
+
 ## about
 
 Das hier ist das Abschlussprojekt des YouGrow-Academy Web-Development Bootcamps. Geschrieben habe ich den Code zusammen mit Ronja Pieroth und Corinna Bödigheimer. 
