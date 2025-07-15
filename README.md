@@ -18,8 +18,7 @@ Hier ist eine Anleitung, mit der du die App lokal laufen lassen kannst:
 6. Führe die Befehle "npm install", "npm run build" und "npm run start" aus
 7. Schaue dir das Ergebnis an
 
-Die App kommt mit Beispieldaten. Wenn du die App auf einem richtigen Server laufen lassen willst, musst du ein paar Sachen selber konfigurieren. Hier
-ist eine grobe Anleitung:
+Die App kommt mit ein paar Beispieldaten, du kanns aber natürlich auch in der UI neue Nutzer*innen, Ausgaben und Abonements hinzufügen. Wenn du die App auf einem richtigen Server laufen lassen willst, musst du ein paar Sachen selber konfigurieren. Hier ist eine grobe Anleitung:
 
 - Benutze einen richtigen Webserver mit Rate-Limiting und Https-Support als reverse Proxy. Auf Linux bietet sich nginx an.
 - Konfiguriere nginx, so dass es Anfragen an das Backend an die Spring Boot Application weiterzuleiten. Diese kannst du auf irgendeinem lokalen Port laufen lassen.
